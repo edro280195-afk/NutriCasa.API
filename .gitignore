@@ -1,0 +1,57 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Visual Studio
+.vs/
+*.rsuser
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## NuGet
+**/[Pp]ackages/*
+*.nupkg
+*.snupkg
+.nuget/
+nuget.exe
+
+## User-specific
+appsettings.Local.json
+*.DotSettings.user
+
+## JetBrains
+.idea/
+*.sln.iml
+
+## macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+## Logs
+logs/
+*.log
+
+## EF Core
+**/Persistence/Migrations/*.Designer.cs
+
+## Test results
+TestResults/
+coverage/
+
+## Reference SQL files (not part of .NET solution)
+001_initial_schema.sql
+002_budget_modes_delta.sql
+PROMPTS_GEMINI_POR_MODO.md

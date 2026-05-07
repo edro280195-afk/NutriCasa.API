@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/NutriCasa.Api/NutriCasa.Api.csproj" />
+    <Project Path="src/NutriCasa.Application/NutriCasa.Application.csproj" />
+    <Project Path="src/NutriCasa.Domain/NutriCasa.Domain.csproj" />
+    <Project Path="src/NutriCasa.Infrastructure/NutriCasa.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/NutriCasa.Api.Tests/NutriCasa.Api.Tests.csproj" />
+    <Project Path="tests/NutriCasa.Application.Tests/NutriCasa.Application.Tests.csproj" />
+    <Project Path="tests/NutriCasa.Domain.Tests/NutriCasa.Domain.Tests.csproj" />
+  </Folder>
+</Solution>

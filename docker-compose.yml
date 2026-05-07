@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: nutricasa-postgres
+    environment:
+      POSTGRES_DB: nutricasa
+      POSTGRES_USER: nutricasa
+      POSTGRES_PASSWORD: ***REMOVED***
+    ports:
+      - "5433:5432"
+    volumes:
+      - nutricasa_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nutricasa"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  nutricasa_pgdata:

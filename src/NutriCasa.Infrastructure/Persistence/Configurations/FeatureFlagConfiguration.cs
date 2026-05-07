@@ -1,0 +1,3 @@
+using Microsoft.EntityFrameworkCore;using Microsoft.EntityFrameworkCore.Metadata.Builders;using NutriCasa.Domain.Entities;
+namespace NutriCasa.Infrastructure.Persistence.Configurations;
+public class FeatureFlagConfiguration : IEntityTypeConfiguration<FeatureFlag>{public void Configure(EntityTypeBuilder<FeatureFlag> builder){builder.ToTable("feature_flags");builder.HasKey(e => e.Id);builder.Property(e => e.Id).HasColumnName("flag_id").HasDefaultValueSql("uuid_generate_v4()");builder.Property(e => e.Code).HasMaxLength(60).IsRequired();builder.Property(e => e.Metadata).HasColumnType("jsonb");builder.HasIndex(e => e.Code).IsUnique();}}

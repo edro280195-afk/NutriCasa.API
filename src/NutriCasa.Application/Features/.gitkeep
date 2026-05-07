@@ -1,0 +1,3 @@
+// Placeholder para features CQRS de fases posteriores.
+// Fase 1: Auth (RegisterCommand, LoginCommand, RefreshCommand)
+// Fase 1: Plans (GeneratePlanCommand, SwapMealCommand)

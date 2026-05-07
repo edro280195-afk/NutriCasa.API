@@ -1,0 +1,3 @@
+using Microsoft.EntityFrameworkCore;using Microsoft.EntityFrameworkCore.Metadata.Builders;using NutriCasa.Domain.Entities;
+namespace NutriCasa.Infrastructure.Persistence.Configurations;
+public class RecipeRatingConfiguration : IEntityTypeConfiguration<RecipeRating>{public void Configure(EntityTypeBuilder<RecipeRating> builder){builder.ToTable("recipe_ratings");builder.HasKey(e => e.Id);builder.Property(e => e.Id).HasColumnName("rating_id").HasDefaultValueSql("uuid_generate_v4()");builder.HasOne(e => e.Recipe).WithMany(r => r.Ratings).HasForeignKey(e => e.RecipeId).OnDelete(DeleteBehavior.Cascade);builder.HasOne(e => e.User).WithMany().HasForeignKey(e => e.UserId).OnDelete(DeleteBehavior.Cascade);builder.HasIndex(e => new { e.RecipeId, e.UserId }).IsUnique();}}
