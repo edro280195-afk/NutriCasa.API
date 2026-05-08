@@ -24,6 +24,35 @@ public class HealthController : ControllerBase
     }
 
     /// <summary>
+    /// Test endpoint to verify Resend email configuration.
+    /// </summary>
+    [HttpPost("test-email")]
+    public async Task<IActionResult> TestEmail(
+        [FromServices] NutriCasa.Application.Common.Interfaces.IEmailService emailService,
+        [FromBody] TestEmailRequest request)
+    {
+        try
+        {
+            await emailService.SendEmailVerificationAsync(
+                request.Email,
+                request.Name ?? "Test",
+                "https://nutricasa.app/verify-email?token=test123",
+                CancellationToken.None);
+            return Ok(new { sent = true, message = "Correo enviado exitosamente" });
+        }
+        catch (Exception ex)
+        {
+            return Ok(new { sent = false, error = ex.Message, innerError = ex.InnerException?.Message });
+        }
+    }
+
+    public class TestEmailRequest
+    {
+        public string Email { get; set; } = null!;
+        public string? Name { get; set; }
+    }
+
+    /// <summary>
     /// Temporary endpoint for Fase 0 to truncate tables and force re-seed.
     /// </summary>
     [HttpDelete("truncate")]

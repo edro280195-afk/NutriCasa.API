@@ -17,7 +17,7 @@ public class JwtTokenService : IJwtTokenService
         _configuration = configuration;
     }
 
-    public string GenerateAccessToken(Guid userId, string email, string fullName)
+    public string GenerateAccessToken(Guid userId, string email, string fullName, bool emailVerified, bool onboardingComplete)
     {
         string key = _configuration["Jwt:Key"]!;
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
@@ -30,6 +30,8 @@ public class JwtTokenService : IJwtTokenService
             new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
             new Claim(ClaimTypes.Email, email),
             new Claim(ClaimTypes.Name, fullName),
+            new Claim("emailVerified", emailVerified.ToString().ToLowerInvariant()),
+            new Claim("onboardingComplete", onboardingComplete.ToString().ToLowerInvariant()),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 

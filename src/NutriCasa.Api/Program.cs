@@ -1,4 +1,7 @@
+using System.Text;
 using Hangfire;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using NutriCasa.Application;
 using NutriCasa.Infrastructure;
 using NutriCasa.Infrastructure.Persistence.Seeds;
@@ -35,10 +38,45 @@ builder.Services.AddHealthChecks()
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("NutriCasaCors", policy =>
-        policy.WithOrigins(builder.Configuration.GetSection("Cors:Origins").Get<string[]>() ?? ["http://localhost:3000"])
+        policy.WithOrigins(builder.Configuration.GetSection("Cors:Origins").Get<string[]>() ?? ["http://localhost:4200", "https://localhost:4200", "http://localhost:8100", "https://nutricasa.app", "https://www.nutricasa.app"])
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials());
+});
+
+// HttpClient para Gemini
+builder.Services.AddHttpClient("Gemini", client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(builder.Configuration.GetValue<int>("Gemini:TimeoutSeconds", 60));
+});
+
+// HttpClient para Resend
+builder.Services.AddHttpClient<NutriCasa.Application.Common.Interfaces.IEmailService, NutriCasa.Infrastructure.Services.ResendEmailService>((sp, client) =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    client.BaseAddress = new Uri("https://api.resend.com/");
+    client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", $"Bearer {config["Resend:ApiKey"]}");
+});
+
+// JWT Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+        ValidateIssuer = true,
+        ValidIssuer = builder.Configuration["Jwt:Issuer"],
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration["Jwt:Audience"],
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero,
+    };
 });
 
 var app = builder.Build();

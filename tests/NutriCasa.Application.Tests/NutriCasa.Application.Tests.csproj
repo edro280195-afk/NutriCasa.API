@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\NutriCasa.Application\NutriCasa.Application.csproj" />
+    <ProjectReference Include="..\..\src\NutriCasa.Infrastructure\NutriCasa.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

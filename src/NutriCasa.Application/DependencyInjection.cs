@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using NutriCasa.Application.Common.Behaviors;
 using NutriCasa.Application.Common.Mappings;
+using NutriCasa.Application.Services;
 
 namespace NutriCasa.Application;
 
@@ -19,6 +20,9 @@ public static class DependencyInjection
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(PerformanceBehavior<,>));
+
+        // Servicios de aplicación
+        services.AddSingleton<KetoProfileCalculator>();
 
         MapsterConfig.Configure();
 

@@ -35,14 +35,15 @@ public static class DependencyInjection
         services.AddMemoryCache();
         services.AddSingleton<ICacheService, MemoryCacheService>();
 
-        // Stubs (se reemplazan en fases posteriores)
+        // Servicios reales de Fase 1
         services.AddScoped<IFileStorageService, CloudflareR2StorageService>();
-        services.AddScoped<IGeminiService, GeminiServiceStub>();
-        services.AddScoped<IPlanValidator, PlanValidatorStub>();
-        services.AddScoped<ICostEstimationService, CostEstimationServiceStub>();
-        services.AddScoped<IIngredientSubstitutionService, IngredientSubstitutionServiceStub>();
+        services.AddScoped<IGeminiService, GeminiService>();
+        services.AddScoped<IPlanValidator, PlanValidator>();
+        services.AddScoped<ICostEstimationService, CostEstimationService>();
+        services.AddScoped<IIngredientSubstitutionService, IngredientSubstitutionService>();
         services.AddScoped<IModerationService, ModerationServiceStub>();
         services.AddScoped<IPaymentService, MercadoPagoServiceStub>();
+        services.AddScoped<IEmailService, ResendEmailService>();
 
         // Hangfire
         services.AddHangfireServices(configuration);
