@@ -10,7 +10,8 @@ public interface IJwtTokenService
         string email,
         string fullName,
         bool emailVerified,
-        bool onboardingComplete);
+        bool onboardingComplete,
+        string role);
 
     string GenerateRefreshToken();
     Guid? ValidateAccessToken(string token);

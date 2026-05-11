@@ -43,6 +43,9 @@ public class User : SoftDeletableEntity
     public DateTime? DeletionScheduledFor { get; set; }
     public DateTime? DeletionCancelledAt { get; set; }
 
+    // Admin
+    public string Role { get; set; } = "user";
+
     // Budget mode (del delta 002)
     public Guid? BudgetModeId { get; set; }
     public DateTime? BudgetModeChangedAt { get; set; }

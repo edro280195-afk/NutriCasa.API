@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Infrastructure.Persistence;
 
 namespace NutriCasa.Infrastructure.Persistence.Seeds;
@@ -10,8 +11,9 @@ public static class DatabaseSeeder
     public static async Task SeedAsync(IServiceProvider serviceProvider)
     {
         using var scope = serviceProvider.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-        var logger = scope.ServiceProvider.GetRequiredService<ILogger<ApplicationDbContext>>();
+        var sp = scope.ServiceProvider;
+        var context = sp.GetRequiredService<ApplicationDbContext>();
+        var logger = sp.GetRequiredService<ILogger<ApplicationDbContext>>();
 
         try
         {
@@ -27,6 +29,7 @@ public static class DatabaseSeeder
             await IngredientCatalogSeeder.SeedAsync(context);
             await IngredientSubstitutionSeeder.SeedAsync(context);
             await CuratedRecipeSeeder.SeedAsync(context);
+            await AdminSeeder.SeedAsync(context, sp.GetRequiredService<IPasswordHasher>());
 
             logger.LogInformation("Seed de datos completado exitosamente.");
         }

@@ -52,7 +52,7 @@ public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, R
         bool onboardingComplete = user.DisclaimerAcceptedAt.HasValue;
 
         string newAccessToken = _jwtTokenService.GenerateAccessToken(
-            user.Id, user.Email, user.FullName, emailVerified, onboardingComplete);
+            user.Id, user.Email, user.FullName, emailVerified, onboardingComplete, user.Role);
         string newRawRefresh  = _jwtTokenService.GenerateRefreshToken();
 
         int expiryDays = await GetThresholdAsync("refresh_token_expiry_days", 30, cancellationToken);

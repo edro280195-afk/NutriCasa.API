@@ -59,7 +59,7 @@ public class VerifyEmailCommandHandler : IRequestHandler<VerifyEmailCommand, Res
         bool onboardingComplete = user.DisclaimerAcceptedAt.HasValue;
 
         string accessToken  = _jwtTokenService.GenerateAccessToken(
-            user.Id, user.Email, user.FullName, emailVerified: true, onboardingComplete);
+            user.Id, user.Email, user.FullName, emailVerified: true, onboardingComplete, user.Role);
         string refreshToken = _jwtTokenService.GenerateRefreshToken();
 
         await SaveRefreshTokenAsync(user.Id, refreshToken, cancellationToken);

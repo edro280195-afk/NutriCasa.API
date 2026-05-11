@@ -44,4 +44,5 @@ public class Recipe : SoftDeletableEntity
 
     public User? CreatedByUser { get; set; }
     public ICollection<RecipeRating> Ratings { get; set; } = new List<RecipeRating>();
+    public ICollection<FavoriteRecipe> FavoriteRecipes { get; set; } = new List<FavoriteRecipe>();
 }

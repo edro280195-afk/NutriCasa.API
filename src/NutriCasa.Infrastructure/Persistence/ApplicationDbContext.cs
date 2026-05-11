@@ -56,6 +56,7 @@ public class ApplicationDbContext : DbContext, IApplicationDbContext
     // Nutrición y planes
     public DbSet<Recipe> Recipes => Set<Recipe>();
     public DbSet<RecipeRating> RecipeRatings => Set<RecipeRating>();
+    public DbSet<FavoriteRecipe> FavoriteRecipes => Set<FavoriteRecipe>();
     public DbSet<WeeklyPlan> WeeklyPlans => Set<WeeklyPlan>();
     public DbSet<WeeklyPlanMeal> WeeklyPlanMeals => Set<WeeklyPlanMeal>();
     public DbSet<MealLog> MealLogs => Set<MealLog>();

@@ -75,7 +75,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<AuthToke
         bool onboardingComplete = user.DisclaimerAcceptedAt.HasValue;
 
         string accessToken  = _jwtTokenService.GenerateAccessToken(
-            user.Id, user.Email, user.FullName, emailVerified, onboardingComplete);
+            user.Id, user.Email, user.FullName, emailVerified, onboardingComplete, user.Role);
         string rawRefresh   = _jwtTokenService.GenerateRefreshToken();
 
         await SaveRefreshTokenAsync(user.Id, rawRefresh, cancellationToken);

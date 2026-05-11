@@ -23,6 +23,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(e => e.Timezone).HasMaxLength(50).HasDefaultValue("America/Mexico_City");
         builder.Property(e => e.PreferredLanguage).HasMaxLength(10).HasDefaultValue("es-MX");
         builder.Property(e => e.NutritionTrack).HasConversion<string>().HasMaxLength(20).HasDefaultValue(NutritionTrack.Keto);
+        builder.Property(e => e.Role).HasMaxLength(20).HasDefaultValue("user");
 
         builder.HasIndex(e => e.Email).IsUnique();
 

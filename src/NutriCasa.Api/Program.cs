@@ -1,10 +1,13 @@
+using System.Security.Claims;
 using System.Text;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using NutriCasa.Application;
+using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Infrastructure;
 using NutriCasa.Infrastructure.Persistence.Seeds;
+using NutriCasa.Infrastructure.Services;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +36,11 @@ builder.Services.AddSwaggerGen(c =>
     c.EnableAnnotations();
 });
 builder.Services.AddSignalR();
+
+// File storage — local dev (swap to CloudflareR2StorageService for production with R2 credentials)
+var webRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+builder.Services.AddScoped<IFileStorageService>(sp =>
+    new LocalFileStorageService(webRoot, "https://localhost:7120"));
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("DefaultConnection")!, name: "postgresql");
 builder.Services.AddCors(options =>
@@ -59,6 +67,11 @@ builder.Services.AddHttpClient<NutriCasa.Application.Common.Interfaces.IEmailSer
 });
 
 // JWT Authentication
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+});
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -105,6 +118,7 @@ if (app.Environment.IsDevelopment())
     app.UseHangfireDashboard("/hangfire");
 }
 
+app.UseStaticFiles();
 app.UseSerilogRequestLogging();
 app.UseCors("NutriCasaCors");
 app.UseAuthentication();

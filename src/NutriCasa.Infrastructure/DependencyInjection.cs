@@ -35,8 +35,11 @@ public static class DependencyInjection
         services.AddMemoryCache();
         services.AddSingleton<ICacheService, MemoryCacheService>();
 
+        // Push notifications
+        services.AddSingleton<IPushNotificationService, PushNotificationService>();
+
         // Servicios reales de Fase 1
-        services.AddScoped<IFileStorageService, CloudflareR2StorageService>();
+        // IFileStorageService registrado en Program.cs (LocalFileStorageService con web root path)
         services.AddScoped<IGeminiService, GeminiService>();
         services.AddScoped<IPlanValidator, PlanValidator>();
         services.AddScoped<ICostEstimationService, CostEstimationService>();

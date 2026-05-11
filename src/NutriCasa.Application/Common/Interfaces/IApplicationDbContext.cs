@@ -31,6 +31,7 @@ public interface IApplicationDbContext
     DbSet<ChallengeParticipant> ChallengeParticipants { get; }
     DbSet<Recipe> Recipes { get; }
     DbSet<RecipeRating> RecipeRatings { get; }
+    DbSet<FavoriteRecipe> FavoriteRecipes { get; }
     DbSet<WeeklyPlan> WeeklyPlans { get; }
     DbSet<WeeklyPlanMeal> WeeklyPlanMeals { get; }
     DbSet<MealLog> MealLogs { get; }

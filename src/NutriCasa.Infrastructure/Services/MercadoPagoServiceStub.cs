@@ -1,15 +1,32 @@
 using NutriCasa.Application.Common.Interfaces;
+using NutriCasa.Domain.Entities;
+using NutriCasa.Domain.Enums;
 
 namespace NutriCasa.Infrastructure.Services;
 
-/// <summary>
-/// Pendiente de Fase 8 — Integración de pagos.
-/// </summary>
 public class MercadoPagoServiceStub : IPaymentService
 {
-    public Task<string> CreateSubscriptionAsync(Guid userId, string planCode, CancellationToken ct = default)
-        => throw new NotImplementedException("Pendiente de Fase 8 — Integración de pagos");
+    private static int _counter;
+
+    public Task<string> CreateCheckoutSessionAsync(Guid userId, Guid planId, string returnUrl, CancellationToken ct = default)
+    {
+        var sessionId = $"mp_sim_{Interlocked.Increment(ref _counter):x8}";
+        return Task.FromResult(sessionId);
+    }
+
+    public Task<string> CreateTrialSubscriptionAsync(Guid userId, Guid planId, CancellationToken ct = default)
+    {
+        var subId = $"mp_sub_sim_{Interlocked.Increment(ref _counter):x8}";
+        return Task.FromResult(subId);
+    }
 
     public Task CancelSubscriptionAsync(string providerSubscriptionId, CancellationToken ct = default)
-        => throw new NotImplementedException("Pendiente de Fase 8 — Integración de pagos");
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task<bool> VerifyPaymentAsync(string providerPaymentId, CancellationToken ct = default)
+    {
+        return Task.FromResult(true);
+    }
 }
