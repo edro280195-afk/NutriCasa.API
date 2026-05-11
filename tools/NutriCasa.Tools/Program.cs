@@ -27,7 +27,7 @@ else
 
 Console.WriteLine();
 Console.WriteLine("Para generar las recetas, ejecutar con API key de Gemini:");
-Console.WriteLine($"  dotnet run --project tools/NutriCasa.Tools -- --api-key AIza...");
+Console.WriteLine($"  dotnet run --project tools/NutriCasa.Tools -- --api-key YOUR_GEMINI_KEY");
 Console.WriteLine();
 Console.WriteLine("O configurar variable de entorno: NUTRICASA_GEMINI_KEY");
 Console.WriteLine();

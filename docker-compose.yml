@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: nutricasa
       POSTGRES_USER: nutricasa
-      POSTGRES_PASSWORD: ***REMOVED***
+      POSTGRES_PASSWORD: Dev_Password_Only
     ports:
       - "5433:5432"
     volumes:

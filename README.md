@@ -58,7 +58,7 @@ dotnet run --project src/NutriCasa.Api
 ```bash
 docker-compose up -d
 # Connection string local:
-# Host=localhost;Port=5433;Database=nutricasa;Username=nutricasa;Password=***REMOVED***
+# Host=localhost;Port=5433;Database=nutricasa;Username=nutricasa;Password=CHANGE-ME
 ```
 
 ## URLs
