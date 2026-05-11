@@ -17,6 +17,7 @@ public record ProgressSummaryDto
 public record WeightEntryDto
 {
     public string Date { get; set; } = "";
+    public double WeightKg { get; set; }
     public double HeightPercent { get; set; }
     public string Color { get; set; } = "";
 }

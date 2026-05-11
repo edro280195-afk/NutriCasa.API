@@ -138,6 +138,7 @@ public class GetWeightHistoryQueryHandler : IRequestHandler<GetWeightHistoryQuer
             return new WeightEntryDto
             {
                 Date = m.MeasuredAt.ToString("d MMM", new System.Globalization.CultureInfo("es-MX")),
+                WeightKg = (double)m.WeightKg,
                 HeightPercent = Math.Round(height, 1),
                 Color = color,
             };
@@ -166,16 +167,16 @@ public class GetCheckinHeatmapQueryHandler : IRequestHandler<GetCheckinHeatmapQu
         var userId = _currentUserService.UserId.Value;
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var thirtyDaysAgo = today.AddDays(-29);
+        var daysAgo = today.AddDays(-83); // 12 semanas = 84 días
 
         var checkins = await _context.DailyCheckIns
-            .Where(c => c.UserId == userId && c.CheckInDate >= thirtyDaysAgo)
+            .Where(c => c.UserId == userId && c.CheckInDate >= daysAgo)
             .ToListAsync(ct);
 
         var checkinByDate = checkins.ToDictionary(c => c.CheckInDate);
 
         var days = new List<CheckinDayDto>();
-        for (var date = thirtyDaysAgo; date <= today; date = date.AddDays(1))
+        for (var date = daysAgo; date <= today; date = date.AddDays(1))
         {
             var level = 0;
             if (checkinByDate.TryGetValue(date, out var checkin))
