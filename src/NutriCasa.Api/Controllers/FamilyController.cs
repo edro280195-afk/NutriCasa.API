@@ -90,6 +90,14 @@ public class FamilyController : BaseApiController
         var result = await _mediator.Send(new DeleteCommentCommand { PostId = postId, CommentId = commentId }, ct);
         return HandleResult(result);
     }
+
+    [HttpGet("leaderboard")]
+    [Authorize]
+    public async Task<IActionResult> GetLeaderboard([FromQuery] string category = "weight_loss", CancellationToken ct = default)
+    {
+        var result = await _mediator.Send(new GetGroupLeaderboardQuery { Category = category }, ct);
+        return HandleResult(result);
+    }
 }
 
 public class CreatePostRequest
