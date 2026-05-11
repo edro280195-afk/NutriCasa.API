@@ -76,20 +76,53 @@ public class GetFamilyFeedQueryHandler : IRequestHandler<GetFamilyFeedQuery, Res
 
         var posts = await _context.GroupPosts
             .Include(p => p.AuthorUser)
+            .Include(p => p.Reactions)
+                .ThenInclude(r => r.User)
+            .Include(p => p.Comments.Where(c => c.DeletedAt == null))
+                .ThenInclude(c => c.User)
             .Where(p => p.GroupId == membership.GroupId && p.DeletedAt == null && !p.IsUnderReview)
             .OrderByDescending(p => p.CreatedAt)
             .Take(20)
-            .Select(p => new FamilyPostDto
-            {
-                PostId = p.Id,
-                AuthorName = p.AuthorUser != null ? p.AuthorUser.FullName : "Alguien",
-                PostType = p.PostType.ToString().ToLowerInvariant(),
-                Content = p.Content ?? "",
-                CreatedAt = p.CreatedAt,
-            })
             .ToListAsync(ct);
 
-        return Result<List<FamilyPostDto>>.Success(posts);
+        var currentUserId = userId;
+
+        var result = posts.Select(p => new FamilyPostDto
+        {
+            PostId = p.Id,
+            AuthorUserId = p.AuthorUserId,
+            AuthorName = p.AuthorUser?.FullName ?? "Alguien",
+            PostType = p.PostType.ToString().ToLowerInvariant(),
+            Content = p.Content ?? "",
+            CreatedAt = p.CreatedAt,
+            Reactions = p.Reactions
+                .GroupBy(r => r.ReactionType)
+                .Select(g => new PostReactionDto
+                {
+                    Type = g.Key.ToString().ToLowerInvariant(),
+                    Count = g.Count(),
+                    HasCurrentUserReacted = g.Any(r => r.UserId == currentUserId),
+                    Users = g.Select(r => r.User.FullName).Take(3).ToList(),
+                })
+                .ToList(),
+            Comments = p.Comments
+                .Where(c => c.DeletedAt == null)
+                .OrderBy(c => c.CreatedAt)
+                .Select(c => new PostCommentDto
+                {
+                    CommentId = c.Id,
+                    UserId = c.UserId,
+                    AuthorName = c.User?.FullName ?? "Alguien",
+                    Content = c.Content,
+                    CreatedAt = c.CreatedAt,
+                    IsOwner = c.UserId == currentUserId,
+                })
+                .ToList(),
+            CommentCount = p.Comments.Count(c => c.DeletedAt == null),
+        })
+        .ToList();
+
+        return Result<List<FamilyPostDto>>.Success(result);
     }
 }
 
@@ -162,10 +195,32 @@ public class FamilyMemberDto
 public class FamilyPostDto
 {
     public Guid PostId { get; set; }
+    public Guid? AuthorUserId { get; set; }
     public string AuthorName { get; set; } = null!;
     public string PostType { get; set; } = null!;
     public string Content { get; set; } = "";
     public DateTime CreatedAt { get; set; }
+    public List<PostReactionDto> Reactions { get; set; } = new();
+    public List<PostCommentDto> Comments { get; set; } = new();
+    public int CommentCount { get; set; }
+}
+
+public class PostReactionDto
+{
+    public string Type { get; set; } = "";
+    public int Count { get; set; }
+    public bool HasCurrentUserReacted { get; set; }
+    public List<string> Users { get; set; } = new();
+}
+
+public class PostCommentDto
+{
+    public Guid CommentId { get; set; }
+    public Guid UserId { get; set; }
+    public string AuthorName { get; set; } = "";
+    public string Content { get; set; } = "";
+    public DateTime CreatedAt { get; set; }
+    public bool IsOwner { get; set; }
 }
 
 public class FamilyStatsDto
