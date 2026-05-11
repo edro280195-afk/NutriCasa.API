@@ -83,7 +83,59 @@ public static class IngredientCatalogSeeder
         I("ajo", "Ajo", "seasoning", 149, 6.4m, 0.5m, 33, 2.1m, 80.00m, "kg", 1000, 1, true, "mercado_tradicional"),
         I("limon", "Limón", "fruit", 29, 1.1m, 0.3m, 9, 2.8m, 25.00m, "kg", 1000, 1, true, "mercado_tradicional"),
         I("vinagre_manzana", "Vinagre de manzana", "condiment", 22, 0, 0, 0.9m, 0, 40.00m, "500ml", 500, 2, true, "supermercado"),
-        I("mostaza", "Mostaza", "condiment", 66, 4, 4, 5, 3, 32.00m, "200g", 200, 2, true, "supermercado")
+        I("mostaza", "Mostaza", "condiment", 66, 4, 4, 5, 3, 32.00m, "200g", 200, 2, true, "supermercado"),
+
+        // Sprint 1.5: Nuevos ingredientes (~34)
+        // Proteínas varias
+        I("bacon", "Tocino", "protein", 541, 37, 42, 1.4m, 0, 85.00m, "kg", 1000, 2, true, "supermercado"),
+        I("chorizo", "Chorizo", "protein", 380, 24, 30, 2, 0, 110.00m, "kg", 1000, 2, true, "mercado_tradicional"),
+        I("longaniza", "Longaniza", "protein", 380, 24, 30, 1, 0, 120.00m, "kg", 1000, 2, true, "mercado_tradicional"),
+        I("pork_rinds", "Chicharrón de cerdo", "protein", 545, 60, 34, 0, 0, 120.00m, "kg", 1000, 2, true, "mercado_tradicional"),
+        I("pork_ribs", "Costilla de cerdo", "protein", 337, 18, 29, 0, 0, 175.00m, "kg", 1000, 3, true, "mercado_tradicional"),
+        I("beef_ribs", "Costilla de res", "protein", 280, 20, 22, 0, 0, 220.00m, "kg", 1000, 3, true, "mercado_tradicional"),
+        I("beef_liver", "Hígado de res", "protein", 135, 20, 3.6m, 3.8m, 0, 60.00m, "kg", 1000, 1, true, "mercado_tradicional"),
+        I("beef_tongue", "Lengua de res", "protein", 224, 16, 17, 0, 0, 160.00m, "kg", 1000, 3, true, "mercado_tradicional"),
+        I("beef_tripe", "Tripa de res", "protein", 85, 12, 3.7m, 0, 0, 90.00m, "kg", 1000, 2, true, "mercado_tradicional"),
+        I("chicken_wings", "Alas de pollo", "protein", 203, 26, 10, 0, 0, 85.00m, "kg", 1000, 2, true, "supermercado"),
+        I("chicken_livers", "Hígado de pollo", "protein", 119, 17, 4.8m, 0.7m, 0, 70.00m, "kg", 1000, 1, true, "mercado_tradicional"),
+        I("ground_pork", "Carne molida de cerdo", "protein", 260, 17, 21, 0, 0, 130.00m, "kg", 1000, 2, true, "mercado_tradicional"),
+        // Lácteos ampliados
+        I("heavy_cream", "Crema para batir", "dairy", 340, 3, 36, 2.8m, 0, 45.00m, "500ml", 500, 3, true, "supermercado"),
+        I("cream_cheese", "Queso crema", "dairy", 342, 6, 34, 4, 0, 58.00m, "220g", 220, 3, true, "supermercado"),
+        I("mozzarella", "Queso mozzarella", "dairy", 280, 28, 17, 3.1m, 0, 130.00m, "kg", 1000, 3, true, "supermercado"),
+        I("cheddar", "Queso cheddar", "dairy", 404, 25, 33, 1.3m, 0, 160.00m, "kg", 1000, 3, true, "supermercado"),
+        I("parmesan", "Queso parmesano", "dairy", 431, 38, 29, 4.1m, 0, 220.00m, "kg", 1000, 4, true, "supermercado"),
+        I("manchego", "Queso manchego", "dairy", 380, 24, 30, 1.5m, 0, 200.00m, "kg", 1000, 4, true, "supermercado"),
+        // Verduras adicionales
+        I("calabacita", "Calabacita", "vegetable", 17, 1.2m, 0.3m, 3.1m, 1, 22.00m, "kg", 1000, 1, true, "mercado_tradicional"),
+        I("pimiento_morron", "Pimiento morrón", "vegetable", 31, 1, 0.3m, 6, 2.1m, 35.00m, "kg", 1000, 2, true, "supermercado"),
+        I("col_repollo", "Col/Repollo", "vegetable", 25, 1.3m, 0.1m, 5.8m, 2.5m, 18.00m, "kg", 1000, 1, true, "mercado_tradicional"),
+        I("ejotes", "Ejotes", "vegetable", 31, 1.8m, 0.2m, 7, 2.7m, 28.00m, "kg", 1000, 1, true, "mercado_tradicional"),
+        I("espárragos", "Espárragos", "vegetable", 20, 2.2m, 0.1m, 3.9m, 2.1m, 65.00m, "manojo", 250, 3, true, "supermercado"),
+        I("jitomate_cherry", "Jitomate cherry", "vegetable", 18, 0.9m, 0.2m, 3.9m, 1.2m, 40.00m, "kg", 1000, 2, true, "supermercado"),
+        I("berenjena", "Berenjena", "vegetable", 25, 1, 0.2m, 6, 3, 28.00m, "kg", 1000, 2, true, "supermercado"),
+        I("cilantro", "Cilantro", "vegetable", 23, 2.1m, 0.5m, 3.7m, 2.8m, 10.00m, "manojo", 100, 1, true, "mercado_tradicional"),
+        I("epazote", "Epazote", "vegetable", 32, 0.6m, 0.5m, 7, 3.5m, 8.00m, "manojo", 50, 1, true, "mercado_tradicional"),
+        // Frutas keto-amigables
+        I("fresa", "Fresa", "fruit", 32, 0.7m, 0.3m, 7.7m, 2, 45.00m, "kg", 1000, 3, true, "mercado_tradicional"),
+        I("arandano", "Arándano", "fruit", 57, 0.7m, 0.3m, 14.5m, 2.4m, 130.00m, "kg", 1000, 4, true, "supermercado"),
+        I("coco", "Coco fresco", "fruit", 354, 3.3m, 33, 15, 9, 30.00m, "pieza", 400, 3, true, "mercado_tradicional"),
+        // Grasas y aceites
+        I("aceite_aguacate", "Aceite de aguacate", "fat", 884, 0, 100, 0, 0, 220.00m, "500ml", 500, 4, true, "supermercado"),
+        I("leche_coco", "Leche de coco (lata)", "fat", 230, 2.3m, 24, 3.4m, 0, 32.00m, "400ml", 400, 3, true, "supermercado"),
+        I("crema_coco", "Crema de coco", "fat", 330, 2.5m, 34, 4.5m, 0, 55.00m, "400ml", 400, 4, true, "supermercado"),
+        // Especias e insumos keto
+        I("canela", "Canela", "seasoning", 247, 4, 1.2m, 80, 53, 25.00m, "50g", 50, 1, true, "supermercado"),
+        I("cacao_polvo", "Cacao en polvo sin azúcar", "seasoning", 228, 20, 14, 58, 37, 65.00m, "200g", 200, 3, true, "supermercado"),
+        I("polvo_hornear", "Polvo para hornear", "seasoning", 0, 0, 0, 0, 0, 18.00m, "100g", 100, 1, true, "supermercado"),
+        I("vainilla", "Extracto de vainilla", "seasoning", 12, 0, 0, 0.5m, 0, 45.00m, "60ml", 60, 3, true, "supermercado"),
+        I("psyllium", "Psyllium husk", "seasoning", 15, 0.6m, 0, 2, 1.7m, 120.00m, "300g", 300, 4, true, "tienda_especializada"),
+        I("eritritol", "Eritritol", "seasoning", 20, 0, 0, 100, 0, 95.00m, "500g", 500, 3, true, "supermercado"),
+        I("stevia", "Stevia en polvo", "seasoning", 0, 0, 0, 0, 0, 55.00m, "100g", 100, 3, true, "supermercado"),
+        I("harina_coco", "Harina de coco", "nut_seed", 443, 19, 16, 61, 38, 95.00m, "500g", 500, 4, true, "tienda_especializada"),
+        I("pepita", "Pepita (semilla de calabaza)", "nut_seed", 559, 30, 49, 11, 6, 110.00m, "500g", 500, 2, true, "mercado_tradicional"),
+        I("cafe", "Café negro", "drink", 2, 0.3m, 0, 0, 0, 120.00m, "kg", 1000, 2, true, "supermercado"),
+        I("grenetina", "Grenetina sin sabor", "seasoning", 335, 84, 0, 0, 0, 18.00m, "50g", 50, 2, true, "supermercado")
     ];
 
     private static IngredientCatalog I(string code, string name, string cat, decimal kcal, decimal prot, decimal fat, decimal carbs, decimal fiber, decimal price, string unit, decimal grams, int tier, bool keto, string store) =>

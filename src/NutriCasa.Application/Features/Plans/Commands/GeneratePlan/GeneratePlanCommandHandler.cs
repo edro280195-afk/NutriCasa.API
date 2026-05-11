@@ -37,6 +37,8 @@ public record MealPlanDto
     public Guid PlanMealId { get; init; }
     public required string MealType { get; init; }
     public bool IsLocked { get; init; }
+    public decimal PortionMultiplier { get; init; } = 1.0m;
+    public long RowVersion { get; init; } = 1;
     public required RecipeDto Recipe { get; init; }
 }
 
@@ -337,6 +339,8 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
                         PlanMealId = m.Id,
                         MealType = m.MealType.ToString().ToLowerInvariant(),
                         IsLocked = m.IsLocked,
+                        PortionMultiplier = m.PortionMultiplier,
+                        RowVersion = m.RowVersion,
                         Recipe = new RecipeDto
                         {
                             RecipeId = m.Recipe!.Id,

@@ -57,6 +57,8 @@ public class GetCurrentPlanQueryHandler : IRequestHandler<GetCurrentPlanQuery, R
                         PlanMealId = m.Id,
                         MealType = m.MealType.ToString().ToLowerInvariant(),
                         IsLocked = m.IsLocked,
+                        PortionMultiplier = m.PortionMultiplier,
+                        RowVersion = m.RowVersion,
                         Recipe = new RecipeDto
                         {
                             RecipeId = m.Recipe!.Id,

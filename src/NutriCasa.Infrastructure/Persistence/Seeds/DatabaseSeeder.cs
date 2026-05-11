@@ -26,6 +26,7 @@ public static class DatabaseSeeder
             await StoreCategorySeeder.SeedAsync(context);
             await IngredientCatalogSeeder.SeedAsync(context);
             await IngredientSubstitutionSeeder.SeedAsync(context);
+            await CuratedRecipeSeeder.SeedAsync(context);
 
             logger.LogInformation("Seed de datos completado exitosamente.");
         }
