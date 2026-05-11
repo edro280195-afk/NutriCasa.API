@@ -1,7 +1,7 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "generatedAt": "2026-05-11",
-  "description": "Catálogo curated de recetas keto mexicanas — 15 por modo, 90 totales. Modo 1=economic, 6=gourmet",
+  "description": "Catálogo curated de recetas keto mexicanas — 6 precargadas + 15 por modo = 96 recetas totales. Modo 1=economic, 2=pantry_basic, 3=simple_kitchen, 4=busy_parent, 5=athletic, 6=gourmet",
   "recipes": [
     {
       "name": "Huevos a la mexicana con nopales",
@@ -19,18 +19,30 @@
       "baseCarbsGr": 9,
       "baseNetCarbsGr": 5,
       "difficultyScore": 1,
-      "tags": ["mexican", "breakfast", "quick", "economic"],
+      "tags": [
+        "mexican",
+        "breakfast",
+        "quick",
+        "economic"
+      ],
       "source": "Curated",
-      "compatibleModeCodes": ["economic", "pantry_basic", "simple_kitchen", "busy_parent", "athletic"],
+      "compatibleModeCodes": [
+        "economic",
+        "pantry_basic",
+        "simple_kitchen",
+        "busy_parent",
+        "athletic"
+      ],
       "economicTier": 1,
-      "estimatedCostPerServingMxn": 18.50,
+      "estimatedCostPerServingMxn": 18.5,
       "totalPrepTimeMin": 15,
       "yieldServingsMin": 1,
       "yieldServingsMax": 2,
       "isBatchCookable": false,
       "isFreezable": false,
-      "cookingMethods": ["stovetop"],
-      "difficultyScore": 1
+      "cookingMethods": [
+        "stovetop"
+      ]
     },
     {
       "name": "Sardinas con aguacate y limón",
@@ -47,17 +59,30 @@
       "baseFatGr": 38,
       "baseCarbsGr": 6,
       "baseNetCarbsGr": 2,
-      "tags": ["mexican", "seafood", "no-cook", "quick", "economic"],
+      "tags": [
+        "mexican",
+        "seafood",
+        "no-cook",
+        "quick",
+        "economic"
+      ],
       "source": "Curated",
-      "compatibleModeCodes": ["economic", "pantry_basic", "simple_kitchen", "athletic"],
+      "compatibleModeCodes": [
+        "economic",
+        "pantry_basic",
+        "simple_kitchen",
+        "athletic"
+      ],
       "economicTier": 1,
-      "estimatedCostPerServingMxn": 32.00,
+      "estimatedCostPerServingMxn": 32,
       "totalPrepTimeMin": 5,
       "yieldServingsMin": 1,
       "yieldServingsMax": 1,
       "isBatchCookable": false,
       "isFreezable": false,
-      "cookingMethods": ["no_cook"],
+      "cookingMethods": [
+        "no_cook"
+      ],
       "difficultyScore": 1
     },
     {
@@ -75,17 +100,30 @@
       "baseFatGr": 28,
       "baseCarbsGr": 10,
       "baseNetCarbsGr": 6,
-      "tags": ["mexican", "soup", "traditional", "economic", "batch-cook"],
+      "tags": [
+        "mexican",
+        "soup",
+        "traditional",
+        "economic",
+        "batch-cook"
+      ],
       "source": "Curated",
-      "compatibleModeCodes": ["economic", "pantry_basic", "busy_parent"],
+      "compatibleModeCodes": [
+        "economic",
+        "pantry_basic",
+        "busy_parent"
+      ],
       "economicTier": 1,
-      "estimatedCostPerServingMxn": 38.00,
+      "estimatedCostPerServingMxn": 38,
       "totalPrepTimeMin": 45,
       "yieldServingsMin": 2,
       "yieldServingsMax": 4,
       "isBatchCookable": true,
       "isFreezable": true,
-      "cookingMethods": ["stovetop", "batch"],
+      "cookingMethods": [
+        "stovetop",
+        "batch"
+      ],
       "difficultyScore": 2
     },
     {
@@ -103,17 +141,29 @@
       "baseFatGr": 46,
       "baseCarbsGr": 5,
       "baseNetCarbsGr": 3,
-      "tags": ["mexican", "tacos", "traditional", "pantry_basic", "batch-cook"],
+      "tags": [
+        "mexican",
+        "tacos",
+        "traditional",
+        "pantry_basic",
+        "batch-cook"
+      ],
       "source": "Curated",
-      "compatibleModeCodes": ["pantry_basic", "busy_parent"],
+      "compatibleModeCodes": [
+        "pantry_basic",
+        "busy_parent"
+      ],
       "economicTier": 2,
-      "estimatedCostPerServingMxn": 45.00,
+      "estimatedCostPerServingMxn": 45,
       "totalPrepTimeMin": 60,
       "yieldServingsMin": 2,
       "yieldServingsMax": 6,
       "isBatchCookable": true,
       "isFreezable": true,
-      "cookingMethods": ["stovetop", "batch"],
+      "cookingMethods": [
+        "stovetop",
+        "batch"
+      ],
       "difficultyScore": 3
     },
     {
@@ -131,17 +181,29 @@
       "baseFatGr": 18,
       "baseCarbsGr": 10,
       "baseNetCarbsGr": 6,
-      "tags": ["mexican", "chicken", "traditional", "pantry_basic"],
+      "tags": [
+        "mexican",
+        "chicken",
+        "traditional",
+        "pantry_basic"
+      ],
       "source": "Curated",
-      "compatibleModeCodes": ["pantry_basic", "simple_kitchen", "busy_parent", "athletic"],
+      "compatibleModeCodes": [
+        "pantry_basic",
+        "simple_kitchen",
+        "busy_parent",
+        "athletic"
+      ],
       "economicTier": 2,
-      "estimatedCostPerServingMxn": 42.00,
+      "estimatedCostPerServingMxn": 42,
       "totalPrepTimeMin": 35,
       "yieldServingsMin": 2,
       "yieldServingsMax": 4,
       "isBatchCookable": true,
       "isFreezable": true,
-      "cookingMethods": ["stovetop"],
+      "cookingMethods": [
+        "stovetop"
+      ],
       "difficultyScore": 2
     },
     {
@@ -159,18 +221,3381 @@
       "baseFatGr": 40,
       "baseCarbsGr": 6,
       "baseNetCarbsGr": 4,
-      "tags": ["mexican", "traditional", "economic", "chicharron"],
+      "tags": [
+        "mexican",
+        "traditional",
+        "economic",
+        "chicharron"
+      ],
       "source": "Curated",
-      "compatibleModeCodes": ["economic", "pantry_basic", "simple_kitchen"],
+      "compatibleModeCodes": [
+        "economic",
+        "pantry_basic",
+        "simple_kitchen"
+      ],
       "economicTier": 2,
-      "estimatedCostPerServingMxn": 28.00,
+      "estimatedCostPerServingMxn": 28,
       "totalPrepTimeMin": 35,
       "yieldServingsMin": 2,
       "yieldServingsMax": 4,
       "isBatchCookable": true,
       "isFreezable": false,
-      "cookingMethods": ["stovetop"],
+      "cookingMethods": [
+        "stovetop"
+      ],
       "difficultyScore": 3
+    },
+    {
+      "name": "Huevos a la Mexicana Keto",
+      "slug": "huevos-a-la-mexicana-keto",
+      "description": "Huevos revueltos con jitomate, cebolla y chile serrano, acompañados de aguacate fresco. Un clásico de la cocina mexicana adaptado a keto.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":3,\"unit\":\"pieza\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Pica finamente el jitomate, la cebolla y el chile serrano. 2. Calienta el aceite de oliva en un sartén a fuego medio. 3. Acitrona la cebolla y el chile por 2 minutos. 4. Agrega el jitomate y cocina 3 minutos. 5. Bate los huevos, viértelos y cocina moviendo hasta que estén listos. 6. Sazona con sal y sirve con el aguacate rebanado.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 10,
+      "servings": 1,
+      "baseCalories": 450,
+      "baseProteinGr": 20,
+      "baseFatGr": 38,
+      "baseCarbsGr": 12,
+      "baseNetCarbsGr": 7,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "economic",
+        "breakfast"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 22,
+      "totalPrepTimeMin": 15,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 2,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Chilaquiles Keto con Pollo y Chicharrón",
+      "slug": "chilaquiles-keto-con-pollo-y-chicharron",
+      "description": "Chilaquiles rojos con pollo deshebrado usando chicharrón en lugar de totopos, cubiertos con crema y queso fresco. El antojo mexicano sin carbohidratos.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"chicken_pieces\",\"name\":\"Pollo en piezas\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"pork_rinds\",\"name\":\"Chicharrón de cerdo\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"chile_jalapeno\",\"name\":\"Chile jalapeño\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"crema_mexicana\",\"name\":\"Crema mexicana\",\"amount\":60,\"unit\":\"ml\"},{\"code\":\"queso_fresco\",\"name\":\"Queso fresco\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Cuece el pollo en agua con sal hasta que esté suave, deshébralo y reserva. 2. Licúa el jitomate, la cebolla, el ajo y el chile jalapeño con un poco de agua. 3. Calienta el aceite y vierte la salsa, cocina 10 minutos a fuego medio. 4. Agrega el pollo deshebrado y mezcla. 5. Sirve colocando el chicharrón en el plato, baña con la salsa de pollo, agrega la crema, el queso fresco y el aguacate rebanado.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 20,
+      "servings": 2,
+      "baseCalories": 460,
+      "baseProteinGr": 30,
+      "baseFatGr": 34,
+      "baseCarbsGr": 9,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "economic",
+        "breakfast"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 20,
+      "totalPrepTimeMin": 30,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Omelette de Nopales con Queso Panela",
+      "slug": "omelette-de-nopales-con-queso-panela",
+      "description": "Omelette relleno de nopales salteados y queso panela. Una opción de desayuno fresco, tradicional y baja en carbohidratos.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":3,\"unit\":\"pieza\"},{\"code\":\"nopales\",\"name\":\"Nopales\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Hierve los nopales en agua con sal por 5 minutos, escúrrelos y pícalos. 2. Calienta la mitad del aceite y saltea los nopales con la cebolla picada por 3 minutos. 3. Bate los huevos con una pizca de sal. 4. Calienta el resto del aceite en un sartén antiadherente y vierte los huevos. 5. Cuando esté cuajado, coloca los nopales y el queso panela en cubos en una mitad, dobla la otra mitad encima. 6. Cocina 2 minutos más y sirve.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 15,
+      "servings": 1,
+      "baseCalories": 480,
+      "baseProteinGr": 32,
+      "baseFatGr": 36,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "economic",
+        "breakfast"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 25,
+      "totalPrepTimeMin": 20,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 2,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Huevo con Chorizo y Aguacate",
+      "slug": "huevo-con-chorizo-y-aguacate",
+      "description": "Huevos revueltos con chorizo de cerdo, servidos con aguacate fresco. Rápido, rendidor y lleno de sabor mexicano.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":2,\"unit\":\"pieza\"},{\"code\":\"chorizo\",\"name\":\"Chorizo\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Retira la piel del chorizo y desmenúzalo. 2. Calienta el aceite en un sartén y fríe el chorizo a fuego medio hasta que esté cocido, unos 5 minutos. 3. Bate los huevos y viértelos sobre el chorizo. 4. Revuelve hasta que los huevos estén cocidos. 5. Sirve con el aguacate rebanado y una pizca de sal.",
+      "prepTimeMin": 2,
+      "cookTimeMin": 10,
+      "servings": 1,
+      "baseCalories": 530,
+      "baseProteinGr": 30,
+      "baseFatGr": 44,
+      "baseCarbsGr": 5,
+      "baseNetCarbsGr": 2,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "economic",
+        "breakfast"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 24,
+      "totalPrepTimeMin": 12,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 2,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Ensalada de Atún con Aguacate y Nopales",
+      "slug": "ensalada-de-atun-con-aguacate-y-nopales",
+      "description": "Ensalada fresca de atún en lata con aguacate, nopales cocidos, jitomate y cebolla. Sin cocción, perfecta para un lunch rápido.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"tuna_can\",\"name\":\"Atún en lata\",\"amount\":2,\"unit\":\"pieza\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"nopales\",\"name\":\"Nopales\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":30,\"unit\":\"ml\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Escurre el atún y desmenúzalo en un tazón. 2. Si los nopales son crudos, hiérvelos 5 minutos y escúrrelos; si son precocidos, solo escúrrelos. 3. Pica el aguacate, jitomate, cebolla, cilantro y nopales en cubos pequeños. 4. Mezcla todo con el atún. 5. Adereza con aceite de oliva, jugo de limón y sal. 6. Mezcla bien y sirve fría o a temperatura ambiente.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 5,
+      "servings": 2,
+      "baseCalories": 360,
+      "baseProteinGr": 28,
+      "baseFatGr": 24,
+      "baseCarbsGr": 10,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "economic",
+        "lunch"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 24,
+      "totalPrepTimeMin": 20,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": true,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no-cook"
+      ]
+    },
+    {
+      "name": "Caldo Tlalpeño Keto",
+      "slug": "caldo-tlalpeno-keto",
+      "description": "Caldo de pollo tradicional con chayote, calabaza y ejotes, servido con aguacate. Reconfortante y bajo en carbohidratos.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"chicken_pieces\",\"name\":\"Pollo en piezas\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"chayote\",\"name\":\"Chayote\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"calabaza\",\"name\":\"Calabaza\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"ejotes\",\"name\":\"Ejotes\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":30,\"unit\":\"ml\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"epazote\",\"name\":\"Epazote\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Cuece el pollo en 1.5 litros de agua con sal y comino hasta que esté suave, unos 20 minutos. 2. Retira el pollo, deshébralo y regrésalo al caldo. 3. Pica el chayote, la calabaza y los ejotes en trozos. 4. Licúa el jitomate, la cebolla y el ajo, y agrégalo al caldo. 5. Agrega las verduras y el epazote, cocina 15 minutos más. 6. Sirve caliente con aguacate picado y cilantro fresco.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 35,
+      "servings": 4,
+      "baseCalories": 290,
+      "baseProteinGr": 24,
+      "baseFatGr": 18,
+      "baseCarbsGr": 9,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "economic",
+        "lunch"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 18,
+      "totalPrepTimeMin": 45,
+      "yieldServingsMin": 4,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Tinga de Pollo Keto con Lechuga",
+      "slug": "tinga-de-pollo-keto-con-lechuga",
+      "description": "Pollo deshebrado en salsa de jitomate con cebolla y jalapeño, servido en hojas de lechuga. Una tinga tradicional sin tortillas.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"chicken_pieces\",\"name\":\"Pollo en piezas\",\"amount\":400,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"chile_jalapeno\",\"name\":\"Chile jalapeño\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":30,\"unit\":\"ml\"},{\"code\":\"lechuga_romana\",\"name\":\"Lechuga romana\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Cuece el pollo en agua con sal hasta que esté suave, deshébralo y reserva. 2. Rebaná la cebolla en tiras delgadas. 3. Licúa el jitomate, el ajo y el chile jalapeño. 4. Calienta el aceite en una cacerola y acitrona la cebolla. 5. Vierte la salsa y cocina 10 minutos a fuego medio. 6. Agrega el pollo, orégano, sal y pimienta, mezcla y cocina 5 minutos. 7. Sirve sobre hojas de lechuga con aguacate rebanado.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 25,
+      "servings": 4,
+      "baseCalories": 320,
+      "baseProteinGr": 22,
+      "baseFatGr": 22,
+      "baseCarbsGr": 9,
+      "baseNetCarbsGr": 6,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "economic",
+        "lunch"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 20,
+      "totalPrepTimeMin": 35,
+      "yieldServingsMin": 4,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Sardinas en Salsa de Jitomate",
+      "slug": "sardinas-en-salsa-de-jitomate",
+      "description": "Sardinas en lata guisadas en salsa de jitomate con cebolla, chile serrano y cilantro. Rápidas, económicas y llenas de omega-3.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"sardines_can\",\"name\":\"Sardinas en lata\",\"amount\":2,\"unit\":\"pieza\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Pica finamente la cebolla, el ajo y el chile serrano. 2. Licúa los jitomates con un poco de agua. 3. Calienta el aceite en un sartén y acitrona la cebolla, el ajo y el chile. 4. Vierte la salsa de jitomate y cocina 10 minutos a fuego medio. 5. Agrega las sardinas escurridas, desmenúzalas ligeramente y mezcla. 6. Cocina 5 minutos más, rectifica la sal y sirve con cilantro picado.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 15,
+      "servings": 2,
+      "baseCalories": 400,
+      "baseProteinGr": 28,
+      "baseFatGr": 28,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "economic",
+        "lunch"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 22,
+      "totalPrepTimeMin": 20,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 3,
+      "isBatchCookable": true,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Albóndigas Keto en Salsa de Jitomate",
+      "slug": "albondigas-keto-en-salsa-de-jitomate",
+      "description": "Albóndigas de carne molida con queso panela en lugar de pan, cocidas en salsa de jitomate con chile jalapeño. Comfort food mexicano keto.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"ground_beef_basic\",\"name\":\"Carne molida de res\",\"amount\":400,\"unit\":\"g\"},{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":2,\"unit\":\"pieza\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"chile_jalapeno\",\"name\":\"Chile jalapeño\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":30,\"unit\":\"ml\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Mezcla la carne molida con los huevos, el queso panela desmenuzado, ajo picado, comino, sal y pimienta. 2. Forma albóndigas del tamaño de una nuez. 3. Licúa el jitomate, la cebolla, el ajo restante y el chile jalapeño. 4. Calienta el aceite en una cacerola, vierte la salsa y cocina 10 minutos. 5. Agrega las albóndigas con cuidado, tapa y cocina 20 minutos a fuego bajo. 6. Rectifica la sal y sirve con orégano espolvoreado.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 30,
+      "servings": 4,
+      "baseCalories": 380,
+      "baseProteinGr": 28,
+      "baseFatGr": 28,
+      "baseCarbsGr": 7,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "economic",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 25,
+      "totalPrepTimeMin": 45,
+      "yieldServingsMin": 4,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Carne Molida con Calabacitas",
+      "slug": "carne-molida-con-calabacitas",
+      "description": "Carne molida de res guisada con calabacitas, jitomate y cebolla. Un platillo de la abuela, reconfortante y bajo en carbohidratos.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"ground_beef_basic\",\"name\":\"Carne molida de res\",\"amount\":400,\"unit\":\"g\"},{\"code\":\"calabacita\",\"name\":\"Calabacita\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":30,\"unit\":\"ml\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Pica la cebolla y el ajo finamente. 2. Calienta la mitad del aceite y acitrona la cebolla y el ajo. 3. Agrega la carne molida, sazona con comino, sal y pimienta, y cocina hasta que dore. 4. Pica el jitomate y las calabacitas en cubos. 5. Agrega el jitomate a la carne y cocina 5 minutos. 6. Añade las calabacitas, tapa y cocina 10 minutos a fuego medio. 7. Rectifica la sal y sirve caliente.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 20,
+      "servings": 4,
+      "baseCalories": 330,
+      "baseProteinGr": 24,
+      "baseFatGr": 22,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "economic",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 22,
+      "totalPrepTimeMin": 30,
+      "yieldServingsMin": 4,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Cerdo en Salsa de Jitomate con Coliflor",
+      "slug": "cerdo-en-salsa-de-jitomate-con-coliflor",
+      "description": "Cerdo en trozos guisado en salsa de jitomate con coliflor y epazote. Un guisado tradicional mexicano sin carbohidratos.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"pork_basic\",\"name\":\"Cerdo (pierna o lomo)\",\"amount\":400,\"unit\":\"g\"},{\"code\":\"coliflor\",\"name\":\"Coliflor\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"chile_jalapeno\",\"name\":\"Chile jalapeño\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":30,\"unit\":\"ml\"},{\"code\":\"epazote\",\"name\":\"Epazote\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Corta el cerdo en cubos medianos y sazona con sal y comino. 2. Calienta el aceite en una cacerola y dora el cerdo por todos lados, retíralo. 3. Licúa el jitomate, la cebolla, el ajo y el chile jalapeño. 4. En la misma cacerola, vierte la salsa y cocina 5 minutos. 5. Regresa el cerdo, agrega el epazote, tapa y cocina 15 minutos. 6. Agrega la coliflor en trozos, tapa y cocina 10 minutos más. 7. Rectifica la sal y sirve caliente.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 30,
+      "servings": 4,
+      "baseCalories": 340,
+      "baseProteinGr": 26,
+      "baseFatGr": 22,
+      "baseCarbsGr": 9,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "economic",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 22,
+      "totalPrepTimeMin": 40,
+      "yieldServingsMin": 4,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Pollo Ranchero Keto",
+      "slug": "pollo-ranchero-keto",
+      "description": "Pollo guisado en salsa de jitomate con calabaza, ejotes y aguacate. Un platillo ranchero completo y nutritivo.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"chicken_pieces\",\"name\":\"Pollo en piezas\",\"amount\":400,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"chile_jalapeno\",\"name\":\"Chile jalapeño\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"calabaza\",\"name\":\"Calabaza\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"ejotes\",\"name\":\"Ejotes\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":30,\"unit\":\"ml\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Corta el pollo en piezas medianas, sazona con sal, pimienta, comino y orégano. 2. Calienta el aceite y dora el pollo por ambos lados, retíralo. 3. Licúa el jitomate, la cebolla, el ajo y el chile jalapeño. 4. Vierte la salsa en la cacerola y cocina 5 minutos. 5. Regresa el pollo, tapa y cocina 15 minutos a fuego medio. 6. Agrega la calabaza en cubos y los ejotes enteros, tapa y cocina 10 minutos. 7. Sirve con aguacate rebanado.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 30,
+      "servings": 4,
+      "baseCalories": 340,
+      "baseProteinGr": 26,
+      "baseFatGr": 22,
+      "baseCarbsGr": 10,
+      "baseNetCarbsGr": 6,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "economic",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 22,
+      "totalPrepTimeMin": 40,
+      "yieldServingsMin": 4,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Nopales Asados con Queso Panela y Pico de Gallo",
+      "slug": "nopales-asados-con-queso-panela-y-pico-de-gallo",
+      "description": "Nopales asados servidos con queso panela dorado y pico de gallo fresco. Una botana ligera, refrescante y muy mexicana.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"nopales\",\"name\":\"Nopales\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":180,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Lava los nopales y ásalos enteros en un comal o sartén a fuego alto, unos 4 minutos por lado. 2. Corta el queso panela en rebanadas gruesas y dóralo en el mismo sartén con un poco de aceite, 2 minutos por lado. 3. Para el pico de gallo, pica el jitomate, cebolla, chile serrano y cilantro en cubos pequeños. 4. Mezcla el pico de gallo con jugo de limón y sal. 5. Corta los nopales asados en tiras y sirve con el queso panela encima y el pico de gallo.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 10,
+      "servings": 2,
+      "baseCalories": 320,
+      "baseProteinGr": 20,
+      "baseFatGr": 24,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "economic",
+        "snack"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 18,
+      "totalPrepTimeMin": 20,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "grilled"
+      ]
+    },
+    {
+      "name": "Huevos Endiablados Keto",
+      "slug": "huevos-endiablados-keto",
+      "description": "Huevos duros rellenos de mayonesa, mostaza y chile serrano. Una botana clásica de fiesta, ahora cetogénica y económica.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":6,\"unit\":\"pieza\"},{\"code\":\"mayonesa\",\"name\":\"Mayonesa\",\"amount\":45,\"unit\":\"g\"},{\"code\":\"mostaza\",\"name\":\"Mostaza\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Coloca los huevos en una olla con agua fría, lleva a ebullición y hierve 10 minutos. 2. Escurre y enfría los huevos con agua fría, pélalos. 3. Corta los huevos por la mitad a lo largo y retira las yemas con cuidado. 4. En un tazón, aplasta las yemas con un tenedor. 5. Agrega la mayonesa, mostaza, chile serrano picado, sal y pimienta, mezcla hasta obtener una pasta homogénea. 6. Rellena las claras con la mezcla y refrigera 10 minutos antes de servir.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 10,
+      "servings": 2,
+      "baseCalories": 330,
+      "baseProteinGr": 18,
+      "baseFatGr": 28,
+      "baseCarbsGr": 3,
+      "baseNetCarbsGr": 2,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "economic",
+        "snack"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 16,
+      "totalPrepTimeMin": 25,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": true,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Queso Fresco con Pepitas y Pico de Gallo",
+      "slug": "queso-fresco-con-pepitas-y-pico-de-gallo",
+      "description": "Queso fresco acompañado de pepitas tostadas y pico de gallo. Una botana rápida, fresca y con el crunch de las pepitas.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"queso_fresco\",\"name\":\"Queso fresco\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"pepita\",\"name\":\"Pepitas (semillas de calabaza)\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Tuesta las pepitas en un sartén seco a fuego medio hasta que doren ligeramente, retíralas. 2. Pica el jitomate, cebolla, chile serrano y cilantro en cubos pequeños. 3. Mezcla con jugo de limón, aceite de oliva y sal para hacer el pico de gallo. 4. Corta el queso fresco en rebanadas o cubos. 5. Sirve el queso fresco bañado con el pico de gallo y espolvorea las pepitas tostadas encima.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 3,
+      "servings": 2,
+      "baseCalories": 300,
+      "baseProteinGr": 18,
+      "baseFatGr": 22,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "economic",
+        "snack"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "economic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 18,
+      "totalPrepTimeMin": 13,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Huevos a la Mexicana con Queso Fresco",
+      "slug": "huevos-a-la-mexicana-con-queso-fresco",
+      "description": "Huevos revueltos con jitomate, cebolla y chile serrano, coronados con queso fresco desmoronado. Un clásico de la cocina mexicana de toda la vida.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":4,\"unit\":\"piezas\"},{\"code\":\"queso_fresco\",\"name\":\"Queso fresco\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Pica finamente el jitomate, la cebolla y el chile serrano. 2. Calienta el aceite de oliva en un sartén a fuego medio-alto. 3. Acitrona la cebolla con el chile por 2 minutos. 4. Agrega el jitomate y cocina 3 minutos hasta que suelte jugo. 5. Bate los huevos ligeramente y viértelos en el sartén. 6. Revuelve constantemente hasta que los huevos estén cocidos pero cremosos. 7. Sirve inmediatamente y desmorona el queso fresco encima.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 10,
+      "servings": 2,
+      "baseCalories": 300,
+      "baseProteinGr": 20,
+      "baseFatGr": 22,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "breakfast",
+        "quick"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 28,
+      "totalPrepTimeMin": 15,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": true,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Omelette de Nopales con Queso Panela",
+      "slug": "omelette-de-nopales-con-queso-panela",
+      "description": "Omelette relleno de nopales salteados con cebolla y queso panela gratinado. Una combinación ligera, fresca y muy mexicana.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":4,\"unit\":\"piezas\"},{\"code\":\"nopales\",\"name\":\"Nopales\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":120,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Lava los nopales y córtalos en tiras delgadas. 2. Calienta la mitad del aceite en un sartén y saltea los nopales con la cebolla picada por 5 minutos. Sazona con sal. 3. Bate los huevos con sal y pimienta. 4. En otro sartén con el aceite restante, vierte la mitad del huevo batido formando un círculo. 5. Cuando esté casi cocido, coloca la mitad de los nopales y el queso panela en cubos. 6. Dobla el omelette y cocina 1 minuto por lado. 7. Repite con el resto. Sirve caliente.",
+      "prepTimeMin": 8,
+      "cookTimeMin": 12,
+      "servings": 2,
+      "baseCalories": 345,
+      "baseProteinGr": 25,
+      "baseFatGr": 24,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "breakfast"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 30,
+      "totalPrepTimeMin": 20,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Chilaquiles de Chicharrón en Salsa Roja",
+      "slug": "chilaquiles-de-chicharron-en-salsa-roja",
+      "description": "Chicharrón de cerdo bañado en salsa roja de jitomate con crema y queso fresco. El sustituto perfecto de los totopos para un desayuno keto.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"pork_rinds\",\"name\":\"Chicharrón de cerdo\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"chile_jalapeno\",\"name\":\"Chile jalapeño\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"crema_mexicana\",\"name\":\"Crema mexicana\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"queso_fresco\",\"name\":\"Queso fresco\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":1,\"unit\":\"diente\"}]",
+      "instructions": "1. Hierve los jitomates con el chile jalapeño en agua por 5 minutos. 2. Licúa los jitomates, el chile, la cebolla, el ajo y sal hasta obtener una salsa homogénea. 3. Calienta el aceite en un sartén y vierte la salsa. Cocina a fuego medio 8 minutos hasta que espese. 4. Agrega el chicharrón a la salsa y mezcla suavemente. Cocina 2 minutos para que se impregne sin ablandarse demasiado. 5. Sirve con la crema y el queso fresco desmoronado encima.",
+      "prepTimeMin": 8,
+      "cookTimeMin": 15,
+      "servings": 2,
+      "baseCalories": 395,
+      "baseProteinGr": 27,
+      "baseFatGr": 28,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "breakfast"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 35,
+      "totalPrepTimeMin": 23,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": true,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Huevos Revueltos con Chorizo y Aguacate",
+      "slug": "huevos-revueltos-con-chorizo-y-aguacate",
+      "description": "Huevos revueltos con chorizo rojo, servidos con rebanadas de aguacate hass. Un desayuno sustancioso y lleno de sabor.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":4,\"unit\":\"piezas\"},{\"code\":\"chorizo\",\"name\":\"Chorizo\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate Hass\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Retira la piel del chorizo y desmenúzalo. 2. Calienta el aceite en un sartén a fuego medio y cocina el chorizo 5 minutos hasta que esté dorado y suelte su grasa. 3. Bate los huevos ligeramente con una pizca de sal. 4. Vierte los huevos sobre el chorizo y revuelve constantemente hasta que estén cocidos pero jugosos. 5. Sirve con las rebanadas de aguacate hass al lado.",
+      "prepTimeMin": 3,
+      "cookTimeMin": 10,
+      "servings": 2,
+      "baseCalories": 455,
+      "baseProteinGr": 23,
+      "baseFatGr": 38,
+      "baseCarbsGr": 5,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "breakfast",
+        "quick"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 38,
+      "totalPrepTimeMin": 13,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 2,
+      "isBatchCookable": true,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Tinga de Pollo Keto",
+      "slug": "tinga-de-pollo-keto",
+      "description": "Pollo deshebrado guisado en salsa de jitomate con cebolla y chorizo. Una tinga tradicional sin papas ni frijoles, perfecta para el keto.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"chicken_pieces\",\"name\":\"Pollo en piezas\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"chorizo\",\"name\":\"Chorizo\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":2,\"unit\":\"dientes\"}]",
+      "instructions": "1. Cuece el pollo en agua con sal y un diente de ajo por 20 minutos. Deshébralo y reserva el caldo. 2. Hierve los jitomates 5 minutos y licúalos con un diente de ajo y orégano. 3. Calienta el aceite en una olla y acitrona la cebolla en rebanadas 3 minutos. 4. Agrega el chorizo desmenuzado y cocina 2 minutos. 5. Vierte la salsa de jitomate, sazona con sal y cocina 5 minutos. 6. Incorpora el pollo deshebrado, mezcla bien y cocina 5 minutos más. Sirve caliente.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 35,
+      "servings": 2,
+      "baseCalories": 400,
+      "baseProteinGr": 32,
+      "baseFatGr": 25,
+      "baseCarbsGr": 9,
+      "baseNetCarbsGr": 6,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "lunch"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 45,
+      "totalPrepTimeMin": 45,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Albóndigas en Salsa de Jitomate",
+      "slug": "albondigas-en-salsa-de-jitomate",
+      "description": "Albóndigas de carne molida de res cocidas en una salsa casera de jitomate con cebolla y ajo. Consomé reconfortante y económico.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"ground_beef\",\"name\":\"Carne molida de res\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":1,\"unit\":\"pieza\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":2,\"unit\":\"dientes\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Mezcla la carne molida con el huevo, un diente de ajo picado, comino, sal y pimienta. Forma albóndigas pequeñas. 2. Hierve los jitomates 5 minutos y licúalos con media cebolla y un diente de ajo. 3. Calienta el aceite en una olla y acitrona el resto de la cebolla picada 2 minutos. 4. Vierte la salsa de jitomate, sazona con sal y cocina 5 minutos. 5. Agrega las albóndigas con cuidado a la salsa hirviendo. 6. Tapa y cocina a fuego bajo 20 minutos. Sirve caliente.",
+      "prepTimeMin": 12,
+      "cookTimeMin": 30,
+      "servings": 2,
+      "baseCalories": 460,
+      "baseProteinGr": 30,
+      "baseFatGr": 34,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "lunch"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 42,
+      "totalPrepTimeMin": 42,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Pescado a la Veracruzana",
+      "slug": "pescado-a-la-veracruzana",
+      "description": "Filete de pescado bañado en salsa de jitomate con aceitunas, alcaparras y chiles. Una receta clásica del Golfo de México, ligera y cetogénica.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"fish_basic\",\"name\":\"Pescado básico\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":30,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":2,\"unit\":\"dientes\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":1,\"unit\":\"pieza\"}]",
+      "instructions": "1. Sazona los filetes de pescado con sal, pimienta y jugo de limón. Reserva 10 minutos. 2. Hierve los jitomates 5 minutos y licúalos ligeramente con un diente de ajo. 3. Calienta el aceite en un sartén hondo y acitrona la cebolla en rodajas con el chile serrano 3 minutos. 4. Agrega el ajo picado y el orégano, cocina 1 minuto. 5. Vierte la salsa de jitomate, sazona con sal y cocina 8 minutos a fuego medio. 6. Coloca los filetes en la salsa, tapa y cocina 8-10 minutos hasta que el pescado esté cocido. 7. Sirve caliente bañado con la salsa.",
+      "prepTimeMin": 12,
+      "cookTimeMin": 25,
+      "servings": 2,
+      "baseCalories": 310,
+      "baseProteinGr": 32,
+      "baseFatGr": 17,
+      "baseCarbsGr": 9,
+      "baseNetCarbsGr": 6,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "lunch",
+        "seafood"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 40,
+      "totalPrepTimeMin": 37,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": true,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Chuletas de Cerdo con Calabacitas",
+      "slug": "chuletas-de-cerdo-con-calabacitas",
+      "description": "Chuletas de cerdo doradas con calabacitas salteadas en mantequilla con cebolla y chile serrano. Plato completo y rendidor.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"pork_chops\",\"name\":\"Chuletas de cerdo\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"calabacita\",\"name\":\"Calabacita\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"butter_basic\",\"name\":\"Mantequilla\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Sazona las chuletas de cerdo con sal y pimienta. 2. Calienta el aceite en un sartén grande a fuego alto y dora las chuletas 4 minutos por lado. Retíralas. 3. En el mismo sartén, derrite la mantequilla y acitrona la cebolla en juliana con el chile serrano 2 minutos. 4. Agrega las calabacitas en rodajas y saltea 5 minutos hasta que estén tiernas. 5. Regresa las chuletas al sartén, tapa y cocina 5 minutos a fuego medio-bajo. 6. Sirve las chuletas con las calabacitas al lado.",
+      "prepTimeMin": 8,
+      "cookTimeMin": 22,
+      "servings": 2,
+      "baseCalories": 490,
+      "baseProteinGr": 38,
+      "baseFatGr": 34,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "lunch"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 48,
+      "totalPrepTimeMin": 30,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Sopa de Coliflor con Queso Panela",
+      "slug": "sopa-de-coliflor-con-queso-panela",
+      "description": "Crema espesa de coliflor cocida con cebolla y ajo, servida con cubos de queso panela dorados. Una sopa reconfortante sin harinas.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"coliflor\",\"name\":\"Coliflor\",\"amount\":400,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"crema_mexicana\",\"name\":\"Crema mexicana\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"butter_basic\",\"name\":\"Mantequilla\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":2,\"unit\":\"dientes\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Corta la coliflor en trozos pequeños. Pica la cebolla y el ajo finamente. 2. Derrite la mitad de la mantequilla en una olla y acitrona la cebolla con el ajo 3 minutos. 3. Agrega la coliflor, cubre con agua, sazona con sal y pimienta. Cocina 15 minutos hasta que esté muy suave. 4. Corta el queso panela en cubos y dóralos en el resto de la mantequilla en un sartén aparte. 5. Licúa la coliflor cocida con su caldo y la crema hasta obtener una crema homogénea. 6. Sirve la crema caliente con los cubos de queso panela dorados encima.",
+      "prepTimeMin": 8,
+      "cookTimeMin": 20,
+      "servings": 2,
+      "baseCalories": 430,
+      "baseProteinGr": 24,
+      "baseFatGr": 30,
+      "baseCarbsGr": 12,
+      "baseNetCarbsGr": 7,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "dinner",
+        "soup"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 35,
+      "totalPrepTimeMin": 28,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Tacos de Lechuga con Carne Molida y Queso Fresco",
+      "slug": "tacos-de-lechuga-con-carne-molida-y-queso-fresco",
+      "description": "Carne molida de res sazonada con comino y ajo, servida en hojas de lechuga romana con queso fresco, crema y aguacate.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"ground_beef\",\"name\":\"Carne molida de res\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"lechuga_romana\",\"name\":\"Lechuga romana\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"queso_fresco\",\"name\":\"Queso fresco\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate Hass\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"crema_mexicana\",\"name\":\"Crema mexicana\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":1,\"unit\":\"diente\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Calienta el aceite en un sartén a fuego medio-alto. 2. Agrega la carne molida y cocina 5 minutos deshaciéndola con una cuchara. 3. Añade el ajo picado, el comino y la sal. Cocina 3 minutos más. 4. Lava y separa las hojas de lechuga romana. 5. Sirve la carne dentro de las hojas de lechuga formando tacos. 6. Agrega cubitos de queso fresco, jitomate picado, crema y rebanadas de aguacate al gusto.",
+      "prepTimeMin": 8,
+      "cookTimeMin": 10,
+      "servings": 2,
+      "baseCalories": 490,
+      "baseProteinGr": 30,
+      "baseFatGr": 37,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "dinner",
+        "quick"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 45,
+      "totalPrepTimeMin": 18,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": true,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Pollo en Salsa de Jitomate con Epazote",
+      "slug": "pollo-en-salsa-de-jitomate-con-epazote",
+      "description": "Piernas y muslos de pollo cocidos en una salsa de jitomate con epazote fresco. Un guiso tradicional de la cocina mexicana de diario.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"chicken_pieces\",\"name\":\"Pollo en piezas\",\"amount\":400,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"epazote\",\"name\":\"Epazote\",\"amount\":5,\"unit\":\"ramitas\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":2,\"unit\":\"dientes\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Sazona las piezas de pollo con sal y pimienta. 2. Calienta el aceite en una olla a fuego alto y dora el pollo por todos lados 8 minutos. Retíralo. 3. En la misma olla, acitrona la cebolla picada con el ajo 3 minutos. 4. Hierve los jitomates 5 minutos y licúalos con un diente de ajo. 5. Vierte la salsa en la olla, agrega el epazote y sazona con sal. Cocina 5 minutos. 6. Regresa el pollo a la olla, tapa y cocina a fuego bajo 20 minutos. 7. Sirve el pollo bañado con la salsa.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 38,
+      "servings": 2,
+      "baseCalories": 400,
+      "baseProteinGr": 34,
+      "baseFatGr": 26,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 40,
+      "totalPrepTimeMin": 48,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Calabacitas Rellenas de Chorizo y Queso Oaxaca",
+      "slug": "calabacitas-rellenas-de-chorizo-y-queso-oaxaca",
+      "description": "Calabacitas tiernas rellenas de chorizo gratinadas con queso oaxaca. Un plato sin pasta ni arroz, puro sabor mexicano.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"calabacita\",\"name\":\"Calabacita\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"chorizo\",\"name\":\"Chorizo\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"queso_oaxaca\",\"name\":\"Queso oaxaca\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Parte las calabacitas por la mitad a lo largo y vacía el centro con una cuchara dejando un borde firme. Reserva la pulpa. 2. Calienta el aceite en un sartén y cocina el chorizo desmenuzado 5 minutos. 3. Agrega la cebolla picada y la pulpa de calabacita picada. Cocina 3 minutos. 4. Rellena las calabacitas con la mezcla de chorizo. 5. Deshebra el queso oaxaca y colócalo encima de cada calabacita. 6. Hornea a 180°C por 12 minutos hasta que el queso se derrita y dore ligeramente. 7. Sirve caliente.",
+      "prepTimeMin": 12,
+      "cookTimeMin": 25,
+      "servings": 2,
+      "baseCalories": 510,
+      "baseProteinGr": 30,
+      "baseFatGr": 39,
+      "baseCarbsGr": 9,
+      "baseNetCarbsGr": 6,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 42,
+      "totalPrepTimeMin": 37,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": true,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop",
+        "oven"
+      ]
+    },
+    {
+      "name": "Nopales Asados con Queso Panela",
+      "slug": "nopales-asados-con-queso-panela",
+      "description": "Nopales asados en comal con aceite de oliva, servidos con queso panela dorado y jugo de limón. Botana ligera y refrescante.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"nopales\",\"name\":\"Nopales\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":1,\"unit\":\"pieza\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Lava los nopales y córtalos en tiras de 2 cm de ancho. 2. Calienta un comal o sartén a fuego alto y asa los nopales 5 minutos por lado sin aceite, hasta que suelten el baba y estén cocidos. 3. Corta el queso panela en rebanadas gruesas. 4. En el mismo comal caliente con un poco de aceite, dora el queso panela 2 minutos por lado. 5. Sirve los nopales con el queso encima, rocía con jugo de limón, espolvorea sal y orégano al gusto.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 15,
+      "servings": 2,
+      "baseCalories": 310,
+      "baseProteinGr": 20,
+      "baseFatGr": 22,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "snack",
+        "vegetarian",
+        "quick"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 28,
+      "totalPrepTimeMin": 20,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": true,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Ceviche de Atún con Aguacate",
+      "slug": "ceviche-de-atun-con-aguacate",
+      "description": "Ceviche de atún enlatado con jitomate, cebolla, chile serrano, pepino y aguacate, marinado en jugo de limón. Fresco, rápido y sin cocción.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"tuna_can\",\"name\":\"Atún en lata\",\"amount\":160,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate Hass\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"pepino\",\"name\":\"Pepino\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":2,\"unit\":\"piezas\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":5,\"unit\":\"ramitas\"}]",
+      "instructions": "1. Escurre el atún y desmenúzalo en un tazón. 2. Pica finamente el jitomate, la cebolla morada, el chile serrano, el pepino sin cáscara y el cilantro. 3. Mezcla todo con el atún. 4. Exprime los limones, agrega el aceite de oliva y sal al gusto. Mezcla bien. 5. Corta el aguacate en cubos pequeños y agrégalo justo antes de servir. 6. Deja reposar 5 minutos para que se integren los sabores. Sirve frío o a temperatura ambiente.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 0,
+      "servings": 2,
+      "baseCalories": 320,
+      "baseProteinGr": 22,
+      "baseFatGr": 22,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "snack",
+        "no_cook",
+        "quick"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 35,
+      "totalPrepTimeMin": 15,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": true,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no_cook"
+      ]
+    },
+    {
+      "name": "Espinacas Salteadas con Huevo Estrellado",
+      "slug": "espinacas-salteadas-con-huevo-estrellado",
+      "description": "Espinacas frescas salteadas en mantequilla con ajo, servidas con huevo estrellado y queso panela desmoronado. Cena rápida y nutritiva.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"espinaca\",\"name\":\"Espinaca\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":6,\"unit\":\"piezas\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"butter_basic\",\"name\":\"Mantequilla\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":2,\"unit\":\"dientes\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Lava y escurre bien las espinacas. Pica los ajos finamente. 2. Derrite la mantequilla en un sartén grande a fuego medio. 3. Agrega el ajo y cocina 30 segundos. 4. Añade las espinacas por tandas y saltea 3-4 minutos hasta que se reduzcan. Sazona con sal y pimienta. 5. En otro sartén con un poco de mantequilla, fríe los huevos uno por uno hasta que la clara esté cocida y la yema líquida. 6. Desmorona el queso panela sobre las espinacas. 7. Sirve las espinacas con los huevos estrellados encima.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 10,
+      "servings": 2,
+      "baseCalories": 385,
+      "baseProteinGr": 26,
+      "baseFatGr": 28,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "pantry_basic",
+        "snack",
+        "quick"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "pantry_basic"
+      ],
+      "economicTier": 1,
+      "estimatedCostPerServingMxn": 25,
+      "totalPrepTimeMin": 15,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 4,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Huevos a la Mexicana",
+      "slug": "huevos-a-la-mexicana",
+      "description": "Huevos revueltos con jitomate, cebolla y chile serrano. Clásico cetogénico mexicano en un solo sartén.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":3,\"unit\":\"pieza\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":1,\"unit\":\"pieza\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Pica finamente el jitomate, cebolla y chile serrano. 2. Sofríe en aceite de oliva en un sartén a fuego medio por 2 minutos. 3. Agrega los huevos batidos, sal y revuelve hasta que estén cocidos (3-4 minutos).",
+      "prepTimeMin": 5,
+      "cookTimeMin": 7,
+      "servings": 1,
+      "baseCalories": 320,
+      "baseProteinGr": 20,
+      "baseFatGr": 24,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 20,
+      "totalPrepTimeMin": 12,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Tacos de Nopales con Queso Panela",
+      "slug": "tacos-de-nopales-con-queso-panela",
+      "description": "Nopales salteados con queso panela dorado, servidos como taco sin tortilla. Rápidos y saturadores.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"nopales\",\"name\":\"Nopales\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Corta los nopales en tiras y la cebolla en juliana. 2. Saltea en aceite de oliva a fuego alto por 5 minutos. 3. Agrega el queso panela en cubos, dora 2-3 minutos y sirve con cilantro picado.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 8,
+      "servings": 1,
+      "baseCalories": 290,
+      "baseProteinGr": 18,
+      "baseFatGr": 22,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 25,
+      "totalPrepTimeMin": 13,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Tostadas de Chicharrón con Aguacate",
+      "slug": "tostadas-de-chicharron-con-aguacate",
+      "description": "Chicharrón crujiente como base con aguacate fresco y limón. Desayuno sin cocción en 5 minutos.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"pork_rinds\",\"name\":\"Chicharrón\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":5,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Corta el aguacate en cubos y machácalo ligeramente con un tenedor. 2. Mezcla con jugo de limón y sal. 3. Sirve sobre trozos de chicharrón como si fueran tostadas.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 0,
+      "servings": 1,
+      "baseCalories": 310,
+      "baseProteinGr": 18,
+      "baseFatGr": 24,
+      "baseCarbsGr": 4,
+      "baseNetCarbsGr": 1,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen",
+        "no-cook"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 22,
+      "totalPrepTimeMin": 5,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no-cook"
+      ]
+    },
+    {
+      "name": "Atún Fresco con Aguacate",
+      "slug": "atun-fresco-con-aguacate",
+      "description": "Ensalada de atún con aguacate y limón. Desayuno fresco, sin cocción y alto en proteína.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"tuna_can\",\"name\":\"Atún en lata\",\"amount\":1,\"unit\":\"lata\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Escurre el atún y colócalo en un bowl. 2. Agrega el aguacate en cubos, jugo de limón, cilantro picado y sal. 3. Mezcla todo con un tenedor y sirve de inmediato.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 0,
+      "servings": 1,
+      "baseCalories": 290,
+      "baseProteinGr": 22,
+      "baseFatGr": 20,
+      "baseCarbsGr": 4,
+      "baseNetCarbsGr": 2,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen",
+        "no-cook"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 25,
+      "totalPrepTimeMin": 5,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no-cook"
+      ]
+    },
+    {
+      "name": "Ensalada de Pollo con Aguacate",
+      "slug": "ensalada-de-pollo-con-aguacate",
+      "description": "Pechuga de pollo desmenuzada con aguacate cremoso y mayonesa. Comida rápida sin encender la estufa.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"chicken_breast\",\"name\":\"Pechuga de pollo\",\"amount\":120,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"mayonesa\",\"name\":\"Mayonesa\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":5,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Desmenuza la pechuga de pollo cocida (puede ser de un pollo rostizado o cocido con antelación). 2. Mezcla con mayonesa, aguacate en cubos y jugo de limón. 3. Salpimienta al gusto y sirve fría o a temperatura ambiente.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 0,
+      "servings": 1,
+      "baseCalories": 380,
+      "baseProteinGr": 32,
+      "baseFatGr": 26,
+      "baseCarbsGr": 3,
+      "baseNetCarbsGr": 1,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen",
+        "no-cook"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 30,
+      "totalPrepTimeMin": 10,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no-cook"
+      ]
+    },
+    {
+      "name": "Nopales con Huevo",
+      "slug": "nopales-con-huevo",
+      "description": "Nopales salteados con huevo revuelto, cebolla y aceite de oliva. Un solo sartén, listo en minutos.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"nopales\",\"name\":\"Nopales\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":3,\"unit\":\"pieza\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Corta los nopales en tiras y la cebolla en cubos. 2. Saltea en aceite de oliva a fuego alto por 4 minutos. 3. Agrega los huevos batidos y sal, revuelve hasta que cuajen (2-3 minutos).",
+      "prepTimeMin": 3,
+      "cookTimeMin": 8,
+      "servings": 1,
+      "baseCalories": 290,
+      "baseProteinGr": 20,
+      "baseFatGr": 22,
+      "baseCarbsGr": 5,
+      "baseNetCarbsGr": 2,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 18,
+      "totalPrepTimeMin": 11,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Calabacitas con Queso Panela",
+      "slug": "calabacitas-con-queso-panela",
+      "description": "Calabacita salteada con queso panela dorado y cebolla. Plato ligero pero saturador en un solo sartén.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"calabacita\",\"name\":\"Calabacita\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Corta la calabacita en medallones y la cebolla en tiras. 2. Saltea en aceite de oliva a fuego medio por 5 minutos. 3. Agrega el queso panela en cubos y cocina 3 minutos más hasta que se dore ligeramente.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 8,
+      "servings": 1,
+      "baseCalories": 280,
+      "baseProteinGr": 18,
+      "baseFatGr": 20,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 22,
+      "totalPrepTimeMin": 13,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Carne Molida con Verduras",
+      "slug": "carne-molida-con-verduras",
+      "description": "Carne molida salteada con calabacita, jitomate y comino. Plato completo en un solo sartén en 15 minutos.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"ground_beef_basic\",\"name\":\"Carne molida\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"calabacita\",\"name\":\"Calabacita\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Dora la carne molida en un sartén caliente sin aceite por 5 minutos, deshaciendo los grumos. 2. Agrega cebolla picada, calabacita en cubos y jitomate picado. 3. Cocina 5 minutos más, sazona con comino y sal.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 10,
+      "servings": 1,
+      "baseCalories": 330,
+      "baseProteinGr": 22,
+      "baseFatGr": 24,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 28,
+      "totalPrepTimeMin": 15,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Pechuga de Pollo con Espinacas",
+      "slug": "pechuga-de-pollo-con-espinacas",
+      "description": "Pechuga de pollo en cubos salteada con espinacas frescas y ajo. Cena rápida y alta en proteína.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"chicken_breast\",\"name\":\"Pechuga de pollo\",\"amount\":120,\"unit\":\"g\"},{\"code\":\"espinaca\",\"name\":\"Espinaca\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Corta la pechuga de pollo en cubos pequeños y sazona con sal y pimienta. 2. Dora en aceite de oliva a fuego medio-alto por 8 minutos, moviendo ocasionalmente. 3. Agrega el ajo picado y las espinacas, cocina 2 minutos hasta que se marchiten.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 12,
+      "servings": 1,
+      "baseCalories": 330,
+      "baseProteinGr": 34,
+      "baseFatGr": 20,
+      "baseCarbsGr": 3,
+      "baseNetCarbsGr": 2,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 30,
+      "totalPrepTimeMin": 17,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Coliflor con Queso Fundido",
+      "slug": "coliflor-con-queso-fundido",
+      "description": "Coliflor salteada con queso panela fundido y crema mexicana. Cena cremosa y reconfortante en un sartén.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"coliflor\",\"name\":\"Coliflor\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"crema_mexicana\",\"name\":\"Crema mexicana\",\"amount\":30,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Corta la coliflor en floretes pequeños. 2. Saltéalos en un sartén con un poco de agua a fuego medio por 5 minutos para ablandarlos. 3. Agrega el queso panela desmenuzado y la crema, cocina 3-4 minutos hasta que se funda.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 10,
+      "servings": 1,
+      "baseCalories": 290,
+      "baseProteinGr": 18,
+      "baseFatGr": 22,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 25,
+      "totalPrepTimeMin": 15,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Queso Panela Asado con Aguacate",
+      "slug": "queso-panela-asado-con-aguacate",
+      "description": "Queso panela dorado en sartén servido con aguacate fresco y limón. Cena sencilla en menos de 10 minutos.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":5,\"unit\":\"ml\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":5,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Corta el queso panela en rebanadas de 1 cm. 2. Dora en aceite de oliva a fuego alto por 3 minutos de cada lado. 3. Sirve con aguacate en rebanadas, jugo de limón y sal.",
+      "prepTimeMin": 3,
+      "cookTimeMin": 6,
+      "servings": 1,
+      "baseCalories": 360,
+      "baseProteinGr": 20,
+      "baseFatGr": 28,
+      "baseCarbsGr": 4,
+      "baseNetCarbsGr": 2,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 28,
+      "totalPrepTimeMin": 9,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Sardinas con Aguacate y Limón",
+      "slug": "sardinas-con-aguacate-y-limon",
+      "description": "Sardinas en lata con aguacate fresco y limón. Botana cetogénica lista en 3 minutos sin cocinar.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"sardines_can\",\"name\":\"Sardinas en lata\",\"amount\":1,\"unit\":\"lata\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Escurre ligeramente las sardinas. 2. Corta el aguacate en cubos y colócalo en un plato con las sardinas. 3. Rocía con jugo de limón y sal al gusto.",
+      "prepTimeMin": 3,
+      "cookTimeMin": 0,
+      "servings": 1,
+      "baseCalories": 310,
+      "baseProteinGr": 22,
+      "baseFatGr": 24,
+      "baseCarbsGr": 2,
+      "baseNetCarbsGr": 1,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen",
+        "no-cook"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 20,
+      "totalPrepTimeMin": 3,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no-cook"
+      ]
+    },
+    {
+      "name": "Pepino con Chicharrón y Chile",
+      "slug": "pepino-con-chicharron-y-chile",
+      "description": "Pepino fresco con chicharrón crujiente, chile serrano y limón. Botana crunch cetogénica sin cocción.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"pepino\",\"name\":\"Pepino\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"pork_rinds\",\"name\":\"Chicharrón\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":1,\"unit\":\"pieza\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Corta el pepino en rodajas o bastones. 2. Coloca en un bowl con los trozos de chicharrón. 3. Agrega chile serrano picado, jugo de limón y sal al gusto.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 0,
+      "servings": 1,
+      "baseCalories": 200,
+      "baseProteinGr": 16,
+      "baseFatGr": 10,
+      "baseCarbsGr": 5,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen",
+        "no-cook"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 18,
+      "totalPrepTimeMin": 5,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no-cook"
+      ]
+    },
+    {
+      "name": "Atún con Mayonesa y Chiles",
+      "slug": "atun-con-mayonesa-y-chiles",
+      "description": "Atún en lata mezclado con mayonesa, chile jalapeño y cebolla. Botana clásica sin cocción ni complicaciones.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"tuna_can\",\"name\":\"Atún en lata\",\"amount\":1,\"unit\":\"lata\"},{\"code\":\"mayonesa\",\"name\":\"Mayonesa\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"chile_jalapeno\",\"name\":\"Chile jalapeño\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":5,\"unit\":\"ml\"}]",
+      "instructions": "1. Escurre el atún y colócalo en un bowl. 2. Agrega mayonesa, chile jalapeño picado, cebolla en cubos finos y jugo de limón. 3. Mezcla bien y sirve frío o a temperatura ambiente.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 0,
+      "servings": 1,
+      "baseCalories": 290,
+      "baseProteinGr": 22,
+      "baseFatGr": 20,
+      "baseCarbsGr": 3,
+      "baseNetCarbsGr": 2,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen",
+        "no-cook"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 22,
+      "totalPrepTimeMin": 5,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no-cook"
+      ]
+    },
+    {
+      "name": "Huevos Endiablados",
+      "slug": "huevos-endiablados",
+      "description": "Huevos cocidos en microondas con yema mezclada con mayonesa y mostaza. Botana rápida de microondas.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":3,\"unit\":\"pieza\"},{\"code\":\"mayonesa\",\"name\":\"Mayonesa\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"mostaza\",\"name\":\"Mostaza\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"pizca\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"pizca\"}]",
+      "instructions": "1. Cocina los huevos en microondas en un recipiente con agua: 2 minutos, revisa y repite hasta que estén duros (4-5 min total). 2. Pela los huevos, córtalos por la mitad y extrae las yemas. 3. Mezcla las yemas con mayonesa, mostaza, sal y pimienta; rellena las claras.",
+      "prepTimeMin": 8,
+      "cookTimeMin": 5,
+      "servings": 1,
+      "baseCalories": 280,
+      "baseProteinGr": 18,
+      "baseFatGr": 22,
+      "baseCarbsGr": 2,
+      "baseNetCarbsGr": 1,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "quick",
+        "simple_kitchen"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "simple_kitchen"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 18,
+      "totalPrepTimeMin": 13,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "microwave"
+      ]
+    },
+    {
+      "name": "Tinga de Pollo",
+      "slug": "tinga-de-pollo",
+      "description": "Pollo deshebrado en salsa de jitomate y chipotle. Rinde 6 porciones. Congelable hasta 3 semanas.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"chicken_thighs\",\"name\":\"Muslo de pollo\",\"amount\":800,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":3,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Cuece los muslos de pollo en agua con sal 20 min. Deshebra y reserva el caldo. 2. Licúa jitomate, cebolla, ajo, orégano y comino con un poco de caldo. 3. Calienta el aceite en una olla grande y vierte la salsa. Cocina a fuejo medio 10 min. 4. Agrega el pollo deshebrado, mezcla y cocina 5 min más. Rectifica sazón.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 35,
+      "servings": 6,
+      "baseCalories": 370,
+      "baseProteinGr": 34,
+      "baseFatGr": 24,
+      "baseCarbsGr": 5,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "batch-cook",
+        "busy_parent",
+        "freezable",
+        "tinga"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 32,
+      "totalPrepTimeMin": 50,
+      "yieldServingsMin": 6,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop",
+        "batch"
+      ]
+    },
+    {
+      "name": "Carnitas de Cerdo",
+      "slug": "carnitas-de-cerdo",
+      "description": "Cerdo confitado en su propia grasa, súma crocante y jugoso. Rinde 8 porciones. Congelable hasta 4 semanas.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"pork_shoulder\",\"name\":\"Espaldilla de cerdo\",\"amount\":1000,\"unit\":\"g\"},{\"code\":\"manteca_cerdo\",\"name\":\"Manteca de cerdo\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":3,\"unit\":\"g\"}]",
+      "instructions": "1. Corta la espaldilla en cubos grandes de 5 cm. 2. Calienta la manteca en una olla gruesa a fuego medio-alto. 3. Agrega el cerdo, ajo entero, sal y orégano. 4. Cocina tapado a fuego bajo 2 h hasta que la carne se deshaga. 5. Destapa y sube el fuego para dorar los bordes 10 min. 6. Escurre y deja enfriar antes de porcionar y congelar.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 130,
+      "servings": 8,
+      "baseCalories": 450,
+      "baseProteinGr": 32,
+      "baseFatGr": 36,
+      "baseCarbsGr": 1,
+      "baseNetCarbsGr": 0,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "batch-cook",
+        "busy_parent",
+        "freezable",
+        "carnitas"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 28,
+      "totalPrepTimeMin": 145,
+      "yieldServingsMin": 6,
+      "yieldServingsMax": 10,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop",
+        "batch"
+      ]
+    },
+    {
+      "name": "Albóndigas Keto al Chipotle",
+      "slug": "albondigas-keto-al-chipotle",
+      "description": "Albóndigas de res y cerdo en salsa de chipotle. Rinde 6 porciones. Congelable hasta 3 semanas.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"ground_beef\",\"name\":\"Carne molida de res\",\"amount\":600,\"unit\":\"g\"},{\"code\":\"ground_pork\",\"name\":\"Carne molida de cerdo\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":3,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Mezcla las carnes molidas con huevo, queso panela rallado, sal, pimienta y comino. Forma albóndigas de 4 cm. 2. Licúa jitomate, cebolla, ajo y chipotle (si tienes) con 100 ml de agua. 3. Calienta aceite en una olla y vierte la salsa. Cocina 10 min a fuejo medio. 4. Incorpora las albóndigas con cuidado, tapa y cocina 25 min a fuejo bajo. 5. Deja enfriar antes de refrigerar o congelar.",
+      "prepTimeMin": 20,
+      "cookTimeMin": 35,
+      "servings": 6,
+      "baseCalories": 420,
+      "baseProteinGr": 30,
+      "baseFatGr": 32,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "batch-cook",
+        "busy_parent",
+        "freezable",
+        "albondigas"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 38,
+      "totalPrepTimeMin": 55,
+      "yieldServingsMin": 6,
+      "yieldServingsMax": 8,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop",
+        "batch"
+      ]
+    },
+    {
+      "name": "Pollo en Crema de Espinacas y Champiñones",
+      "slug": "pollo-en-crema-de-espinacas",
+      "description": "Piezas de pollo bañadas en cremosa salsa de espinacas con champiñones. Rinde 6 porciones. Congelable hasta 3 semanas.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"chicken_pieces\",\"name\":\"Piezas de pollo\",\"amount\":800,\"unit\":\"g\"},{\"code\":\"heavy_cream\",\"name\":\"Crema para batir\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"espinaca\",\"name\":\"Espinaca\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"champinones\",\"name\":\"Champiñones\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"butter_basic\",\"name\":\"Mantequilla\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":3,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Sella las piezas de pollo en mantequilla hasta dorar. Retira y reserva. 2. En la misma sartén saltea los champiñones fileteados y el ajo picado 3 min. 3. Agrega la espinaca y cocina hasta que reduzca. 4. Vierte la crema para batir, salpimienta y mezcla. 5. Regresa el pollo a la sartén, tapa y cocina a fuejo bajo 20 min. 6. Deja enfriar antes de refrigerar o congelar.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 35,
+      "servings": 6,
+      "baseCalories": 480,
+      "baseProteinGr": 34,
+      "baseFatGr": 36,
+      "baseCarbsGr": 5,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "batch-cook",
+        "busy_parent",
+        "freezable",
+        "cremosa"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 35,
+      "totalPrepTimeMin": 50,
+      "yieldServingsMin": 6,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop",
+        "batch"
+      ]
+    },
+    {
+      "name": "Barbacoa de Res (Olla Express)",
+      "slug": "barbacoa-de-res-olla-express",
+      "description": "Carne de res para guisar cocida a presión con ajo y especias. Rinde 6 porciones. Congelable hasta 4 semanas.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"beef_stew_cuts\",\"name\":\"Carne para guisar de res\",\"amount\":800,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":3,\"unit\":\"g\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"vinagre_manzana\",\"name\":\"Vinagre de manzana\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":4,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Corta la carne en trozos grandes de 5 cm. 2. Licúa ajo, comino, orégano, vinagre, aceite y sal con 100 ml de agua. 3. Vierte sobre la carne y marina 15 min. 4. Coloca la carne con el adobo y cebolla fileteada en la olla express. 5. Cocina a presión 45 min. 6. Deshebra la carne con dos tenedores y mezcla con los jugos de cocción. 7. Deja enfriar antes de congelar.",
+      "prepTimeMin": 20,
+      "cookTimeMin": 45,
+      "servings": 6,
+      "baseCalories": 440,
+      "baseProteinGr": 36,
+      "baseFatGr": 32,
+      "baseCarbsGr": 3,
+      "baseNetCarbsGr": 2,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "batch-cook",
+        "busy_parent",
+        "freezable",
+        "barbacoa",
+        "pressure-cooker"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 42,
+      "totalPrepTimeMin": 65,
+      "yieldServingsMin": 6,
+      "yieldServingsMax": 8,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "pressure_cooker",
+        "batch"
+      ]
+    },
+    {
+      "name": "Picadillo Keto",
+      "slug": "picadillo-keto",
+      "description": "Carne molida guisada con jitomate, calabacita y especias. Rinde 6 porciones. Congelable hasta 3 semanas.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"ground_beef\",\"name\":\"Carne molida de res\",\"amount\":700,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"calabacita\",\"name\":\"Calabacita\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":3,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Calienta el aceite en un sartén grande a fuejo alto. 2. Agrega la carne molida y cocina hasta que pierda el color rojo, deshaciendo los grumos. 3. Añade cebolla picada y ajo; cocina 3 min. 4. Agrega jitomate picado, comino, sal y pimienta. Cocina 10 min. 5. Incorpora la calabacita en cubos y cocina 5 min más. 6. Deja enfriar antes de refrigerar o congelar.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 25,
+      "servings": 6,
+      "baseCalories": 380,
+      "baseProteinGr": 30,
+      "baseFatGr": 26,
+      "baseCarbsGr": 7,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "batch-cook",
+        "busy_parent",
+        "freezable",
+        "picadillo"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 35,
+      "totalPrepTimeMin": 40,
+      "yieldServingsMin": 6,
+      "yieldServingsMax": 8,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop",
+        "batch"
+      ]
+    },
+    {
+      "name": "Caldo Tlalpeño de Pollo",
+      "slug": "caldo-tlalpeno-de-pollo",
+      "description": "Caldo de pollo con chayote, ejotes y epazote. Rinde 6 porciones. Congelable hasta 3 semanas.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"chicken_pieces\",\"name\":\"Piezas de pollo\",\"amount\":600,\"unit\":\"g\"},{\"code\":\"chayote\",\"name\":\"Chayote\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"ejotes\",\"name\":\"Ejotes\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"epazote\",\"name\":\"Epazote\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":4,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":30,\"unit\":\"g\"}]",
+      "instructions": "1. Calienta el aceite en una olla grande y dora las piezas de pollo 3 min por lado. 2. Agrega cebolla y ajo picados; cocina 2 min. 3. Cubre con agua (1.5 L), salpimienta y lleva a ebullición. 4. Reduce el fuejo, tapa y cocina 25 min. 5. Agrega chayote en cubos y ejotes; cocina 10 min más. 6. Añade epazote fresco, apaga y deja reposar 5 min. Sirve con limón.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 40,
+      "servings": 6,
+      "baseCalories": 350,
+      "baseProteinGr": 28,
+      "baseFatGr": 24,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "batch-cook",
+        "busy_parent",
+        "freezable",
+        "caldo"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 25,
+      "totalPrepTimeMin": 55,
+      "yieldServingsMin": 6,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop",
+        "batch"
+      ]
+    },
+    {
+      "name": "Costillas de Cerdo en Salsa Verde",
+      "slug": "costillas-en-salsa-verde",
+      "description": "Costillas de cerdo cocidas a presión en salsa verde con epazote. Rinde 6 porciones. Congelable hasta 4 semanas.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"pork_ribs\",\"name\":\"Costillas de cerdo\",\"amount\":800,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"epazote\",\"name\":\"Epazote\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":4,\"unit\":\"g\"}]",
+      "instructions": "1. Separa las costillas en piezas individuales. 2. Licúa jitomate, cebolla, chile serrano y ajo con 100 ml de agua. 3. Calienta aceite en la olla express y sella las costillas 3 min por lado. 4. Vierte la salsa, agrega sal y epazote. 5. Cocina a presión 30 min. 6. Deja salir el vapor naturalmente. Rectifica sazón y deja enfriar antes de congelar.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 35,
+      "servings": 6,
+      "baseCalories": 490,
+      "baseProteinGr": 30,
+      "baseFatGr": 38,
+      "baseCarbsGr": 4,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "batch-cook",
+        "busy_parent",
+        "freezable",
+        "costillas"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 40,
+      "totalPrepTimeMin": 50,
+      "yieldServingsMin": 6,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "pressure_cooker",
+        "batch"
+      ]
+    },
+    {
+      "name": "Rajas con Crema y Pollo",
+      "slug": "rajas-con-crema-y-pollo",
+      "description": "Tiras de pimiento morrón y pollo en crema con queso oaxaca. Rinde 6 porciones. Congelable hasta 3 semanas.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"chicken_pieces\",\"name\":\"Piezas de pollo\",\"amount\":700,\"unit\":\"g\"},{\"code\":\"pimiento_morron\",\"name\":\"Pimiento morrón\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"heavy_cream\",\"name\":\"Crema para batir\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"queso_oaxaca\",\"name\":\"Queso oaxaca\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"butter_basic\",\"name\":\"Mantequilla\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":3,\"unit\":\"g\"}]",
+      "instructions": "1. Cuece el pollo en agua con sal 20 min, deshebra y reserva. 2. Corta los pimientos en tiras (rajas) y la cebolla en juliana. 3. Derrite mantequilla en un sartén grande y acitrona la cebolla y el ajo 3 min. 4. Agrega las rajas de pimiento y cocina 5 min. 5. Vierte la crema, agrega el pollo deshebrado y el queso oaxaca en hebras. 6. Cocina 5 min hasta que el queso se derrita. Deja enfriar antes de congelar.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 35,
+      "servings": 6,
+      "baseCalories": 420,
+      "baseProteinGr": 32,
+      "baseFatGr": 30,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "batch-cook",
+        "busy_parent",
+        "freezable",
+        "rajas"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 35,
+      "totalPrepTimeMin": 50,
+      "yieldServingsMin": 6,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop",
+        "batch"
+      ]
+    },
+    {
+      "name": "Pozole Verde de Cerdo",
+      "slug": "pozole-verde-de-cerdo",
+      "description": "Guiso de espaldilla de cerdo en caldo verde con especias. Rinde 6 porciones. Congelable hasta 4 semanas.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"pork_shoulder\",\"name\":\"Espaldilla de cerdo\",\"amount\":800,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":3,\"unit\":\"g\"},{\"code\":\"epazote\",\"name\":\"Epazote\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":5,\"unit\":\"g\"}]",
+      "instructions": "1. Corta la espaldilla en cubos de 4 cm. 2. Licúa jitomate, chile serrano, cebolla y ajo con 200 ml de agua. 3. Calienta aceite en una olla y sella la carne 5 min. 4. Vierte la salsa, agrega orégano, sal y 1 L de agua. 5. Cocina a fuejo medio-bajo 50 min hasta que la carne esté suave. 6. Agrega epazote los últimos 5 min. 7. Deja enfriar antes de refrigerar o congelar.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 55,
+      "servings": 6,
+      "baseCalories": 430,
+      "baseProteinGr": 32,
+      "baseFatGr": 32,
+      "baseCarbsGr": 4,
+      "baseNetCarbsGr": 2,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "batch-cook",
+        "busy_parent",
+        "freezable",
+        "pozole"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 30,
+      "totalPrepTimeMin": 70,
+      "yieldServingsMin": 6,
+      "yieldServingsMax": 8,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop",
+        "batch"
+      ]
+    },
+    {
+      "name": "Sartén de Pollo y Brócoli al Horno",
+      "slug": "sarten-de-pollo-y-brocoli-al-horno",
+      "description": "Muslos de pollo horneados con brócoli, crema y queso. Rinde 6 porciones. Congelable hasta 3 semanas.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"chicken_thighs\",\"name\":\"Muslo de pollo\",\"amount\":700,\"unit\":\"g\"},{\"code\":\"brocoli\",\"name\":\"Brócoli\",\"amount\":500,\"unit\":\"g\"},{\"code\":\"heavy_cream\",\"name\":\"Crema para batir\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"butter_basic\",\"name\":\"Mantequilla\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":3,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Precalienta el horno a 200 °C. 2. Corta el brócoli en florecitas y los muslos en mitades. 3. Coloca todo en un sartén para horno (o charola). 4. Derrite mantequilla con ajo picado y vierte sobre el pollo y brócoli. 5. Salpimienta, vierte la crema y espolvorea queso panela rallado. 6. Hornea 30 min hasta que el pollo esté cocido y el queso gratinado. 7. Deja enfriar antes de porcionar y congelar.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 30,
+      "servings": 6,
+      "baseCalories": 400,
+      "baseProteinGr": 30,
+      "baseFatGr": 28,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "batch-cook",
+        "busy_parent",
+        "freezable",
+        "horno"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 30,
+      "totalPrepTimeMin": 45,
+      "yieldServingsMin": 6,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "oven",
+        "batch"
+      ]
+    },
+    {
+      "name": "Tinga de Res en Lechuga",
+      "slug": "tinga-de-res-en-lechuga",
+      "description": "Guisado de carne molida en salsa de jitomate para tacos en lechuga. Rinde 4 porciones. Congela el guisado hasta 3 semanas y sirve con lechuga fresca.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"ground_beef\",\"name\":\"Carne molida de res\",\"amount\":600,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"lechuga_romana\",\"name\":\"Lechuga romana\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"crema_mexicana\",\"name\":\"Crema mexicana\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"queso_fresco\",\"name\":\"Queso fresco\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":3,\"unit\":\"g\"}]",
+      "instructions": "1. Calienta aceite en un sartén grande a fuejo alto. 2. Cocina la carne molida deshaciendo grumos hasta que dore. 3. Agrega cebolla picada y ajo; cocina 2 min. 4. Incorpora jitomate picado, orégano, comino y sal. Cocina 10 min hasta que espese. 5. Sirve en hojas de lechuga romana, adorna con crema y queso fresco desmoronado. 6. El guisado se congela perfectamente; la lechuga se agrega fresca al servir.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 20,
+      "servings": 4,
+      "baseCalories": 420,
+      "baseProteinGr": 28,
+      "baseFatGr": 32,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "batch-cook",
+        "busy_parent",
+        "freezable",
+        "tacos"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 35,
+      "totalPrepTimeMin": 30,
+      "yieldServingsMin": 4,
+      "yieldServingsMax": 6,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop",
+        "batch"
+      ]
+    },
+    {
+      "name": "Huevos a la Mexicana con Chorizo",
+      "slug": "huevos-a-la-mexicana-con-chorizo",
+      "description": "Huevos revueltos con chorizo, jitomate, cebolla y chile serrano. Rinde 2 porciones. Consumir fresco.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"chorizo\",\"name\":\"Chorizo\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"chile_serrano\",\"name\":\"Chile serrano\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Retira la piel del chorizo y desmenuza la carne. 2. Calienta aceite en un sartén a fuejo medio y fríe el chorizo 5 min. 3. Agrega cebolla picada, chile serrano en rodajas y jitomate picado; cocina 3 min. 4. Bate los huevos y viértelos sobre la mezcla. 5. Cocina sin dejar de mover hasta que los huevos estén cocidos pero jugosos. Sirve de inmediato.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 10,
+      "servings": 2,
+      "baseCalories": 440,
+      "baseProteinGr": 26,
+      "baseFatGr": 34,
+      "baseCarbsGr": 5,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "busy_parent",
+        "breakfast"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 28,
+      "totalPrepTimeMin": 15,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 2,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Chilaquiles Keto con Chicharrón",
+      "slug": "chilaquiles-keto-con-chicharron",
+      "description": "Chicharrón en salsa de jitomate con crema y queso fresco. Rinde 2 porciones. Consumir fresco.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"pork_rinds\",\"name\":\"Chicharrón de cerdo\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"crema_mexicana\",\"name\":\"Crema mexicana\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"queso_fresco\",\"name\":\"Queso fresco\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Licúa jitomate, cebolla y ajo con 50 ml de agua. 2. Calienta aceite en un sartén y vierte la salsa. Cocina 8 min a fuejo medio. 3. Agrega el chicharrón y mezcla rápidamente 1 min para que se ablande ligeramente sin deshacerse. 4. Sirve inmediatamente con crema y queso fresco desmoronado.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 10,
+      "servings": 2,
+      "baseCalories": 470,
+      "baseProteinGr": 24,
+      "baseFatGr": 36,
+      "baseCarbsGr": 7,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "busy_parent",
+        "breakfast"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 32,
+      "totalPrepTimeMin": 15,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 2,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Nopales con Huevo y Queso",
+      "slug": "nopales-con-huevo-y-queso",
+      "description": "Nopales salteados con huevo revuelto y queso panela. Rinde 2 porciones. Consumir fresco.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"nopales\",\"name\":\"Nopales\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Corta los nopales en tiras y hiérvelos 5 min con sal. Escurre bien. 2. Calienta aceite en un sartén y acitrona la cebolla picada 2 min. 3. Agrega los nopales escurridos y saltea 3 min. 4. Bate los huevos y viértelos sobre los nopales; cocina sin dejar de mover. 5. Cuando el huevo esté casi cocido, agrega el queso panela en cubos y mezcla suavemente. Sirve de inmediato.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 10,
+      "servings": 2,
+      "baseCalories": 340,
+      "baseProteinGr": 22,
+      "baseFatGr": 26,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "busy_parent",
+        "breakfast"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "busy_parent"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 25,
+      "totalPrepTimeMin": 20,
+      "yieldServingsMin": 2,
+      "yieldServingsMax": 2,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Pechuga Asada con Nopales y Pico de Gallo",
+      "slug": "pechuga-asada-nopales-pico-de-gallo",
+      "description": "Pechuga de pollo asada con nopales a la plancha y pico de gallo fresco. Alta en proteína. Ideal post-entreno.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"chicken_breast\",\"name\":\"Pechuga de pollo\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"cebolla_morada\",\"name\":\"Cebolla morada\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"chile_jalapeno\",\"name\":\"Chile jalapeño\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":60,\"unit\":\"g\"}]",
+      "instructions": "1. Sazona la pechuga con sal, pimienta y comino. 2. Asa en sartén con aceite de oliva a fuego medio 6 min por lado. 3. Pica jitomate, cebolla, jalapeño y cilantro; mezcla con limón para el pico de gallo. 4. Filetea la pechuga y sirve con los nopales asados, pico de gallo y aguacate en rebanadas.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 15,
+      "servings": 1,
+      "baseCalories": 520,
+      "baseProteinGr": 72,
+      "baseFatGr": 20,
+      "baseCarbsGr": 9,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "post-workout"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 55,
+      "totalPrepTimeMin": 25,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 2,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Sirloin a la Mexicana con Calabacitas",
+      "slug": "sirloin-a-la-mexicana-calabacitas",
+      "description": "Sirloin de res en tiras cocinado a la mexicana con jitomate, cebolla y chile, acompañado de calabacitas salteadas. Comida alta en proteína para recuperación muscular.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"beef_sirloin\",\"name\":\"Sirloin de res\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"chile_jalapeno\",\"name\":\"Chile jalapeño\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"calabacita\",\"name\":\"Calabacita\",\"amount\":120,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Corta el sirloin en tiras delgadas, sazona con sal, pimienta y orégano. 2. Calienta aceite en sartén y sella la carne a fuego alto 3 min. 3. Agrega cebolla fileteada, jitomate picado y jalapeño; cocina 5 min. 4. Corta calabacitas en medallones y saltéalas en otra sartén con un poco de aceite 4 min. 5. Sirve carne sobre las calabacitas.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 15,
+      "servings": 1,
+      "baseCalories": 550,
+      "baseProteinGr": 58,
+      "baseFatGr": 28,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "beef"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 70,
+      "totalPrepTimeMin": 25,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Tacos de Lechuga con Tinga de Pollo",
+      "slug": "tacos-lechuga-tinga-pollo",
+      "description": "Tacos de lechuga rellenos de tinga de pollo con crema y queso panela. Sin tortilla, altos en proteína, perfectos para alimentación cetogénica.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"chicken_breast\",\"name\":\"Pechuga de pollo\",\"amount\":280,\"unit\":\"g\"},{\"code\":\"lechuga_romana\",\"name\":\"Lechuga romana\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"chile_jalapeno\",\"name\":\"Chile jalapeño\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"cream_cheese\",\"name\":\"Queso crema\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Cocina la pechuga de pollo en agua con sal 15 min, deshebra. 2. En sartén con aceite, acitrona cebolla y jalapeño picados. 3. Agrega el pollo deshebrado, jitomate picado y orégano; cocina 8 min. 4. Desprende hojas de lechuga romana enteras formando tazones. 5. Rellena con tinga de pollo, agrega queso panela desmoronado y una cucharada de cream cheese.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 25,
+      "servings": 1,
+      "baseCalories": 510,
+      "baseProteinGr": 68,
+      "baseFatGr": 22,
+      "baseCarbsGr": 7,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "tacos",
+        "keto"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 50,
+      "totalPrepTimeMin": 35,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 2,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Omelette Norteno con Queso y Aguacate",
+      "slug": "omelette-norteno-queso-aguacate",
+      "description": "Omelette norteño relleno de queso panela y aguacate, preparado con claras de huevo extra. Desayuno alto en proteína y grasas saludables.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"egg_whites\",\"name\":\"Claras de huevo\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":2,\"unit\":\"pz\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Bate las claras con los huevos enteros, sal y pimienta. 2. Calienta aceite en sartén antiadherente a fuego medio. 3. Vierte la mezcla y cocina 3 min hasta que los bordes estén firmes. 4. Agrega queso panela desmoronado al centro, dobla el omelette. 5. Sirve con aguacate en rebanadas.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 8,
+      "servings": 1,
+      "baseCalories": 480,
+      "baseProteinGr": 42,
+      "baseFatGr": 32,
+      "baseCarbsGr": 5,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "breakfast",
+        "eggs"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 35,
+      "totalPrepTimeMin": 13,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Shake Proteico de Coco y Canela",
+      "slug": "shake-proteico-coco-canela",
+      "description": "Batido post-entreno con whey protein, leche de coco, canela y hielo. Recuperación rápida con proteína de alta calidad.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"whey_protein\",\"name\":\"Whey protein\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"coco\",\"name\":\"Coco rallado\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"canela\",\"name\":\"Canela\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"heavy_cream\",\"name\":\"Crema batida\",\"amount\":30,\"unit\":\"ml\"},{\"code\":\"agua\",\"name\":\"Agua\",\"amount\":300,\"unit\":\"ml\"},{\"code\":\"hielo\",\"name\":\"Hielo\",\"amount\":100,\"unit\":\"g\"}]",
+      "instructions": "1. Coloca todos los ingredientes en la licuadora. 2. Licúa a velocidad alta 30 segundos hasta obtener consistencia homogénea. 3. Sirve inmediatamente con hielo.",
+      "prepTimeMin": 3,
+      "cookTimeMin": 0,
+      "servings": 1,
+      "baseCalories": 320,
+      "baseProteinGr": 35,
+      "baseFatGr": 16,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "shake",
+        "post-workout"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 40,
+      "totalPrepTimeMin": 3,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no-cook"
+      ]
+    },
+    {
+      "name": "Bowl de Camarones al Mojo de Ajo con Espinacas",
+      "slug": "bowl-camarones-mojo-ajo-espinacas",
+      "description": "Camarones salteados al mojo de ajo sobre cama de espinacas frescas. Plato rápido, alto en proteína y perfecto para cena ligera post-entreno.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"prawn\",\"name\":\"Camarón\",\"amount\":280,\"unit\":\"g\"},{\"code\":\"espinaca\",\"name\":\"Espinaca\",\"amount\":120,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Pela y desvena los camarones, sazona con sal y pimienta. 2. Calienta aceite en sartén, añade ajo picado fino 30 seg. 3. Agrega camarones y cocina 2 min por lado. 4. Retira camarones, en la misma sartén saltea espinacas 2 min. 5. Sirve camarones sobre espinacas, rocía jugo de limón.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 8,
+      "servings": 1,
+      "baseCalories": 400,
+      "baseProteinGr": 55,
+      "baseFatGr": 15,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "seafood",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 75,
+      "totalPrepTimeMin": 18,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Pechuga Rellena de Queso y Espinacas",
+      "slug": "pechuga-rellena-queso-espinacas",
+      "description": "Pechuga de pollo rellena de queso panela y espinacas, sellada y horneada. Plato principal de alto impacto proteico.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"chicken_breast\",\"name\":\"Pechuga de pollo\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"queso_panela\",\"name\":\"Queso panela\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"espinaca\",\"name\":\"Espinaca\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Haz un corte profundo al costado de la pechuga para crear una bolsa. 2. Saltea espinacas con ajo 2 min, mezcla con queso panela desmoronado. 3. Rellena la pechuga y cierra con palillos. 4. Sazona con sal y pimienta, sella en sartén con aceite 3 min por lado. 5. Hornea a 180°C 15 min. 6. Deja reposar 2 min antes de servir.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 25,
+      "servings": 1,
+      "baseCalories": 490,
+      "baseProteinGr": 75,
+      "baseFatGr": 18,
+      "baseCarbsGr": 4,
+      "baseNetCarbsGr": 2,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "stuffed-chicken"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 55,
+      "totalPrepTimeMin": 35,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 2,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop",
+        "oven"
+      ]
+    },
+    {
+      "name": "Shake de Fresa con Whey y Crema",
+      "slug": "shake-fresa-whey-crema",
+      "description": "Batido cremoso de fresa con whey protein y crema batida. Refrescante, rápido y con proteína de alta calidad para después del entrenamiento.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"whey_protein\",\"name\":\"Whey protein\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"fresa\",\"name\":\"Fresa\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"heavy_cream\",\"name\":\"Crema batida\",\"amount\":30,\"unit\":\"ml\"},{\"code\":\"agua\",\"name\":\"Agua\",\"amount\":300,\"unit\":\"ml\"},{\"code\":\"hielo\",\"name\":\"Hielo\",\"amount\":100,\"unit\":\"g\"}]",
+      "instructions": "1. Lava y corta las fresas. 2. Coloca todos los ingredientes en la licuadora. 3. Licúa 30 seg hasta textura suave y homogénea. 4. Sirve frío.",
+      "prepTimeMin": 3,
+      "cookTimeMin": 0,
+      "servings": 1,
+      "baseCalories": 310,
+      "baseProteinGr": 35,
+      "baseFatGr": 14,
+      "baseCarbsGr": 7,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "shake",
+        "post-workout"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 40,
+      "totalPrepTimeMin": 3,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no-cook"
+      ]
+    },
+    {
+      "name": "Albondigas de Res en Salsa Verde",
+      "slug": "albondigas-res-salsa-verde",
+      "description": "Albóndigas de res jugosas bañadas en salsa verde con calabacitas. Plato tradicional mexican adaptado a keto athletic.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"ground_beef\",\"name\":\"Carne molida de res\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":1,\"unit\":\"pz\"},{\"code\":\"almond_flour_premium\",\"name\":\"Harina de almendra\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"calabacita\",\"name\":\"Calabacita\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"jitomate_verde\",\"name\":\"Tomate verde\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"chile_jalapeno\",\"name\":\"Chile jalapeño\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Mezcla carne molida con huevo, harina de almendra, sal y pimienta; forma albóndigas. 2. Hierve tomates verdes y jalapeño 5 min; licúa con ajo y sal. 3. Calienta aceite, fríe las albóndigas 5 min dorando todos lados. 4. Vierte salsa verde y calabacitas en rodajas; cocina a fuejo bajo 15 min tapado.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 30,
+      "servings": 1,
+      "baseCalories": 580,
+      "baseProteinGr": 48,
+      "baseFatGr": 36,
+      "baseCarbsGr": 9,
+      "baseNetCarbsGr": 6,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "keto",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 55,
+      "totalPrepTimeMin": 45,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 2,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Tuna Steak con Pico de Gallo y Aguacate",
+      "slug": "tuna-steak-pico-gallo-aguacate",
+      "description": "Filete de atún sellado con costra de pimienta, servido con pico de gallo fresco y aguacate. Plato elegante y altamente proteico.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"tuna_steak\",\"name\":\"Filete de atún\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"cebolla\",\"name\":\"Cebolla\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"chile_jalapeno\",\"name\":\"Chile jalapeño\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"aguacate\",\"name\":\"Aguacate\",\"amount\":70,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Sazona el filete de atún con sal y pimienta molida gruesa. 2. Calienta aceite en sartén a fuego alto; sella el atún 2 min por lado (término medio). 3. Prepara pico de gallo: pica jitomate, cebolla, jalapeño y cilantro; mezcla con limón y sal. 4. Corta aguacate en rebanadas. 5. Sirve el atún fileteado con pico de gallo y aguacate.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 6,
+      "servings": 1,
+      "baseCalories": 460,
+      "baseProteinGr": 55,
+      "baseFatGr": 22,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "fish",
+        "seafood"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 78,
+      "totalPrepTimeMin": 16,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Shake de Cafe con Whey y Crema",
+      "slug": "shake-cafe-whey-crema",
+      "description": "Batido proteico sabor café con whey protein, cafe y crema batida. Perfecto como breakfast rápido post-entreno matutino.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"whey_protein\",\"name\":\"Whey protein\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"cafe\",\"name\":\"Café\",\"amount\":200,\"unit\":\"ml\"},{\"code\":\"heavy_cream\",\"name\":\"Crema batida\",\"amount\":30,\"unit\":\"ml\"},{\"code\":\"canela\",\"name\":\"Canela\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"hielo\",\"name\":\"Hielo\",\"amount\":100,\"unit\":\"g\"}]",
+      "instructions": "1. Prepara café cargado y deja enfriar ligeramente. 2. Licúa café, whey protein, crema batida, canela y hielo 30 seg. 3. Sirve inmediatamente.",
+      "prepTimeMin": 3,
+      "cookTimeMin": 0,
+      "servings": 1,
+      "baseCalories": 290,
+      "baseProteinGr": 34,
+      "baseFatGr": 14,
+      "baseCarbsGr": 4,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "shake",
+        "breakfast",
+        "coffee"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 2,
+      "estimatedCostPerServingMxn": 35,
+      "totalPrepTimeMin": 3,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no-cook"
+      ]
+    },
+    {
+      "name": "Pollo al Pastor con Piña Keto",
+      "slug": "pollo-al-pastor-pina-keto",
+      "description": "Pechuga de pollo marinada al pastor con especias, asada a la plancha y servida con trozos de coco fresco (sustituto de piña). Acompañada de cebolla y cilantro.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"chicken_thighs\",\"name\":\"Muslo de pollo sin piel\",\"amount\":280,\"unit\":\"g\"},{\"code\":\"coco\",\"name\":\"Coco fresco\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"vinagre_manzana\",\"name\":\"Vinagre de manzana\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"lechuga_romana\",\"name\":\"Lechuga romana\",\"amount\":80,\"unit\":\"g\"}]",
+      "instructions": "1. Licúa vinagre, ajo, comino, orégano, sal y pimienta para hacer la marinada al pastor. 2. Marina el pollo 15 min mínimo. 3. Corta coco fresco en cubos pequeños. 4. Calienta aceite, asa el pollo 7 min por lado. 5. Corta el pollo en tiras, sirve sobre lechuga con cubos de coco, cebolla picada y cilantro.",
+      "prepTimeMin": 20,
+      "cookTimeMin": 15,
+      "servings": 1,
+      "baseCalories": 520,
+      "baseProteinGr": 60,
+      "baseFatGr": 26,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "al-pastor",
+        "keto"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 52,
+      "totalPrepTimeMin": 35,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 2,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Bowl de Yogurt Griego con Almendras y Fresa",
+      "slug": "bowl-yogurt-griego-almendras-fresa",
+      "description": "Bowl de yogurt griego natural con almendras fileteadas, fresas frescas y semillas de chía. Desayuno rápido y alto en proteína.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"greek_yogurt\",\"name\":\"Yogurt griego natural\",\"amount\":300,\"unit\":\"g\"},{\"code\":\"fresa\",\"name\":\"Fresa\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"almendras\",\"name\":\"Almendras fileteadas\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"chia\",\"name\":\"Chía\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"canela\",\"name\":\"Canela\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Coloca el yogurt griego en un bowl. 2. Lava y corta las fresas en cuartos. 3. Agrega fresas, almendras fileteadas, chía y canela por encima. 4. Mezcla y disfruta.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 0,
+      "servings": 1,
+      "baseCalories": 380,
+      "baseProteinGr": 32,
+      "baseFatGr": 18,
+      "baseCarbsGr": 10,
+      "baseNetCarbsGr": 7,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "breakfast",
+        "no-cook"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 45,
+      "totalPrepTimeMin": 5,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no-cook"
+      ]
+    },
+    {
+      "name": "Salmon con Calabacitas al Cilantro",
+      "slug": "salmon-calabacitas-cilantro",
+      "description": "Filete de salmón sellado con costra de ajo y comino, servido con calabacitas salteadas con cilantro. Plato gourmet keto athletic.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"salmon_fillet\",\"name\":\"Filete de salmón\",\"amount\":220,\"unit\":\"g\"},{\"code\":\"calabacita\",\"name\":\"Calabacita\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":8,\"unit\":\"g\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Sazona el salmón con sal, pimienta, comino y ajo picado. 2. Calienta aceite en sartén, cocina el salmón 4 min por lado (piel crujiente primero). 3. Corta calabacitas en bastones y saltéalas en la misma sartén 4 min. 4. Agrega cilantro picado al final. 5. Sirve salmón sobre calabacitas, rocía limón.",
+      "prepTimeMin": 8,
+      "cookTimeMin": 12,
+      "servings": 1,
+      "baseCalories": 550,
+      "baseProteinGr": 46,
+      "baseFatGr": 35,
+      "baseCarbsGr": 7,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 2,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "salmon",
+        "keto"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 80,
+      "totalPrepTimeMin": 20,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Shake de Yogurt Griego con Arandanos y MCT",
+      "slug": "shake-yogurt-griego-arandanos-mct",
+      "description": "Batido cremoso de yogurt griego con arándanos, aceite MCT y whey protein. Energía rápida y proteína de alto valor biológico. Ideal pre-entreno.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"greek_yogurt\",\"name\":\"Yogurt griego natural\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"whey_protein\",\"name\":\"Whey protein\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"arandano\",\"name\":\"Arándanos\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"mct_oil\",\"name\":\"Aceite MCT\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"agua\",\"name\":\"Agua\",\"amount\":200,\"unit\":\"ml\"},{\"code\":\"hielo\",\"name\":\"Hielo\",\"amount\":80,\"unit\":\"g\"}]",
+      "instructions": "1. Coloca yogurt griego, whey, arándanos, aceite MCT, agua y hielo en licuadora. 2. Licúa 30 seg hasta homogéneo. 3. Sirve inmediatamente.",
+      "prepTimeMin": 3,
+      "cookTimeMin": 0,
+      "servings": 1,
+      "baseCalories": 370,
+      "baseProteinGr": 36,
+      "baseFatGr": 18,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 6,
+      "difficultyScore": 1,
+      "tags": [
+        "mexican",
+        "athletic",
+        "high-protein",
+        "shake",
+        "pre-workout"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "athletic"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 45,
+      "totalPrepTimeMin": 3,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no-cook"
+      ]
+    },
+    {
+      "name": "Ribeye con Salsa de Aguacate y Pepitas",
+      "slug": "ribeye-salsa-aguacate-pepitas",
+      "description": "Ribeye sellado a la perfección bañado en una salsa cremosa de aguacate Hass con pepitas tostadas y cilantro. Inspirada en la cocina mexicana gourmet de vanguardia.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"beef_ribeye\",\"name\":\"Ribeye\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate Hass\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"pepita\",\"name\":\"Pepitas tostadas\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"aceite_aguacate\",\"name\":\"Aceite de aguacate\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Sazonar el ribeye con sal y pimienta, dejar reposar 10 min a temperatura ambiente. 2. Calentar aceite de aguacate en sartén de hierro a fuego alto. 3. Sellar el ribeye 4 min por cada lado para término medio, retirar y reposar. 4. Licuar aguacate, pepitas, ajo, cilantro, jugo de limón y 30 ml de agua hasta obtener salsa cremosa. 5. Servir el ribeye en rebanadas bañado con la salsa y decorar con pepitas extra.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 10,
+      "servings": 1,
+      "baseCalories": 620,
+      "baseProteinGr": 46,
+      "baseFatGr": 48,
+      "baseCarbsGr": 7,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 4,
+      "tags": [
+        "mexican",
+        "gourmet",
+        "international",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 5,
+      "estimatedCostPerServingMxn": 140,
+      "totalPrepTimeMin": 20,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Salmón a la Talla con Espárragos",
+      "slug": "salmon-talla-esparragos",
+      "description": "Filete de salmón marinado con ajo, limón y especias, asado a la parrilla estilo pescado a la talla. Inspirada en la cocina tradicional mexicana de Guerrero.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"salmon_fillet\",\"name\":\"Filete de salmón\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"esparragos\",\"name\":\"Espárragos\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva extra virgen\",\"amount\":20,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Mezclar aceite de oliva, ajo picado, orégano, jugo de limón, sal y pimienta. 2. Marinar el salmón 15 min en la mezcla. 3. Calentar parrilla o sartén a fuego alto. 4. Asar el salmón 4 min por lado, barnizando con el marinado. 5. Saltear espárragos en la misma sartén 3 min. 6. Servir el salmón sobre los espárragos con rodajas de limón.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 12,
+      "servings": 1,
+      "baseCalories": 540,
+      "baseProteinGr": 42,
+      "baseFatGr": 40,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 3,
+      "tags": [
+        "mexican",
+        "gourmet",
+        "international",
+        "seafood",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 5,
+      "estimatedCostPerServingMxn": 120,
+      "totalPrepTimeMin": 22,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop",
+        "grill"
+      ]
+    },
+    {
+      "name": "Camarones al Mojo de Ajo con Coliflor Cremosa",
+      "slug": "camarones-mojo-ajo-coliflor-cremosa",
+      "description": "Camarones salteados en mantequilla grass-fed con ajo y limón, servidos sobre puré sedoso de coliflor. Inspirada en la cocina costera mexicana.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"prawn\",\"name\":\"Camarón\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"coliflor\",\"name\":\"Coliflor\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"grass_fed_butter\",\"name\":\"Mantequilla grass-fed\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":10,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva extra virgen\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Cocer coliflor en agua hirviendo 10 min hasta suave. 2. Escurrir y licuar con 15g de mantequilla, 30 ml de agua, sal y pimienta hasta obtener puré cremoso. 3. Calentar aceite de oliva en sartén a fuego alto. 4. Saltear camarones con ajo picado 2 min por lado. 5. Agregar mantequilla restante y jugo de limón, mover 1 min. 6. Servir camarones sobre el puré de coliflor, decorar con cilantro.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 15,
+      "servings": 1,
+      "baseCalories": 480,
+      "baseProteinGr": 36,
+      "baseFatGr": 34,
+      "baseCarbsGr": 10,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 3,
+      "tags": [
+        "mexican",
+        "gourmet",
+        "international",
+        "seafood",
+        "lunch"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 95,
+      "totalPrepTimeMin": 25,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Huevos Ahogados en Salsa Roja con Manchego",
+      "slug": "huevos-ahogados-salsa-roja-manchego",
+      "description": "Huevos pochados en salsa de jitomate asado con ajo y un toque de comino, gratinados con queso manchego. Inspirada en la cocina mexicana de desayunos tradicionales.",
+      "mealType": "Breakfast",
+      "ingredients": "[{\"code\":\"egg_large\",\"name\":\"Huevo\",\"amount\":3,\"unit\":\"pieza\"},{\"code\":\"jitomate\",\"name\":\"Jitomate\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"manchego\",\"name\":\"Queso manchego\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva extra virgen\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":5,\"unit\":\"g\"}]",
+      "instructions": "1. Asar jitomates en comal o sartén hasta que la piel se queme ligeramente. 2. Licuar jitomates con ajo, comino y 50 ml de agua. 3. Calentar aceite en cacerola, verter la salsa y cocinar 5 min a fuego medio. 4. Romper los huevos directamente en la salsa, tapar y cocinar 4 min hasta que las claras estén firmes. 5. Espolvorear manchego rallado, tapar 1 min para que se derrita. 6. Servir con cilantro fresco.",
+      "prepTimeMin": 5,
+      "cookTimeMin": 15,
+      "servings": 1,
+      "baseCalories": 420,
+      "baseProteinGr": 28,
+      "baseFatGr": 32,
+      "baseCarbsGr": 8,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 3,
+      "tags": [
+        "mexican",
+        "gourmet",
+        "international",
+        "breakfast"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 3,
+      "estimatedCostPerServingMxn": 68,
+      "totalPrepTimeMin": 20,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Lubina al Horno con Limón y Espárragos",
+      "slug": "lubina-horno-limon-esparragos",
+      "description": "Filete de lubina horneado con rodajas de limón, ajo y aceite de oliva, acompañado de espárragos asados. Inspirada en la cocina mediterránea costera.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"sea_bass\",\"name\":\"Lubina\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"esparragos\",\"name\":\"Espárragos\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva extra virgen\",\"amount\":20,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":20,\"unit\":\"ml\"},{\"code\":\"oregano\",\"name\":\"Orégano\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Precalentar horno a 200°C. 2. Colocar lubina en papel aluminio, sazonar con sal, pimienta y orégano. 3. Cubrir con láminas de ajo, rodajas de limón y aceite de oliva. 4. Cerrar el papillote y hornear 20 min. 5. En otra charola, asar espárragos con aceite de oliva y sal 12 min. 6. Servir lubina con espárragos al lado.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 22,
+      "servings": 1,
+      "baseCalories": 490,
+      "baseProteinGr": 40,
+      "baseFatGr": 34,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 3,
+      "tags": [
+        "mediterranean",
+        "gourmet",
+        "international",
+        "seafood",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 5,
+      "estimatedCostPerServingMxn": 130,
+      "totalPrepTimeMin": 32,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "oven"
+      ]
+    },
+    {
+      "name": "Atún Sellado con Ensalada de Espinaca y Piñones",
+      "slug": "atun-sellado-ensalada-espinaca-pinones",
+      "description": "Filete de atún fresco sellado con costra de pimienta, servido sobre cama de espinaca baby con piñones tostados, queso manchego y vinagreta de limón. Inspirada en la cocina mediterránea.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"tuna_steak\",\"name\":\"Filete de atún\",\"amount\":180,\"unit\":\"g\"},{\"code\":\"espinaca\",\"name\":\"Espinaca\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"manchego\",\"name\":\"Queso manchego\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"pine_nuts\",\"name\":\"Piñones\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva extra virgen\",\"amount\":20,\"unit\":\"ml\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"vinagre_manzana\",\"name\":\"Vinagre de manzana\",\"amount\":5,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Sazonar atún con sal y cubrir con pimienta molida. 2. Calentar 10 ml de aceite de oliva en sartén a fuego muy alto. 3. Sellar atún 90 segundos por lado, retirar y reposar. 4. Tostar piñones en la misma sartén 1 min. 5. Mezclar espinaca con vinagre de manzana, limón y aceite restante. 6. Servir atún fileteado sobre ensalada, coronar con piñones y lascas de manchego.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 5,
+      "servings": 1,
+      "baseCalories": 530,
+      "baseProteinGr": 46,
+      "baseFatGr": 36,
+      "baseCarbsGr": 7,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 4,
+      "tags": [
+        "mediterranean",
+        "gourmet",
+        "international",
+        "seafood",
+        "lunch"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 5,
+      "estimatedCostPerServingMxn": 125,
+      "totalPrepTimeMin": 15,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Pollo al Limón con Espárragos y Parmesano",
+      "slug": "pollo-limon-esparragos-parmesano",
+      "description": "Muslos de pollo dorados en mantequilla con una salsa de limón y ajo, acompañados de espárragos salteados y parmesano. Inspirada en la cocina mediterránea italiana.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"chicken_thighs\",\"name\":\"Muslo de pollo\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"esparragos\",\"name\":\"Espárragos\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"parmesan\",\"name\":\"Queso parmesano\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva extra virgen\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"grass_fed_butter\",\"name\":\"Mantequilla grass-fed\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":20,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Sazonar muslos de pollo con sal y pimienta. 2. Calentar aceite de oliva en sartén grande a fuego medio-alto. 3. Dorar pollo 6 min por lado hasta que esté dorado y cocido. 4. Retirar pollo, agregar mantequilla y ajo, cocinar 1 min. 5. Agregar jugo de limón y 30 ml de agua, mover para desglasar. 6. Saltear espárragos en la salsa 3 min. 7. Servir pollo con espárragos y parmesano rallado encima.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 18,
+      "servings": 1,
+      "baseCalories": 490,
+      "baseProteinGr": 40,
+      "baseFatGr": 35,
+      "baseCarbsGr": 5,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 3,
+      "tags": [
+        "mediterranean",
+        "italian",
+        "gourmet",
+        "international",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 88,
+      "totalPrepTimeMin": 28,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Champiñones Rellenos con Queso Brie y Nueces",
+      "slug": "champinones-rellenos-queso-brie-nueces",
+      "description": "Champiñones grandes rellenos de queso brie cremoso y nueces caramelizadas con eritritol, envueltos en bacon crujiente. Inspirada en la cocina mediterránea y francesa de tablas de quesos.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"champiñones\",\"name\":\"Champiñones\",\"amount\":150,\"unit\":\"g\"},{\"code\":\"exotic_cheese\",\"name\":\"Queso brie\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"nueces\",\"name\":\"Nueces\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"bacon\",\"name\":\"Bacon\",\"amount\":40,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva extra virgen\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"eritritol\",\"name\":\"Eritritol\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":1,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Limpiar champiñones y retirar los tallos. 2. Picar nueces y mezclar con brie desmenuzado y eritritol. 3. Rellenar cada champiñón con la mezcla. 4. Envolver cada champiñón con media tira de bacon y asegurar con palillo. 5. Colocar en charola para horno, rociar con aceite de oliva. 6. Hornear a 190°C por 18 min hasta que el bacon esté crujiente. 7. Servir calientes.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 18,
+      "servings": 1,
+      "baseCalories": 420,
+      "baseProteinGr": 24,
+      "baseFatGr": 34,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 4,
+      "tags": [
+        "mediterranean",
+        "french",
+        "gourmet",
+        "international",
+        "snack"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 85,
+      "totalPrepTimeMin": 33,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 2,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "oven"
+      ]
+    },
+    {
+      "name": "Curry de Camarón con Leche de Coco",
+      "slug": "curry-camaron-leche-coco",
+      "description": "Camarones salteados en un curry cremoso de leche de coco con ajo, limón y especias aromáticas. Inspirada en la cocina tailandesa del sudeste asiático.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"prawn\",\"name\":\"Camarón\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"leche_coco\",\"name\":\"Leche de coco\",\"amount\":100,\"unit\":\"ml\"},{\"code\":\"aceite_coco\",\"name\":\"Aceite de coco\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"pimiento_morron\",\"name\":\"Pimiento morrón\",\"amount\":50,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":2,\"unit\":\"g\"}]",
+      "instructions": "1. Calentar aceite de coco en sartén honda a fuego medio. 2. Sofreír ajo picado y comino 1 min. 3. Agregar pimiento morrón en tiras, cocinar 2 min. 4. Incorporar camarones y saltear 2 min por lado. 5. Verter leche de coco y jugo de limón, cocinar 3 min a fuego bajo. 6. Rectificar sal y servir con cilantro fresco picado.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 12,
+      "servings": 1,
+      "baseCalories": 460,
+      "baseProteinGr": 34,
+      "baseFatGr": 34,
+      "baseCarbsGr": 9,
+      "baseNetCarbsGr": 6,
+      "difficultyScore": 3,
+      "tags": [
+        "asian",
+        "thai",
+        "gourmet",
+        "international",
+        "seafood",
+        "lunch"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 100,
+      "totalPrepTimeMin": 22,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Sopa Thai de Pollo y Coco",
+      "slug": "sopa-thai-pollo-coco",
+      "description": "Sopa aromática de pollo con leche de coco, champiñones y limón, ligeramente especiada. Inspirada en el tradicional Tom Kha Gai tailandés.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"chicken_thighs\",\"name\":\"Muslo de pollo\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"leche_coco\",\"name\":\"Leche de coco\",\"amount\":150,\"unit\":\"ml\"},{\"code\":\"champiñones\",\"name\":\"Champiñones\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"aceite_coco\",\"name\":\"Aceite de coco\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":20,\"unit\":\"ml\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Cortar pollo en trozos pequeños y sazonar con sal y pimienta. 2. Calentar aceite de coco en olla a fuego medio. 3. Saltear pollo 5 min hasta dorar. 4. Agregar ajo picado y champiñones fileteados, cocinar 2 min. 5. Verter leche de coco y 100 ml de agua, llevar a hervor suave. 6. Cocinar 10 min a fuego bajo. 7. Agregar jugo de limón, rectificar sal y servir con cilantro.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 20,
+      "servings": 1,
+      "baseCalories": 440,
+      "baseProteinGr": 36,
+      "baseFatGr": 30,
+      "baseCarbsGr": 7,
+      "baseNetCarbsGr": 5,
+      "difficultyScore": 3,
+      "tags": [
+        "asian",
+        "thai",
+        "gourmet",
+        "international",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 88,
+      "totalPrepTimeMin": 30,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 2,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Chuletas de Cerdo con Salsa de Mostaza y Crema",
+      "slug": "chuletas-cerdo-salsa-mostaza-crema",
+      "description": "Chuletas de cerdo selladas y bañadas en una salsa cremosa de mostaza Dijon con mantequilla y crema. Inspirada en la cocina bistro francesa.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"pork_chops\",\"name\":\"Chuletas de cerdo\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"heavy_cream\",\"name\":\"Crema para batir\",\"amount\":60,\"unit\":\"ml\"},{\"code\":\"mostaza\",\"name\":\"Mostaza Dijon\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"grass_fed_butter\",\"name\":\"Mantequilla grass-fed\",\"amount\":20,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva extra virgen\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Sazonar chuletas con sal y pimienta. 2. Calentar aceite en sartén a fuego alto. 3. Sellar chuletas 4 min por lado, retirar. 4. Bajar fuego, agregar mantequilla y ajo picado, cocinar 1 min. 5. Agregar mostaza y crema, mezclar y cocinar 2 min hasta espesar. 6. Regresar chuletas a la salsa, cocinar 2 min más. 7. Servir bañadas con la salsa.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 15,
+      "servings": 1,
+      "baseCalories": 520,
+      "baseProteinGr": 42,
+      "baseFatGr": 38,
+      "baseCarbsGr": 4,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 4,
+      "tags": [
+        "french",
+        "gourmet",
+        "international",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 110,
+      "totalPrepTimeMin": 25,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Salmón en Costra de Almendras con Mantequilla",
+      "slug": "salmon-costra-almendras-mantequilla",
+      "description": "Filete de salmón cubierto con costra de almendra molida y hierbas, horneado con mantequilla grass-fed hasta quedar dorado. Inspirada en la cocina francesa clásica.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"salmon_fillet\",\"name\":\"Filete de salmón\",\"amount\":200,\"unit\":\"g\"},{\"code\":\"almond_flour_premium\",\"name\":\"Harina de almendra premium\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"grass_fed_butter\",\"name\":\"Mantequilla grass-fed\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"esparragos\",\"name\":\"Espárragos\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":10,\"unit\":\"ml\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Precalentar horno a 200°C. 2. Mezclar harina de almendra con ajo picado, sal y pimienta. 3. Untar salmón con 15g de mantequilla suave y cubrir con la mezcla de almendra. 4. Colocar en charola con papel encerado, hornear 15 min. 5. Derretir mantequilla restante en sartén y saltear espárragos 4 min. 6. Servir salmón con espárragos y un chorrito de limón.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 18,
+      "servings": 1,
+      "baseCalories": 580,
+      "baseProteinGr": 44,
+      "baseFatGr": 42,
+      "baseCarbsGr": 7,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 4,
+      "tags": [
+        "french",
+        "gourmet",
+        "international",
+        "seafood",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 5,
+      "estimatedCostPerServingMxn": 138,
+      "totalPrepTimeMin": 33,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "oven"
+      ]
+    },
+    {
+      "name": "Ribeye con Salsa Cremosa de Champiñones y Parmesano",
+      "slug": "ribeye-salsa-champinones-parmesano",
+      "description": "Ribeye sellado servido con una salsa cremosa de champiñones, ajo y queso parmesano. Inspirada en la cocina italiana de la Toscana.",
+      "mealType": "Dinner",
+      "ingredients": "[{\"code\":\"beef_ribeye\",\"name\":\"Ribeye\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"champiñones\",\"name\":\"Champiñones\",\"amount\":100,\"unit\":\"g\"},{\"code\":\"parmesan\",\"name\":\"Queso parmesano\",\"amount\":25,\"unit\":\"g\"},{\"code\":\"heavy_cream\",\"name\":\"Crema para batir\",\"amount\":60,\"unit\":\"ml\"},{\"code\":\"grass_fed_butter\",\"name\":\"Mantequilla grass-fed\",\"amount\":15,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva extra virgen\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Sazonar ribeye con sal y pimienta, reposar 10 min. 2. Calentar aceite de oliva en sartén de hierro a fuego alto. 3. Sellar ribeye 4 min por lado, retirar y reposar. 4. En la misma sartén a fuego medio, agregar mantequilla y ajo. 5. Agregar champiñones fileteados, cocinar 4 min. 6. Verter crema y parmesano, cocinar 3 min hasta espesar. 7. Servir ribeye bañado con la salsa de champiñones.",
+      "prepTimeMin": 10,
+      "cookTimeMin": 18,
+      "servings": 1,
+      "baseCalories": 640,
+      "baseProteinGr": 48,
+      "baseFatGr": 50,
+      "baseCarbsGr": 6,
+      "baseNetCarbsGr": 4,
+      "difficultyScore": 4,
+      "tags": [
+        "italian",
+        "gourmet",
+        "international",
+        "dinner"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 5,
+      "estimatedCostPerServingMxn": 150,
+      "totalPrepTimeMin": 28,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "stovetop"
+      ]
+    },
+    {
+      "name": "Ceviche de Lubina con Leche de Tigre y Aguacate",
+      "slug": "ceviche-lubina-leche-tigre-aguacate",
+      "description": "Lubina fresca marinada en leche de tigre cítrica con cebolla morada, cilantro y aguacate. Inspirada en la cocina peruana tradicional.",
+      "mealType": "Snack",
+      "ingredients": "[{\"code\":\"sea_bass\",\"name\":\"Lubina\",\"amount\":180,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":60,\"unit\":\"ml\"},{\"code\":\"cebolla\",\"name\":\"Cebolla blanca\",\"amount\":30,\"unit\":\"g\"},{\"code\":\"aguacate\",\"name\":\"Aguacate Hass\",\"amount\":80,\"unit\":\"g\"},{\"code\":\"cilantro\",\"name\":\"Cilantro\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":3,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Cortar lubina en cubos pequeños de 1 cm. 2. Mezclar jugo de limón con ajo triturado, sal y pimienta para la leche de tigre. 3. Marinar el pescado en la leche de tigre 10 min en refrigeración. 4. Cortar cebolla en juliana fina y aguacate en cubos. 5. Mezclar todo con cilantro picado. 6. Servir frío en copa o plato hondo.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 0,
+      "servings": 1,
+      "baseCalories": 380,
+      "baseProteinGr": 36,
+      "baseFatGr": 24,
+      "baseCarbsGr": 7,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 4,
+      "tags": [
+        "peruvian",
+        "gourmet",
+        "international",
+        "seafood",
+        "snack"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 100,
+      "totalPrepTimeMin": 25,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 1,
+      "isBatchCookable": false,
+      "isFreezable": false,
+      "cookingMethods": [
+        "no_cook"
+      ]
+    },
+    {
+      "name": "Brochetas de Pollo con Salsa de Yogurt y Especias",
+      "slug": "brochetas-pollo-salsa-yogurt-especias",
+      "description": "Brochetas de pollo marinadas con comino y limón, asadas a la parrilla y servidas con salsa cremosa de yogurt, ajo y hierbas. Inspirada en la cocina árabe y del Medio Oriente.",
+      "mealType": "Lunch",
+      "ingredients": "[{\"code\":\"chicken_thighs\",\"name\":\"Muslo de pollo\",\"amount\":250,\"unit\":\"g\"},{\"code\":\"greek_yogurt\",\"name\":\"Yogurt griego\",\"amount\":60,\"unit\":\"g\"},{\"code\":\"aceite_oliva\",\"name\":\"Aceite de oliva extra virgen\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"ajo\",\"name\":\"Ajo\",\"amount\":5,\"unit\":\"g\"},{\"code\":\"limon\",\"name\":\"Limón\",\"amount\":15,\"unit\":\"ml\"},{\"code\":\"comino\",\"name\":\"Comino\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"sal\",\"name\":\"Sal\",\"amount\":2,\"unit\":\"g\"},{\"code\":\"pimienta\",\"name\":\"Pimienta negra\",\"amount\":1,\"unit\":\"g\"}]",
+      "instructions": "1. Cortar pollo en cubos de 3 cm. 2. Marinar con aceite de oliva, comino, ajo picado, jugo de limón, sal y pimienta 20 min. 3. Ensartar en brochetas. 4. Asar en parrilla o sartén 5 min por lado hasta dorar. 5. Mezclar yogurt griego con ajo picado, sal y limón para la salsa. 6. Servir brochetas con la salsa de yogurt al lado.",
+      "prepTimeMin": 15,
+      "cookTimeMin": 12,
+      "servings": 1,
+      "baseCalories": 450,
+      "baseProteinGr": 40,
+      "baseFatGr": 30,
+      "baseCarbsGr": 5,
+      "baseNetCarbsGr": 3,
+      "difficultyScore": 3,
+      "tags": [
+        "arabic",
+        "middle-eastern",
+        "gourmet",
+        "international",
+        "lunch"
+      ],
+      "source": "Curated",
+      "compatibleModeCodes": [
+        "gourmet"
+      ],
+      "economicTier": 4,
+      "estimatedCostPerServingMxn": 85,
+      "totalPrepTimeMin": 27,
+      "yieldServingsMin": 1,
+      "yieldServingsMax": 2,
+      "isBatchCookable": true,
+      "isFreezable": true,
+      "cookingMethods": [
+        "stovetop",
+        "grill"
+      ]
     }
   ]
 }
