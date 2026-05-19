@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Application.Common.Models;
 using NutriCasa.Application.Features.Onboarding.DTOs;
+using NutriCasa.Application.Features.Plans.Commands.GeneratePlan;
 using NutriCasa.Application.Services;
 using NutriCasa.Domain.Entities;
 using NutriCasa.Domain.Enums;
@@ -14,15 +15,18 @@ public class CompleteStep7DisclaimerGoalCommandHandler : IRequestHandler<Complet
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
     private readonly KetoProfileCalculator _ketoCalculator;
+    private readonly ISender _sender;
 
     public CompleteStep7DisclaimerGoalCommandHandler(
         IApplicationDbContext context,
         ICurrentUserService currentUserService,
-        KetoProfileCalculator ketoCalculator)
+        KetoProfileCalculator ketoCalculator,
+        ISender sender)
     {
         _context = context;
         _currentUserService = currentUserService;
         _ketoCalculator = ketoCalculator;
+        _sender = sender;
     }
 
     public async Task<Result<CompleteStep7DisclaimerGoalResponse>> Handle(CompleteStep7DisclaimerGoalCommand request, CancellationToken cancellationToken)
@@ -79,7 +83,7 @@ public class CompleteStep7DisclaimerGoalCommandHandler : IRequestHandler<Complet
 
         // 1. Actualizar disclaimer en usuario
         user.DisclaimerAcceptedAt = DateTime.UtcNow;
-        user.DisclaimerVersionId = request.DisclaimerVersionId;
+        user.DisclaimerVersionId = disclaimer.Id;
 
         // 2. Actualizar meta activa si existe
         var activeGoal = user.UserGoals.FirstOrDefault(g => g.IsActive);
@@ -162,11 +166,27 @@ public class CompleteStep7DisclaimerGoalCommandHandler : IRequestHandler<Complet
 
         await _context.SaveChangesAsync(cancellationToken);
 
+        var firstPlanResult = await _sender.Send(new GeneratePlanCommand
+        {
+            WeekStartDate = GetCurrentWeekStart(),
+            ForceRegenerate = false,
+        }, cancellationToken);
+
         return Result<CompleteStep7DisclaimerGoalResponse>.Success(new CompleteStep7DisclaimerGoalResponse
         {
             OnboardingComplete = true,
-            KetoProfile = result
+            KetoProfile = result,
+            FirstPlanGenerated = firstPlanResult.IsSuccess && firstPlanResult.Value is not null,
+            FirstPlanId = firstPlanResult.Value?.PlanId,
+            FirstPlanError = firstPlanResult.IsSuccess ? null : firstPlanResult.Error
         });
+    }
+
+    private static DateOnly GetCurrentWeekStart()
+    {
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+        var daysSinceMonday = ((int)today.DayOfWeek + 6) % 7;
+        return today.AddDays(-daysSinceMonday);
     }
 
     private async Task<decimal> GetThresholdDecimalAsync(string code, decimal def, CancellationToken ct)

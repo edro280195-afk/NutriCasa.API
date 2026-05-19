@@ -28,6 +28,7 @@ public record UserSubscriptionDto
     public required DateTime StartedAt { get; init; }
     public DateTime? CurrentPeriodEnd { get; init; }
     public bool CancelAtPeriodEnd { get; init; }
+    public string? CheckoutUrl { get; init; }
 }
 
 public record CreateCheckoutRequestDto
@@ -38,4 +39,9 @@ public record CreateCheckoutRequestDto
 public record TrialSubscriptionRequestDto
 {
     public required Guid PlanId { get; init; }
+}
+
+public record ConfirmPaymentRequestDto
+{
+    public required string PaymentId { get; init; }
 }

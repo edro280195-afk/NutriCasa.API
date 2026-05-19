@@ -58,5 +58,20 @@ public static class HangfireConfiguration
             "motivation-post-thu",
             job => job.RunAsync(CancellationToken.None),
             Cron.Weekly(DayOfWeek.Thursday, 18));
+
+        manager.AddOrUpdate<ChallengeFinalizationJob>(
+            "challenge-finalization",
+            job => job.ExecuteAsync(CancellationToken.None),
+            Cron.Daily(3));
+
+        manager.AddOrUpdate<WeeklySummaryJob>(
+            "weekly-summary",
+            job => job.RunAsync(CancellationToken.None),
+            Cron.Weekly(DayOfWeek.Sunday, 7));
+
+        manager.AddOrUpdate<RefeedDetectionJob>(
+            "refeed-detection",
+            job => job.RunAsync(CancellationToken.None),
+            Cron.Weekly(DayOfWeek.Monday, 6));
     }
 }

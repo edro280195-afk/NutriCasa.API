@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Application.Common.Models;
 using NutriCasa.Application.Features.Subscriptions.DTOs;
@@ -30,20 +31,41 @@ public class GetMySubscriptionQueryHandler : IRequestHandler<GetMySubscriptionQu
             .Include(s => s.Plan)
             .Where(s => s.UserId == userId && s.Status != Domain.Enums.SubscriptionStatus.Expired)
             .OrderByDescending(s => s.StartedAt)
-            .Select(s => new UserSubscriptionDto
-            {
-                SubscriptionId = s.Id,
-                PlanId = s.PlanId,
-                PlanCode = s.Plan.Code,
-                PlanName = s.Plan.Name,
-                PriceMonthlyMxn = s.Plan.PriceMonthlyMxn,
-                Status = s.Status.ToString(),
-                StartedAt = s.StartedAt,
-                CurrentPeriodEnd = s.CurrentPeriodEnd,
-                CancelAtPeriodEnd = s.CancelAtPeriodEnd,
-            })
             .FirstOrDefaultAsync(cancellationToken);
 
-        return Result<UserSubscriptionDto?>.Success(sub);
+        if (sub is null)
+            return Result<UserSubscriptionDto?>.Success(null);
+
+        return Result<UserSubscriptionDto?>.Success(new UserSubscriptionDto
+        {
+            SubscriptionId = sub.Id,
+            PlanId = sub.PlanId,
+            PlanCode = sub.Plan.Code,
+            PlanName = sub.Plan.Name,
+            PriceMonthlyMxn = sub.Plan.PriceMonthlyMxn,
+            Status = sub.Status.ToString(),
+            StartedAt = sub.StartedAt,
+            CurrentPeriodEnd = sub.CurrentPeriodEnd,
+            CancelAtPeriodEnd = sub.CancelAtPeriodEnd,
+            CheckoutUrl = GetCheckoutUrl(sub.Metadata),
+        });
+    }
+
+    private static string? GetCheckoutUrl(string? metadata)
+    {
+        if (string.IsNullOrWhiteSpace(metadata))
+            return null;
+
+        try
+        {
+            using var doc = JsonDocument.Parse(metadata);
+            return doc.RootElement.TryGetProperty("checkout_url", out var value)
+                ? value.GetString()
+                : null;
+        }
+        catch (JsonException)
+        {
+            return null;
+        }
     }
 }

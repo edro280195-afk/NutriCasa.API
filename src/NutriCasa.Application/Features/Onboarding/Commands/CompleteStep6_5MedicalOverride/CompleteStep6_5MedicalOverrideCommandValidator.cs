@@ -12,7 +12,5 @@ public class CompleteStep6_5MedicalOverrideCommandValidator : AbstractValidator<
         RuleFor(x => x.DisclaimerAccepted)
             .Equal(true).WithMessage("Debes aceptar el disclaimer médico.");
 
-        RuleFor(x => x.DisclaimerVersionId)
-            .NotEmpty().WithMessage("El disclaimer de override es requerido.");
     }
 }

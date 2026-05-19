@@ -59,7 +59,6 @@ public class MilestoneDetectionJob
                     MilestoneType = "first_kg",
                     MilestoneValue = (decimal)totalLost,
                     AchievedAt = DateTime.UtcNow,
-                    PostedToGroup = false,
                 };
                 _context.UserMilestones.Add(milestone);
                 detectedCount++;
@@ -76,7 +75,6 @@ public class MilestoneDetectionJob
                     MilestoneType = "five_kg",
                     MilestoneValue = (decimal)totalLost,
                     AchievedAt = DateTime.UtcNow,
-                    PostedToGroup = false,
                 };
                 _context.UserMilestones.Add(milestone);
                 detectedCount++;
@@ -85,32 +83,103 @@ public class MilestoneDetectionJob
                     postCount++;
             }
 
-            var weekStreak = await _context.DailyCheckIns
+            if (totalLost >= 10 && !existingMilestones.Contains("ten_kg"))
+            {
+                var milestone = new UserMilestone
+                {
+                    UserId = user.Id,
+                    MilestoneType = "ten_kg",
+                    MilestoneValue = (decimal)totalLost,
+                    AchievedAt = DateTime.UtcNow,
+                };
+                _context.UserMilestones.Add(milestone);
+                detectedCount++;
+
+                if (await PostToGroupWallAsync(user, $"{user.FullName} perdió 10 kg 🏆 ¡Logro extraordinario!", ct))
+                    postCount++;
+            }
+
+            var checkInDates = await _context.DailyCheckIns
                 .Where(c => c.UserId == user.Id)
                 .OrderByDescending(c => c.CheckInDate)
-                .Take(30)
-                .CountAsync(ct);
+                .Select(c => c.CheckInDate)
+                .ToListAsync(ct);
 
-            if (weekStreak >= 7 && !existingMilestones.Contains("week_streak"))
+            var currentStreak = CalculateCurrentStreak(checkInDates);
+
+            if (currentStreak >= 7 && !existingMilestones.Contains("week_streak"))
             {
                 var milestone = new UserMilestone
                 {
                     UserId = user.Id,
                     MilestoneType = "week_streak",
-                    MilestoneValue = weekStreak,
+                    MilestoneValue = currentStreak,
                     AchievedAt = DateTime.UtcNow,
-                    PostedToGroup = false,
                 };
                 _context.UserMilestones.Add(milestone);
                 detectedCount++;
 
-                if (await PostToGroupWallAsync(user, $"{user.FullName} completó {weekStreak} días de check-in consecutivos 🔥", ct))
+                if (await PostToGroupWallAsync(user, $"{user.FullName} completó {currentStreak} días de check-in consecutivos 🔥", ct))
+                    postCount++;
+            }
+
+            if (currentStreak >= 30 && !existingMilestones.Contains("thirty_day"))
+            {
+                var milestone = new UserMilestone
+                {
+                    UserId = user.Id,
+                    MilestoneType = "thirty_day",
+                    MilestoneValue = currentStreak,
+                    AchievedAt = DateTime.UtcNow,
+                };
+                _context.UserMilestones.Add(milestone);
+                detectedCount++;
+
+                if (await PostToGroupWallAsync(user, $"{user.FullName} lleva {currentStreak} días consecutivos de check-in 💪 ¡Un mes completo!", ct))
+                    postCount++;
+            }
+
+            if (currentStreak >= 60 && !existingMilestones.Contains("sixty_day"))
+            {
+                var milestone = new UserMilestone
+                {
+                    UserId = user.Id,
+                    MilestoneType = "sixty_day",
+                    MilestoneValue = currentStreak,
+                    AchievedAt = DateTime.UtcNow,
+                };
+                _context.UserMilestones.Add(milestone);
+                detectedCount++;
+
+                if (await PostToGroupWallAsync(user, $"{user.FullName} alcanzó {currentStreak} días de check-in consecutivos 👑 ¡Dos meses imparable!", ct))
                     postCount++;
             }
         }
 
         await _context.SaveChangesAsync(ct);
         _logger.LogInformation("MilestoneDetection: {Detected} hitos detectados, {Posted} publicados al muro.", detectedCount, postCount);
+    }
+
+    private static int CalculateCurrentStreak(List<DateOnly> checkInDates)
+    {
+        if (checkInDates.Count == 0) return 0;
+
+        checkInDates = checkInDates.OrderByDescending(d => d).ToList();
+        var today = DateOnly.FromDateTime(DateTime.UtcNow);
+
+        if ((today.DayNumber - checkInDates[0].DayNumber) > 1)
+            return 0;
+
+        int streak = 1;
+        for (int i = 1; i < checkInDates.Count; i++)
+        {
+            if ((checkInDates[i - 1].DayNumber - checkInDates[i].DayNumber) == 1)
+                streak++;
+            else
+                break;
+        }
+
+        return streak;
     }
 
     private async Task<bool> PostToGroupWallAsync(User user, string content, CancellationToken ct)

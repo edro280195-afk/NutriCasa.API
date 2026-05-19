@@ -36,7 +36,8 @@ public class GenerateShoppingListCommandHandler : IRequestHandler<GenerateShoppi
             return Result.Failure("Solo owner o admin pueden generar la lista de compras.", "FORBIDDEN");
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
-        var weekStart = today.AddDays(-(int)today.DayOfWeek);
+        var daysSinceMonday = ((int)today.DayOfWeek + 6) % 7;
+        var weekStart = today.AddDays(-daysSinceMonday);
         var weekEnd = weekStart.AddDays(6);
 
         // Buscar planes activos de todos los miembros del grupo

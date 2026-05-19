@@ -50,7 +50,10 @@ public class CreateSubscriptionCommandHandler : IRequestHandler<CreateSubscripti
 
         // Check for existing active subscription
         var existing = await _context.UserSubscriptions
-            .AnyAsync(s => s.UserId == userId && s.Status == SubscriptionStatus.Active, cancellationToken);
+            .AnyAsync(s => s.UserId == userId
+                        && (s.Status == SubscriptionStatus.Active
+                         || s.Status == SubscriptionStatus.Trialing
+                         || s.Status == SubscriptionStatus.Pending), cancellationToken);
 
         if (existing)
             return Result<UserSubscriptionDto>.Failure("Ya tienes una suscripción activa.", "CONFLICT");
@@ -65,10 +68,14 @@ public class CreateSubscriptionCommandHandler : IRequestHandler<CreateSubscripti
                 return Result<UserSubscriptionDto>.Failure("Ya usaste el período de prueba para este plan.", "TRIAL_USED");
         }
 
-        string providerSubId;
+        string? providerSubId = null;
+        string? checkoutUrl = null;
+        var status = SubscriptionStatus.Active;
+        var paymentProvider = plan.PriceMonthlyMxn <= 0 ? "free" : "mercadopago";
 
         if (request.IsTrial && plan.TrialDays > 0)
         {
+            status = SubscriptionStatus.Trialing;
             providerSubId = await _paymentService.CreateTrialSubscriptionAsync(userId, request.PlanId, cancellationToken);
 
             var trialRecord = new UserTrialUsed
@@ -81,21 +88,29 @@ public class CreateSubscriptionCommandHandler : IRequestHandler<CreateSubscripti
             };
             _context.UserTrialsUsed.Add(trialRecord);
         }
+        else if (plan.PriceMonthlyMxn <= 0)
+        {
+            providerSubId = $"free_{userId:N}_{plan.Id:N}";
+        }
         else
         {
-            providerSubId = await _paymentService.CreateCheckoutSessionAsync(userId, request.PlanId, "/subscription/success", cancellationToken);
+            status = SubscriptionStatus.Pending;
+            var checkout = await _paymentService.CreateCheckoutSessionAsync(userId, request.PlanId, "/profile/subscription?payment=success", cancellationToken);
+            providerSubId = checkout.ProviderReference;
+            checkoutUrl = checkout.CheckoutUrl;
         }
 
         var subscription = new UserSubscription
         {
             UserId = userId,
             PlanId = request.PlanId,
-            Status = request.IsTrial ? SubscriptionStatus.Trialing : SubscriptionStatus.Active,
+            Status = status,
             StartedAt = now,
             CurrentPeriodStart = now,
             CurrentPeriodEnd = request.IsTrial ? now.AddDays(plan.TrialDays) : now.AddMonths(1),
-            PaymentProvider = "mercadopago_stub",
+            PaymentProvider = paymentProvider,
             ProviderSubscriptionId = providerSubId,
+            Metadata = checkoutUrl is null ? null : System.Text.Json.JsonSerializer.Serialize(new { checkout_url = checkoutUrl }),
         };
 
         _context.UserSubscriptions.Add(subscription);
@@ -112,6 +127,7 @@ public class CreateSubscriptionCommandHandler : IRequestHandler<CreateSubscripti
             StartedAt = subscription.StartedAt,
             CurrentPeriodEnd = subscription.CurrentPeriodEnd,
             CancelAtPeriodEnd = subscription.CancelAtPeriodEnd,
+            CheckoutUrl = checkoutUrl,
         };
 
         return Result<UserSubscriptionDto>.Success(dto);

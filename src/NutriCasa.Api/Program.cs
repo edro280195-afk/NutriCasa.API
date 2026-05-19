@@ -38,10 +38,19 @@ builder.Services.AddSwaggerGen(c =>
 });
 builder.Services.AddSignalR();
 
-// File storage — local dev (swap to CloudflareR2StorageService for production with R2 credentials)
+// File storage
 var webRoot = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
 builder.Services.AddScoped<IFileStorageService>(sp =>
-    new LocalFileStorageService(webRoot, "https://localhost:7120"));
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    var provider = config["Storage:Provider"];
+
+    if (string.Equals(provider, "R2", StringComparison.OrdinalIgnoreCase))
+        return new CloudflareR2StorageService(config);
+
+    var publicBaseUrl = config["Storage:Local:PublicBaseUrl"] ?? "https://localhost:7120";
+    return new LocalFileStorageService(webRoot, publicBaseUrl);
+});
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("DefaultConnection")!, name: "postgresql");
 builder.Services.AddCors(options =>

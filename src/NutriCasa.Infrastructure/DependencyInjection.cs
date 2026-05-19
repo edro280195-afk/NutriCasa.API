@@ -45,7 +45,18 @@ public static class DependencyInjection
         services.AddScoped<ICostEstimationService, CostEstimationService>();
         services.AddScoped<IIngredientSubstitutionService, IngredientSubstitutionService>();
         services.AddScoped<IModerationService, ModerationService>();
-        services.AddScoped<IPaymentService, MercadoPagoServiceStub>();
+        if (string.Equals(configuration["Payments:Provider"], "MercadoPago", StringComparison.OrdinalIgnoreCase))
+        {
+            services.AddHttpClient<IPaymentService, MercadoPagoPaymentService>((_, client) =>
+            {
+                client.BaseAddress = new Uri("https://api.mercadopago.com/");
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", $"Bearer {configuration["MercadoPago:AccessToken"]}");
+            });
+        }
+        else
+        {
+            services.AddScoped<IPaymentService, SimulatedPaymentService>();
+        }
         services.AddScoped<IEmailService, ResendEmailService>();
 
         // Hangfire

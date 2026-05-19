@@ -1,22 +1,20 @@
 using NutriCasa.Application.Common.Interfaces;
-using NutriCasa.Domain.Entities;
-using NutriCasa.Domain.Enums;
 
 namespace NutriCasa.Infrastructure.Services;
 
-public class MercadoPagoServiceStub : IPaymentService
+public class SimulatedPaymentService : IPaymentService
 {
     private static int _counter;
 
-    public Task<string> CreateCheckoutSessionAsync(Guid userId, Guid planId, string returnUrl, CancellationToken ct = default)
+    public Task<PaymentCheckoutResult> CreateCheckoutSessionAsync(Guid userId, Guid planId, string returnUrl, CancellationToken ct = default)
     {
-        var sessionId = $"mp_sim_{Interlocked.Increment(ref _counter):x8}";
-        return Task.FromResult(sessionId);
+        var sessionId = $"pay_sim_{Interlocked.Increment(ref _counter):x8}";
+        return Task.FromResult(new PaymentCheckoutResult(sessionId, returnUrl));
     }
 
     public Task<string> CreateTrialSubscriptionAsync(Guid userId, Guid planId, CancellationToken ct = default)
     {
-        var subId = $"mp_sub_sim_{Interlocked.Increment(ref _counter):x8}";
+        var subId = $"trial_sim_{Interlocked.Increment(ref _counter):x8}";
         return Task.FromResult(subId);
     }
 

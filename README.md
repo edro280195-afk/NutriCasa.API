@@ -99,28 +99,28 @@ NutriCasa/
 
 | Fase | Descripción | Estado |
 |------|-------------|--------|
-| 0 | Schema + Clean Architecture + Seeds | ✅ Actual |
-| 1 | Auth + Registro + Perfil médico + Planes IA | Pendiente |
-| 1.5 | Recetas curated + catálogo inicial | Pendiente |
-| 2 | Editor drag-and-drop + Swaps | Pendiente |
-| 3 | Fotos progreso + R2 Storage | Pendiente |
-| 4 | Social + Moderación | Pendiente |
-| 5 | Gamificación + Challenges | Pendiente |
+| 0 | Schema + Clean Architecture + Seeds | Completa |
+| 1 | Auth + Registro + Perfil médico + Planes IA | Completa |
+| 1.5 | Recetas curated + catálogo inicial | Completa |
+| 2 | Editor drag-and-drop + Swaps | Completa |
+| 3 | Fotos progreso + R2 Storage | Implementada |
+| 4 | Social + Moderación básica | Implementada |
+| 5 | Gamificación + Challenges | Avance implementado |
 | 6 | Chat IA + SignalR | Pendiente |
-| 7 | PWA + Push notifications | Pendiente |
-| 8 | Monetización + MercadoPago | Pendiente |
+| 7 | PWA + Push notifications | Implementada parcial |
+| 8 | Monetización + MercadoPago | Checkout Pro básico implementado |
 
-## Servicios stub preparados
+## Servicios externos
 
-Los siguientes servicios están registrados como stubs con `NotImplementedException`, listos para implementarse en fases posteriores:
+Servicios relevantes registrados por configuración:
 
-- `GeminiServiceStub` → Fase 1: Integración con Gemini 2.5 Pro/Flash
-- `PlanValidatorStub` → Fase 1: Validador de respuestas IA
-- `CostEstimationServiceStub` → Fase 1: Estimación de costos
-- `IngredientSubstitutionServiceStub` → Fase 1: Sustitución por modo
-- `CloudflareR2StorageService` → Fase 3: Storage de fotos
-- `ModerationServiceStub` → Fase 4: Filtro híbrido
-- `MercadoPagoServiceStub` → Fase 8: Pagos
+- `GeminiService`: generación de planes y swaps con fallback curated.
+- `CloudflareR2StorageService`: storage real por API S3 compatible. Activar con `Storage:Provider = R2`.
+- `MercadoPagoPaymentService`: Checkout Pro básico. Activar con `Payments:Provider = MercadoPago`.
+- `SimulatedPaymentService`: proveedor local para desarrollo cuando `Payments:Provider = Simulated`.
+- `ModerationService`: moderación básica con `toxic_words`.
+
+No debe haber servicios registrados con `NotImplementedException` en runtime.
 
 ## Licencia
 

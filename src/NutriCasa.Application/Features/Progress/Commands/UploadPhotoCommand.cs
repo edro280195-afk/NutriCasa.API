@@ -2,8 +2,10 @@ using MediatR;
 using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Application.Common.Models;
 using NutriCasa.Application.Features.Progress.DTOs;
+using NutriCasa.Domain.Constants;
 using NutriCasa.Domain.Entities;
 using NutriCasa.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace NutriCasa.Application.Features.Progress.Commands;
 
@@ -62,6 +64,19 @@ public class UploadPhotoCommandHandler : IRequestHandler<UploadPhotoCommand, Res
         DateOnly takenAt;
         if (!DateOnly.TryParse(request.TakenAt, out takenAt))
             takenAt = DateOnly.FromDateTime(DateTime.UtcNow);
+
+        var maxPhotosPerDay = await _context.SystemThresholds
+            .Where(t => t.Code == SystemThresholdCodes.MaxPhotosPerUserDay && t.IsActive)
+            .Select(t => (int?)(t.NumericValue ?? 20))
+            .FirstOrDefaultAsync(ct) ?? 20;
+
+        var photosToday = await _context.ProgressPhotos
+            .CountAsync(p => p.UserId == userId && p.TakenAt == takenAt && p.DeletedAt == null, ct);
+
+        if (photosToday >= maxPhotosPerDay)
+            return Result<UploadPhotoResultDto>.Failure(
+                $"Ya alcanzaste el limite de {maxPhotosPerDay} fotos para ese dia.",
+                "PHOTO_DAILY_LIMIT_REACHED");
 
         var storageKey = await _storage.UploadAsync(request.FileStream, request.FileName, request.ContentType, ct);
         var photoUrl = _storage.GetPublicUrl(storageKey);

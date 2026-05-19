@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NutriCasa.Application.Features.Subscriptions.Commands.CancelSubscription;
+using NutriCasa.Application.Features.Subscriptions.Commands.ConfirmPayment;
 using NutriCasa.Application.Features.Subscriptions.Commands.CreateSubscription;
 using NutriCasa.Application.Features.Subscriptions.DTOs;
 using NutriCasa.Application.Features.Subscriptions.Queries.GetMySubscription;
@@ -35,6 +36,13 @@ public class SubscriptionsController : BaseApiController
     public async Task<IActionResult> StartTrial([FromBody] TrialSubscriptionRequestDto request, CancellationToken ct)
     {
         var command = new CreateSubscriptionCommand { PlanId = request.PlanId, IsTrial = true };
+        return HandleResult(await _mediator.Send(command, ct));
+    }
+
+    [HttpPost("confirm-payment")]
+    public async Task<IActionResult> ConfirmPayment([FromBody] ConfirmPaymentRequestDto request, CancellationToken ct)
+    {
+        var command = new ConfirmSubscriptionPaymentCommand { PaymentId = request.PaymentId };
         return HandleResult(await _mediator.Send(command, ct));
     }
 

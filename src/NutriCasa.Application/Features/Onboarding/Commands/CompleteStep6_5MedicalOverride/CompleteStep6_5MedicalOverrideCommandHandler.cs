@@ -58,16 +58,20 @@ public class CompleteStep6_5MedicalOverrideCommandHandler : IRequestHandler<Comp
         if (!_passwordHasher.Verify(request.PasswordConfirmation, user.PasswordHash))
             return Result.Failure("La contraseña no es correcta.", "INVALID_PASSWORD");
 
-        var disclaimer = await _context.DisclaimerVersions
-            .FirstOrDefaultAsync(d => d.Id == request.DisclaimerVersionId
-                                   && d.DisclaimerType == "override"
-                                   && d.IsCurrent, cancellationToken);
+        var disclaimer = request.DisclaimerVersionId.HasValue
+            ? await _context.DisclaimerVersions
+                .FirstOrDefaultAsync(d => d.Id == request.DisclaimerVersionId.Value
+                                       && d.DisclaimerType == "override"
+                                       && d.IsCurrent, cancellationToken)
+            : await _context.DisclaimerVersions
+                .FirstOrDefaultAsync(d => d.DisclaimerType == "override"
+                                       && d.IsCurrent, cancellationToken);
 
         if (disclaimer is null)
             return Result.Failure("El disclaimer de override no está disponible.", "INVALID_DISCLAIMER");
 
         user.MedicalProfile.OverrideAcceptedAt = DateTime.UtcNow;
-        user.MedicalProfile.OverrideDisclaimerVersionId = request.DisclaimerVersionId;
+        user.MedicalProfile.OverrideDisclaimerVersionId = disclaimer.Id;
 
         var auditLog = new AuditLog
         {
@@ -79,7 +83,7 @@ public class CompleteStep6_5MedicalOverrideCommandHandler : IRequestHandler<Comp
             NewValues = JsonSerializer.Serialize(new
             {
                 override_accepted_at = DateTime.UtcNow,
-                disclaimer_version_id = request.DisclaimerVersionId.ToString(),
+                disclaimer_version_id = disclaimer.Id.ToString(),
                 ip_address = _currentUserService.IpAddress
             }),
             IpAddress = System.Net.IPAddress.TryParse(_currentUserService.IpAddress, out var ip) ? ip : null,
