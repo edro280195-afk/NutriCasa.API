@@ -115,7 +115,8 @@ var app = builder.Build();
 await DatabaseSeeder.SeedAsync(app.Services);
 
 // Register recurring jobs
-HangfireConfiguration.RegisterRecurringJobs();
+var recurringJobManager = app.Services.GetRequiredService<IRecurringJobManager>();
+HangfireConfiguration.RegisterRecurringJobs(recurringJobManager);
 
 // Middleware pipeline
 if (app.Environment.IsDevelopment())

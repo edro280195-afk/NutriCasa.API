@@ -22,39 +22,39 @@ public static class HangfireConfiguration
         return services;
     }
 
-    public static void RegisterRecurringJobs()
+    public static void RegisterRecurringJobs(IRecurringJobManager manager)
     {
-        RecurringJob.AddOrUpdate<AccountDeletionPurgeJob>(
+        manager.AddOrUpdate<AccountDeletionPurgeJob>(
             "account-deletion-purge",
             job => job.RunAsync(CancellationToken.None),
             Cron.Daily);
 
-        RecurringJob.AddOrUpdate<WeeklyDifficultyAnalysisJob>(
+        manager.AddOrUpdate<WeeklyDifficultyAnalysisJob>(
             "weekly-difficulty-analysis",
             job => job.RunAsync(CancellationToken.None),
             Cron.Weekly(DayOfWeek.Sunday, 23));
 
-        RecurringJob.AddOrUpdate<CheckInReminderJob>(
+        manager.AddOrUpdate<CheckInReminderJob>(
             "check-in-reminder",
             job => job.RunAsync(CancellationToken.None),
             Cron.Daily(20));
 
-        RecurringJob.AddOrUpdate<InviteCodeExpiryJob>(
+        manager.AddOrUpdate<InviteCodeExpiryJob>(
             "invite-code-expiry",
             job => job.RunAsync(CancellationToken.None),
             Cron.Daily);
 
-        RecurringJob.AddOrUpdate<MilestoneDetectionJob>(
+        manager.AddOrUpdate<MilestoneDetectionJob>(
             "milestone-detection",
             job => job.RunAsync(CancellationToken.None),
             Cron.Daily);
 
-        RecurringJob.AddOrUpdate<MotivationPostJob>(
+        manager.AddOrUpdate<MotivationPostJob>(
             "motivation-post-mon",
             job => job.RunAsync(CancellationToken.None),
             Cron.Weekly(DayOfWeek.Monday, 10));
 
-        RecurringJob.AddOrUpdate<MotivationPostJob>(
+        manager.AddOrUpdate<MotivationPostJob>(
             "motivation-post-thu",
             job => job.RunAsync(CancellationToken.None),
             Cron.Weekly(DayOfWeek.Thursday, 18));
