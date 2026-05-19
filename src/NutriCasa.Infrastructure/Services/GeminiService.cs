@@ -88,16 +88,58 @@ public class GeminiService : IGeminiService
         throw new InvalidOperationException($"Gemini falló tras 3 intentos: {lastError}");
     }
 
-    public Task<SwapMealResponse> SwapMealAsync(SwapMealRequest request, CancellationToken cancellationToken = default)
+    public async Task<SwapMealResponse> SwapMealAsync(SwapMealRequest request, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException("Swap de comidas se implementa en Fase 2.");
+        if (IsCircuitBreakerOpen())
+            throw new InvalidOperationException("Circuit breaker abierto. Usar fallback.");
+
+        string requestHash = ComputeSha256Hash(JsonSerializer.Serialize(request));
+
+        var cachedResponse = await CheckSwapCacheAsync(requestHash, cancellationToken);
+        if (cachedResponse is not null)
+        {
+            _logger.LogInformation("Cache hit para swap del usuario {UserId}", request.UserId);
+            return cachedResponse;
+        }
+
+        string prompt = BuildSwapPrompt(request);
+
+        string? lastError = null;
+        for (int attempt = 1; attempt <= 3; attempt++)
+        {
+            try
+            {
+                var response = await CallGeminiForSwapAsync(prompt, cancellationToken);
+
+                await LogSwapInteractionAsync(request, requestHash, prompt, response.raw, attempt, response.inputTokens, response.outputTokens, true, null, cancellationToken);
+                _logger.LogInformation("Swap meal generado para usuario {UserId} (intento {Attempt})", request.UserId, attempt);
+
+                RecordSuccess();
+
+                return response.swap;
+            }
+            catch (Exception ex)
+            {
+                lastError = ex.Message;
+                _logger.LogWarning("Intento {Attempt} falló para swap Gemini: {Error}", attempt, ex.Message);
+
+                if (attempt < 3)
+                {
+                    prompt = BuildSwapCorrectivePrompt(request, lastError);
+                    await Task.Delay(1000 * attempt, cancellationToken);
+                }
+            }
+        }
+
+        await LogSwapInteractionAsync(request, requestHash, prompt, lastError!, 3, 0, 0, false, lastError, cancellationToken);
+        RecordFailure();
+        throw new InvalidOperationException($"Gemini swap falló tras 3 intentos: {lastError}");
     }
 
     private async Task<(GeneratePlanResponse plan, string raw, int inputTokens, int outputTokens)> CallGeminiAsync(string prompt, bool isOverride, CancellationToken ct)
     {
         var client = _httpClientFactory.CreateClient("Gemini");
         string model = _configuration["Gemini:PlanModel"] ?? "gemini-2.5-pro-preview-05-06";
-        string apiKey = _configuration["Gemini:ApiKey"]!;
 
         var requestBody = new
         {
@@ -117,7 +159,7 @@ public class GeminiService : IGeminiService
         };
 
         var response = await client.PostAsJsonAsync(
-            $"{model}:generateContent?key={apiKey}",
+            $"{model}:generateContent",
             requestBody, ct);
 
         response.EnsureSuccessStatusCode();
@@ -135,7 +177,12 @@ public class GeminiService : IGeminiService
         int inputTokens = prompt.Length / 4;
         int outputTokens = text.Length / 4;
 
-        var plan = JsonSerializer.Deserialize<GeneratePlanResponse>(text, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        var deserializeOptions = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+        };
+        var plan = JsonSerializer.Deserialize<GeneratePlanResponse>(text, deserializeOptions);
         if (plan is null)
             throw new InvalidOperationException("La respuesta de Gemini no pudo ser deserializada.");
 
@@ -270,7 +317,12 @@ public class GeminiService : IGeminiService
         _context.AiInteractions.Add(cacheHit);
         await _context.SaveChangesAsync(ct);
 
-        return JsonSerializer.Deserialize<GeneratePlanResponse>(cached.ResponsePayload, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        var cacheOptions = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+        };
+        return JsonSerializer.Deserialize<GeneratePlanResponse>(cached.ResponsePayload, cacheOptions);
     }
 
     private async Task LogInteractionAsync(
@@ -307,6 +359,202 @@ public class GeminiService : IGeminiService
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error registrando interacción AI en BD");
+        }
+    }
+
+    private async Task<SwapMealResponse?> CheckSwapCacheAsync(string requestHash, CancellationToken ct)
+    {
+        var cached = await _context.AiInteractions
+            .Where(a => a.PromptHash == requestHash
+                     && a.InteractionType == AiInteractionType.MealSwap
+                     && a.Success
+                     && !a.CacheHit
+                     && a.CreatedAt > DateTime.UtcNow.AddDays(-1))
+            .OrderByDescending(a => a.CreatedAt)
+            .FirstOrDefaultAsync(ct);
+
+        if (cached?.ResponsePayload is null) return null;
+
+        var cacheHit = new AiInteraction
+        {
+            Id = Guid.NewGuid(),
+            UserId = null,
+            InteractionType = AiInteractionType.MealSwap,
+            PromptVersion = cached.PromptVersion,
+            ModelUsed = cached.ModelUsed,
+            PromptHash = requestHash,
+            Success = true,
+            CacheHit = true,
+            CreatedAt = DateTime.UtcNow,
+        };
+        _context.AiInteractions.Add(cacheHit);
+        await _context.SaveChangesAsync(ct);
+
+        var cacheOptions = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+        };
+        return JsonSerializer.Deserialize<SwapMealResponse>(cached.ResponsePayload, cacheOptions);
+    }
+
+    private async Task<(SwapMealResponse swap, string raw, int inputTokens, int outputTokens)> CallGeminiForSwapAsync(string prompt, CancellationToken ct)
+    {
+        var client = _httpClientFactory.CreateClient("Gemini");
+        string model = _configuration["Gemini:PlanModel"] ?? "gemini-2.5-pro-preview-05-06";
+
+        var requestBody = new
+        {
+            contents = new[]
+            {
+                new
+                {
+                    parts = new[] { new { text = prompt } }
+                }
+            },
+            generationConfig = new
+            {
+                temperature = 0.5,
+                maxOutputTokens = 2048,
+                responseMimeType = "application/json"
+            }
+        };
+
+        var response = await client.PostAsJsonAsync(
+            $"{model}:generateContent",
+            requestBody, ct);
+
+        response.EnsureSuccessStatusCode();
+
+        var jsonResponse = await response.Content.ReadAsStringAsync(ct);
+
+        using var doc = JsonDocument.Parse(jsonResponse);
+        var text = doc.RootElement
+            .GetProperty("candidates")[0]
+            .GetProperty("content")
+            .GetProperty("parts")[0]
+            .GetProperty("text")
+            .GetString() ?? "{}";
+
+        int inputTokens = prompt.Length / 4;
+        int outputTokens = text.Length / 4;
+
+        var deserializeOptions = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true,
+            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
+        };
+        var swap = JsonSerializer.Deserialize<SwapMealResponse>(text, deserializeOptions);
+        if (swap is null)
+            throw new InvalidOperationException("La respuesta de Gemini swap no pudo ser deserializada.");
+
+        swap = swap with { RawJson = text };
+
+        return (swap, text, inputTokens, outputTokens);
+    }
+
+    private string BuildSwapPrompt(SwapMealRequest request)
+    {
+        string template = PromptTemplates.SwapMealV1;
+
+        string budgetCostLimit = request.BudgetModeCode.ToLowerInvariant() switch
+        {
+            "economic" => "$35 MXN",
+            "pantry_basic" => "$50 MXN",
+            "simple_kitchen" => "$50 MXN",
+            "busy_parent" => "$60 MXN",
+            "athletic" => "$80 MXN",
+            "gourmet" => "$150 MXN",
+            _ => "$50 MXN"
+        };
+
+        return template
+            .Replace("{{budget_mode}}", request.BudgetModeCode)
+            .Replace("{{current_recipe}}", request.CurrentRecipeName)
+            .Replace("{{meal_type}}", request.MealType)
+            .Replace("{{swap_reason}}", request.SwapReason ?? "El usuario quiere variar el menú")
+            .Replace("{{daily_calories}}", request.DailyCaloriesTarget.ToString())
+            .Replace("{{protein_g}}", request.ProteinTarget.ToString("F1"))
+            .Replace("{{fat_g}}", request.FatTarget.ToString("F1"))
+            .Replace("{{carbs_g}}", request.CarbsTarget.ToString("F1"))
+            .Replace("{{allergies}}", string.Join(", ", request.Allergies))
+            .Replace("{{disliked_ingredients}}", string.Join(", ", request.DislikedIngredients))
+            + $"\n\nCosto máximo por comida: {budgetCostLimit}.\n"
+            + GetSwapOutputSchema();
+    }
+
+    private static string GetSwapOutputSchema()
+    {
+        return """
+        OUTPUT_SCHEMA (retorna EXACTAMENTE este JSON, sin markdown ni texto adicional):
+        {
+          "new_meal": {
+            "meal_type": "breakfast",
+            "recipe_name": "string",
+            "ingredients": [{ "ingredient_code": "", "name": "string", "amount_gr": 0, "unit_label": "g", "kcal": 0, "protein_g": 0, "fat_g": 0, "carbs_g": 0 }],
+            "instructions": "string",
+            "prep_time_min": 0,
+            "cook_time_min": 0,
+            "servings": 1,
+            "total_calories": 0,
+            "total_protein_g": 0,
+            "total_fat_g": 0,
+            "total_carbs_g": 0,
+            "estimated_cost_mxn": 0,
+            "tags": [],
+            "primary_store": ""
+          }
+        }
+        """;
+    }
+
+    private string BuildSwapCorrectivePrompt(SwapMealRequest request, string lastError)
+    {
+        return BuildSwapPrompt(request) +
+               $"\n\nCORRECCIÓN del intento anterior:\n{lastError}\n" +
+               "Asegúrate de:\n" +
+               "1. Retornar SOLO JSON válido\n" +
+               "2. Respetar exactamente el schema de output\n" +
+               "3. Los macros no deben desviarse más del 10% del objetivo\n" +
+               "4. No incluir ingredientes alergénicos\n" +
+               "5. Respetar el costo máximo por comida\n" +
+               "6. La receta debe ser keto-friendly (< 20g carbs netos por porción)";
+    }
+
+    private async Task LogSwapInteractionAsync(
+        SwapMealRequest request, string hash, string prompt, string response,
+        int attempt, int inputTokens, int outputTokens, bool success,
+        string? error, CancellationToken ct)
+    {
+        try
+        {
+            decimal estimatedCost = (inputTokens * InputPricePerToken) + (outputTokens * OutputPricePerToken);
+
+            var interaction = new AiInteraction
+            {
+                Id = Guid.NewGuid(),
+                UserId = request.UserId,
+                InteractionType = AiInteractionType.MealSwap,
+                PromptVersion = PromptTemplates.Versions.SwapMeal,
+                ModelUsed = _configuration["Gemini:PlanModel"] ?? "gemini-2.5-pro-preview-05-06",
+                InputTokens = inputTokens,
+                OutputTokens = outputTokens,
+                EstimatedCostUsd = estimatedCost,
+                DurationMs = attempt * 1000,
+                Success = success,
+                ErrorMessage = error,
+                PromptHash = hash,
+                RequestPayload = prompt.Length > 4000 ? prompt[..4000] : prompt,
+                ResponsePayload = success ? (response.Length > 8000 ? response[..8000] : response) : null,
+                CacheHit = false,
+                CreatedAt = DateTime.UtcNow,
+            };
+            _context.AiInteractions.Add(interaction);
+            await _context.SaveChangesAsync(ct);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error registrando swap AI en BD");
         }
     }
 
@@ -353,19 +601,10 @@ public class GeminiService : IGeminiService
         _cache.Set(ErrorCountKey, errors, TimeSpan.FromMinutes(5));
         _cache.Set(LastErrorTimeKey, DateTime.UtcNow, TimeSpan.FromMinutes(5));
 
-        int totalRequests = _cache.GetOrCreate(TotalRequestsKey, e =>
-        {
-            e.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5);
-            return 1;
-        });
-
-        _cache.Set(TotalRequestsKey, totalRequests + 1, TimeSpan.FromMinutes(5));
-
-        double errorRate = (double)errors / totalRequests;
-        if (errorRate > 0.30 || errors >= 3)
+        if (errors >= 3)
         {
             _cache.Set(CircuitBreakerKey, "open", TimeSpan.FromMinutes(5));
-            _logger.LogWarning("Circuit breaker ABIERTO. Tasa de error: {Rate:P2}, Errores: {Errors}", errorRate, errors);
+            _logger.LogWarning("Circuit breaker ABIERTO tras {Errors} errores consecutivos.", errors);
         }
     }
 

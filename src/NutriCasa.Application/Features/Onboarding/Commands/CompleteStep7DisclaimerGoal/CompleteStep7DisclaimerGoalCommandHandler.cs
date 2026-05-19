@@ -57,6 +57,26 @@ public class CompleteStep7DisclaimerGoalCommandHandler : IRequestHandler<Complet
             return Result<CompleteStep7DisclaimerGoalResponse>.Failure(
                 "El disclaimer general no está disponible.", "INVALID_DISCLAIMER");
 
+        int age = DateTime.UtcNow.Year - user.BirthDate.Year;
+        if (user.BirthDate > DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-age))) age--;
+
+        if (age < 18)
+            return Result<CompleteStep7DisclaimerGoalResponse>.Failure(
+                "Necesitas tener al menos 18 años para usar planes keto en NutriCasa.", "MINOR_NOT_ALLOWED");
+
+        if (user.MedicalProfile is not null)
+        {
+            user.MedicalProfile.RequiresHumanReview = MedicalSafetyRules.RequiresHumanReview(user.MedicalProfile);
+
+            if (MedicalSafetyRules.HasAbsoluteKetoBlock(user.MedicalProfile, age))
+                return Result<CompleteStep7DisclaimerGoalResponse>.Failure(
+                    MedicalSafetyRules.GetAbsoluteBlockMessage(user.MedicalProfile, age), "MEDICAL_ABSOLUTE_BLOCK");
+
+            if (user.MedicalProfile.RequiresHumanReview && user.MedicalProfile.OverrideAcceptedAt is null)
+                return Result<CompleteStep7DisclaimerGoalResponse>.Failure(
+                    "Para tu seguridad, primero necesitamos que completes el override médico.", "MEDICAL_OVERRIDE_REQUIRED");
+        }
+
         // 1. Actualizar disclaimer en usuario
         user.DisclaimerAcceptedAt = DateTime.UtcNow;
         user.DisclaimerVersionId = request.DisclaimerVersionId;
@@ -87,10 +107,6 @@ public class CompleteStep7DisclaimerGoalCommandHandler : IRequestHandler<Complet
             if (budgetMode?.Code == "athletic")
                 budgetModeMinProtein = 1.6m;
         }
-
-        // 5. Calcular edad
-        int age = DateTime.UtcNow.Year - user.BirthDate.Year;
-        if (user.BirthDate > DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-age))) age--;
 
         bool isOverride = user.MedicalProfile?.RequiresHumanReview == true
                           && user.MedicalProfile?.OverrideAcceptedAt != null;

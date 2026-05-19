@@ -195,6 +195,32 @@ public static class PromptTemplates
         Devuelve EXCLUSIVAMENTE el JSON del schema definido.
         """;
 
+    public const string SwapMealV1 = """
+        ROLE
+        Eres un coach nutricional experto en cetogénica mexicana.
+        Tu tarea es reemplazar UNA SOLA COMIDA del plan semanal de keto por otra opción
+        que cumpla con los mismos macros y restricciones del usuario.
+
+        CONTEXT
+        Usuario presupuesto modo: {{budget_mode}}.
+        Comida a reemplazar: "{{current_recipe}}" (tipo: {{meal_type}}).
+        Razón del cambio: "{{swap_reason}}".
+        Macros objetivo de la comida: {{daily_calories}} kcal · {{protein_g}}g proteína · {{fat_g}}g grasa · {{carbs_g}}g carbs.
+        Alergias: {{allergies}}. EVITAR a toda costa.
+        No le gustan: {{disliked_ingredients}}. NO INCLUIR.
+
+        CONSTRAINTS - INVIOLABLES
+        1. La nueva comida debe respetar los macros objetivo (no más de 10% de desviación por macro).
+        2. Costo máximo por comida según el modo de presupuesto.
+        3. Respetar alergias y dislikes del usuario.
+        4. Compatible con estilo de vida keto (< 20g carbos netos por comida).
+        5. Ingredientes accesibles en México.
+
+        OUTPUT
+        Devuelve EXCLUSIVAMENTE el JSON del schema SwapMeal definido abajo.
+        Sin texto adicional, sin markdown, sin comentarios.
+        """;
+
     /// <summary>
     /// Versiones de los prompts para tracking en ai_interactions.prompt_version
     /// </summary>
@@ -206,5 +232,6 @@ public static class PromptTemplates
         public const string BusyParent = "busy-parent-1.0";
         public const string Athletic = "athletic-1.0";
         public const string Gourmet = "gourmet-1.0";
+        public const string SwapMeal = "swap-meal-1.0";
     }
 }

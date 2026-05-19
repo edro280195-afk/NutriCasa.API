@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using NutriCasa.Application;
 using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Infrastructure;
+using NutriCasa.Infrastructure.BackgroundJobs;
 using NutriCasa.Infrastructure.Persistence.Seeds;
 using NutriCasa.Infrastructure.Services;
 using Serilog;
@@ -53,9 +54,12 @@ builder.Services.AddCors(options =>
 });
 
 // HttpClient para Gemini
-builder.Services.AddHttpClient("Gemini", client =>
+builder.Services.AddHttpClient("Gemini", (sp, client) =>
 {
-    client.Timeout = TimeSpan.FromSeconds(builder.Configuration.GetValue<int>("Gemini:TimeoutSeconds", 60));
+    var config = sp.GetRequiredService<IConfiguration>();
+    client.BaseAddress = new Uri("https://generativelanguage.googleapis.com/v1beta/models/");
+    client.DefaultRequestHeaders.TryAddWithoutValidation("x-goog-api-key", config["Gemini:ApiKey"]);
+    client.Timeout = TimeSpan.FromSeconds(config.GetValue<int>("Gemini:TimeoutSeconds", 60));
 });
 
 // HttpClient para Resend
@@ -109,6 +113,9 @@ var app = builder.Build();
 
 // Seed
 await DatabaseSeeder.SeedAsync(app.Services);
+
+// Register recurring jobs
+HangfireConfiguration.RegisterRecurringJobs();
 
 // Middleware pipeline
 if (app.Environment.IsDevelopment())

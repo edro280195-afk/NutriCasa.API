@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Application.Common.Models;
+using NutriCasa.Application.Services;
 using NutriCasa.Domain.Entities;
 using NutriCasa.Domain.Enums;
 
@@ -128,6 +129,13 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
         if (user is null)
             return Result<PlanGenerationResult>.Failure("Usuario no encontrado.", "NOT_FOUND");
 
+        int age = DateTime.UtcNow.Year - user.BirthDate.Year;
+        if (user.BirthDate > DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-age))) age--;
+
+        if (age < 18)
+            return Result<PlanGenerationResult>.Failure(
+                "Necesitas tener al menos 18 años para generar un plan keto en NutriCasa.", "MINOR_NOT_ALLOWED");
+
         if (user.EmailVerifiedAt is null)
             return Result<PlanGenerationResult>.Failure(
                 "Debes verificar tu email antes de generar un plan.", "EMAIL_NOT_VERIFIED");
@@ -136,9 +144,18 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
             return Result<PlanGenerationResult>.Failure(
                 "Debes completar el onboarding antes de generar un plan.", "ONBOARDING_INCOMPLETE");
 
-        if (user.MedicalProfile?.RequiresHumanReview == true && user.MedicalProfile?.OverrideAcceptedAt is null)
-            return Result<PlanGenerationResult>.Failure(
-                "Tu perfil médico requiere validación adicional.", "MEDICAL_OVERRIDE_REQUIRED");
+        if (user.MedicalProfile is not null)
+        {
+            user.MedicalProfile.RequiresHumanReview = MedicalSafetyRules.RequiresHumanReview(user.MedicalProfile);
+
+            if (MedicalSafetyRules.HasAbsoluteKetoBlock(user.MedicalProfile, age))
+                return Result<PlanGenerationResult>.Failure(
+                    MedicalSafetyRules.GetAbsoluteBlockMessage(user.MedicalProfile, age), "MEDICAL_ABSOLUTE_BLOCK");
+
+            if (user.MedicalProfile.RequiresHumanReview && user.MedicalProfile.OverrideAcceptedAt is null)
+                return Result<PlanGenerationResult>.Failure(
+                    "Tu perfil médico requiere validación adicional.", "MEDICAL_OVERRIDE_REQUIRED");
+        }
 
         if (user.BudgetMode is null)
             return Result<PlanGenerationResult>.Failure(
@@ -177,9 +194,6 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
         if (existingPlan is not null && !request.ForceRegenerate)
             return Result<PlanGenerationResult>.Success(await MapToResult(existingPlan, cancellationToken));
 
-        int age = DateTime.UtcNow.Year - user.BirthDate.Year;
-        if (user.BirthDate > DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-age))) age--;
-
         var geminiRequest = new GeneratePlanRequest
         {
             UserId = userId,
@@ -214,8 +228,7 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
         }
         catch (Exception)
         {
-            return Result<PlanGenerationResult>.Failure(
-                "Error al generar el plan con IA. Intenta de nuevo.", "GEMINI_ERROR");
+            return await GenerateCuratedFallbackPlanAsync(user, activeGoal, request, userId, cancellationToken);
         }
 
         var validationContext = new PlanValidationContext
@@ -238,8 +251,7 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
 
         var validationResult = _planValidator.Validate(geminiResponse, validationContext);
         if (!validationResult.IsValid)
-            return Result<PlanGenerationResult>.Failure(
-                $"El plan generado no pasó validación: {validationResult.ErrorMessage}", "PLAN_VALIDATION_FAILED");
+            return await GenerateCuratedFallbackPlanAsync(user, activeGoal, request, userId, cancellationToken);
 
         var costEstimate = await _costEstimationService.EstimatePlanCostAsync(
             geminiResponse, user.BudgetMode.Code, numberOfPeople: 1, cancellationToken);
@@ -386,6 +398,108 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
             Macros = new KetoProfileResult(),
             ShoppingList = null,
         };
+    }
+
+    private async Task<Result<PlanGenerationResult>> GenerateCuratedFallbackPlanAsync(
+        User user,
+        UserGoal? activeGoal,
+        GeneratePlanCommand request,
+        Guid userId,
+        CancellationToken ct)
+    {
+        var budgetModeCode = user.BudgetMode?.Code ?? "pantry_basic";
+
+        var curatedRecipes = await _context.Recipes
+            .Where(r => r.Source == RecipeSource.Curated
+                     && r.NutritionTrack == NutritionTrack.Keto
+                     && (r.CompatibleModeCodes.Contains(budgetModeCode) || r.CompatibleModeCodes.Length == 0))
+            .OrderBy(r => r.MealType)
+            .ThenBy(r => r.UseCount)
+            .ThenBy(r => r.Name)
+            .ToListAsync(ct);
+
+        if (curatedRecipes.Count < 4)
+        {
+            curatedRecipes = await _context.Recipes
+                .Where(r => r.Source == RecipeSource.Curated && r.NutritionTrack == NutritionTrack.Keto)
+                .OrderBy(r => r.MealType)
+                .ThenBy(r => r.UseCount)
+                .ThenBy(r => r.Name)
+                .ToListAsync(ct);
+        }
+
+        if (curatedRecipes.Count == 0)
+            return Result<PlanGenerationResult>.Failure(
+                "No pudimos generar el plan y no hay recetas curadas disponibles como respaldo.", "NO_CURATED_FALLBACK");
+
+        var activePlans = await _context.WeeklyPlans
+            .Where(p => p.UserId == userId && p.IsActive)
+            .ToListAsync(ct);
+
+        foreach (var plan in activePlans)
+            plan.IsActive = false;
+
+        var weeklyPlan = new WeeklyPlan
+        {
+            Id = Guid.NewGuid(),
+            UserId = userId,
+            StartDate = request.WeekStartDate,
+            EndDate = request.WeekStartDate.AddDays(6),
+            IsOverridePlan = user.MedicalProfile?.OverrideAcceptedAt is not null,
+            OriginalMenuContent = JsonSerializer.Serialize(new
+            {
+                source = "curated_fallback",
+                reason = "gemini_failed_or_validation_failed",
+                budget_mode = budgetModeCode,
+                generated_at = DateTime.UtcNow,
+            }),
+            IsActive = true,
+            GenerationSource = GenerationSource.Fallback,
+            BudgetModeId = user.BudgetModeId,
+        };
+
+        var totalCost = 0m;
+        var mealTypes = new[] { MealType.Breakfast, MealType.Lunch, MealType.Dinner, MealType.Snack };
+        var recipesByType = mealTypes.ToDictionary(
+            type => type,
+            type =>
+            {
+                var matching = curatedRecipes.Where(r => r.MealType == type).ToList();
+                return matching.Count > 0 ? matching : curatedRecipes;
+            });
+
+        for (int day = 1; day <= 7; day++)
+        {
+            for (int i = 0; i < mealTypes.Length; i++)
+            {
+                var type = mealTypes[i];
+                var pool = recipesByType[type];
+                var recipe = pool[(day - 1) % pool.Count];
+                recipe.UseCount++;
+                totalCost += recipe.EstimatedCostPerServingMxn ?? 0m;
+
+                _context.WeeklyPlanMeals.Add(new WeeklyPlanMeal
+                {
+                    Id = Guid.NewGuid(),
+                    PlanId = weeklyPlan.Id,
+                    DayOfWeek = day,
+                    MealType = type,
+                    RecipeId = recipe.Id,
+                    SortOrder = i + 1,
+                });
+            }
+        }
+
+        weeklyPlan.EstimatedTotalCostMxn = totalCost;
+        weeklyPlan.EstimatedCostPerPersonMxn = totalCost;
+        weeklyPlan.EstimatedCostGourmetBaselineMxn = totalCost;
+        weeklyPlan.SavingsVsGourmetMxn = 0m;
+        weeklyPlan.SavingsVsGourmetPercent = 0m;
+
+        _context.WeeklyPlans.Add(weeklyPlan);
+        await _context.SaveChangesAsync(ct);
+
+        return Result<PlanGenerationResult>.Success(await MapToResult(weeklyPlan, ct));
     }
 
     private static string GetDayName(int day) => day switch

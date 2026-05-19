@@ -109,6 +109,9 @@ public record CompleteStep7DisclaimerGoalResponse
 {
     public required bool OnboardingComplete { get; init; }
     public required KetoProfileResult KetoProfile { get; init; }
+    public bool FirstPlanGenerated { get; init; }
+    public Guid? FirstPlanId { get; init; }
+    public string? FirstPlanError { get; init; }
 }
 
 // ─── Status ───────────────────────────────────────────────────────────────────

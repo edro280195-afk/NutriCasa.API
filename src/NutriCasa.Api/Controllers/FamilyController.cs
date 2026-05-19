@@ -2,7 +2,13 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NutriCasa.Application.Features.Family.Commands;
+using NutriCasa.Application.Features.Family.Commands.ChangeMemberRole;
+using NutriCasa.Application.Features.Family.Commands.CreateSubgroup;
+using NutriCasa.Application.Features.Family.Commands.RegenerateInviteCode;
+using NutriCasa.Application.Features.Family.Commands.RemoveMember;
+using NutriCasa.Application.Features.Family.Commands.TransferOwnership;
 using NutriCasa.Application.Features.Family.Queries;
+using NutriCasa.Application.Features.Family.Queries.GetInviteCode;
 
 namespace NutriCasa.Api.Controllers;
 
@@ -98,6 +104,86 @@ public class FamilyController : BaseApiController
         var result = await _mediator.Send(new GetGroupLeaderboardQuery { Category = category }, ct);
         return HandleResult(result);
     }
+
+    // ── Group Management ──
+
+    [HttpPost("subgroups")]
+    [Authorize]
+    public async Task<IActionResult> CreateSubgroup([FromBody] CreateSubgroupRequest request, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new CreateSubgroupCommand
+        {
+            Name = request.Name,
+            Description = request.Description,
+        }, ct);
+        return HandleResult(result);
+    }
+
+    [HttpPost("transfer-ownership")]
+    [Authorize]
+    public async Task<IActionResult> TransferOwnership([FromBody] TransferOwnershipRequest request, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new TransferOwnershipCommand
+        {
+            TargetUserId = request.TargetUserId,
+        }, ct);
+        return HandleResult(result);
+    }
+
+    [HttpPatch("members/{userId:guid}/role")]
+    [Authorize]
+    public async Task<IActionResult> ChangeMemberRole(Guid userId, [FromBody] ChangeMemberRoleRequest request, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new ChangeMemberRoleCommand
+        {
+            TargetUserId = userId,
+            NewRole = request.Role,
+        }, ct);
+        return HandleResult(result);
+    }
+
+    [HttpDelete("members/{userId:guid}")]
+    [Authorize]
+    public async Task<IActionResult> RemoveMember(Guid userId, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new RemoveMemberCommand
+        {
+            TargetUserId = userId,
+        }, ct);
+        return HandleResult(result);
+    }
+
+    [HttpGet("invite-code")]
+    [Authorize]
+    public async Task<IActionResult> GetInviteCode(CancellationToken ct)
+    {
+        var result = await _mediator.Send(new GetInviteCodeQuery(), ct);
+        return HandleResult(result);
+    }
+
+    [HttpPost("invite-code/regenerate")]
+    [Authorize]
+    public async Task<IActionResult> RegenerateInviteCode(CancellationToken ct)
+    {
+        var result = await _mediator.Send(new RegenerateInviteCodeCommand(), ct);
+        return HandleResult(result);
+    }
+}
+
+public class CreateSubgroupRequest
+{
+    public string Name { get; set; } = "";
+    public string? Description { get; set; }
+}
+
+public class TransferOwnershipRequest
+{
+    public Guid TargetUserId { get; set; }
+}
+
+public class ChangeMemberRoleRequest
+{
+    public string Role { get; set; } = "member";
 }
 
 public class CreatePostRequest

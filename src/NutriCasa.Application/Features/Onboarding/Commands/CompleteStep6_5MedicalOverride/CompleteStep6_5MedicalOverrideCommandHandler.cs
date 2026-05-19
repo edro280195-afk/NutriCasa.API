@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Application.Common.Models;
+using NutriCasa.Application.Services;
 using NutriCasa.Domain.Entities;
 
 namespace NutriCasa.Application.Features.Onboarding.Commands.CompleteStep6_5MedicalOverride;
@@ -40,6 +41,19 @@ public class CompleteStep6_5MedicalOverrideCommandHandler : IRequestHandler<Comp
 
         if (user.MedicalProfile is null)
             return Result.Failure("No hay perfil médico registrado. Completa el paso 6 primero.", "NO_MEDICAL_PROFILE");
+
+        user.MedicalProfile.RequiresHumanReview = MedicalSafetyRules.RequiresHumanReview(user.MedicalProfile);
+
+        if (!user.MedicalProfile.RequiresHumanReview)
+            return Result.Failure("Tu perfil médico no requiere override.", "OVERRIDE_NOT_REQUIRED");
+
+        int age = DateTime.UtcNow.Year - user.BirthDate.Year;
+        if (user.BirthDate > DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-age))) age--;
+
+        if (!MedicalSafetyRules.CanAcceptOverride(user.MedicalProfile, age))
+            return Result.Failure(
+                MedicalSafetyRules.GetAbsoluteBlockMessage(user.MedicalProfile, age),
+                "MEDICAL_OVERRIDE_NOT_ALLOWED");
 
         if (!_passwordHasher.Verify(request.PasswordConfirmation, user.PasswordHash))
             return Result.Failure("La contraseña no es correcta.", "INVALID_PASSWORD");

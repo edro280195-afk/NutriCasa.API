@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Application.Common.Models;
+using NutriCasa.Application.Services;
 using NutriCasa.Domain.Enums;
 
 namespace NutriCasa.Application.Features.UserMedicalProfile.Commands;
@@ -75,6 +76,10 @@ public class UpdateMedicalProfileCommandHandler : IRequestHandler<UpdateMedicalP
         profile.DislikedIngredients = request.DislikedIngredients;
         profile.PreferredIngredients = request.PreferredIngredients;
         profile.KetoExperienceLevel = expLevel;
+        profile.RequiresHumanReview = MedicalSafetyRules.RequiresHumanReview(profile);
+        profile.OverrideAcceptedAt = null;
+        profile.OverrideDisclaimerVersionId = null;
+        profile.OverrideRevokedAt = DateTime.UtcNow;
 
         await _context.SaveChangesAsync(ct);
         return Result.Success();

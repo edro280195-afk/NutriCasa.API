@@ -21,4 +21,42 @@ public static class HangfireConfiguration
 
         return services;
     }
+
+    public static void RegisterRecurringJobs()
+    {
+        RecurringJob.AddOrUpdate<AccountDeletionPurgeJob>(
+            "account-deletion-purge",
+            job => job.RunAsync(CancellationToken.None),
+            Cron.Daily);
+
+        RecurringJob.AddOrUpdate<WeeklyDifficultyAnalysisJob>(
+            "weekly-difficulty-analysis",
+            job => job.RunAsync(CancellationToken.None),
+            Cron.Weekly(DayOfWeek.Sunday, 23));
+
+        RecurringJob.AddOrUpdate<CheckInReminderJob>(
+            "check-in-reminder",
+            job => job.RunAsync(CancellationToken.None),
+            Cron.Daily(20));
+
+        RecurringJob.AddOrUpdate<InviteCodeExpiryJob>(
+            "invite-code-expiry",
+            job => job.RunAsync(CancellationToken.None),
+            Cron.Daily);
+
+        RecurringJob.AddOrUpdate<MilestoneDetectionJob>(
+            "milestone-detection",
+            job => job.RunAsync(CancellationToken.None),
+            Cron.Daily);
+
+        RecurringJob.AddOrUpdate<MotivationPostJob>(
+            "motivation-post-mon",
+            job => job.RunAsync(CancellationToken.None),
+            Cron.Weekly(DayOfWeek.Monday, 10));
+
+        RecurringJob.AddOrUpdate<MotivationPostJob>(
+            "motivation-post-thu",
+            job => job.RunAsync(CancellationToken.None),
+            Cron.Weekly(DayOfWeek.Thursday, 18));
+    }
 }

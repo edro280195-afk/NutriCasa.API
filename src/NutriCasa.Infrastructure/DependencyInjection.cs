@@ -44,7 +44,7 @@ public static class DependencyInjection
         services.AddScoped<IPlanValidator, PlanValidator>();
         services.AddScoped<ICostEstimationService, CostEstimationService>();
         services.AddScoped<IIngredientSubstitutionService, IngredientSubstitutionService>();
-        services.AddScoped<IModerationService, ModerationServiceStub>();
+        services.AddScoped<IModerationService, ModerationService>();
         services.AddScoped<IPaymentService, MercadoPagoServiceStub>();
         services.AddScoped<IEmailService, ResendEmailService>();
 

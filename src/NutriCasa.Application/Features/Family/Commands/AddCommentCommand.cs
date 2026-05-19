@@ -25,11 +25,16 @@ public class AddCommentCommandHandler : IRequestHandler<AddCommentCommand, Resul
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUser;
+    private readonly IModerationService _moderation;
 
-    public AddCommentCommandHandler(IApplicationDbContext context, ICurrentUserService currentUser)
+    public AddCommentCommandHandler(
+        IApplicationDbContext context,
+        ICurrentUserService currentUser,
+        IModerationService moderation)
     {
         _context = context;
         _currentUser = currentUser;
+        _moderation = moderation;
     }
 
     public async Task<Result<CommentResultDto>> Handle(AddCommentCommand request, CancellationToken ct)
@@ -47,6 +52,13 @@ public class AddCommentCommandHandler : IRequestHandler<AddCommentCommand, Resul
 
         if (string.IsNullOrWhiteSpace(request.Content))
             return Result<CommentResultDto>.Failure("El comentario no puede estar vacío.", "EMPTY_COMMENT");
+
+        var (isClean, reason, severity) = await _moderation.ModerateTextAsync(request.Content, ct);
+
+        if (!isClean)
+            return Result<CommentResultDto>.Failure(
+                "El comentario contiene contenido no permitido y no se ha publicado.",
+                "MODERATION_FLAGGED");
 
         var comment = new PostComment
         {

@@ -34,12 +34,23 @@ public class PlanValidator : IPlanValidator
 
             decimal bmrFloor = context.BmrKcal * 0.85m;
             decimal tdeeCeiling = context.TdeeKcal * 1.10m;
-            if (day.DayTotals.Calories < bmrFloor || day.DayTotals.Calories > tdeeCeiling)
-                warnings.Add($"El día {day.DayNumber} tiene {day.DayTotals.Calories} kcal (rango: {bmrFloor:F0}-{tdeeCeiling:F0}).");
+            if (context.BmrKcal > 0 && context.TdeeKcal > 0 &&
+                (day.DayTotals.Calories < bmrFloor || day.DayTotals.Calories > tdeeCeiling))
+                return Fail($"El día {day.DayNumber} tiene {day.DayTotals.Calories} kcal, fuera del rango seguro ({bmrFloor:F0}-{tdeeCeiling:F0}).");
 
             if (day.DayTotals.ProteinG < context.MinProteinPerKg * context.WeightKg)
                 return Fail($"El día {day.DayNumber} tiene solo {day.DayTotals.ProteinG:F1}g de proteína, " +
                             $"necesita al menos {context.MinProteinPerKg * context.WeightKg:F1}g.");
+
+            if (day.DayTotals.Calories <= 0)
+                return Fail($"El día {day.DayNumber} tiene calorías inválidas.");
+
+            decimal macroCalories = (day.DayTotals.ProteinG * 4m)
+                                  + (day.DayTotals.FatG * 9m)
+                                  + (day.DayTotals.CarbsG * 4m);
+            decimal macroVariancePercent = Math.Abs(macroCalories - day.DayTotals.Calories) / day.DayTotals.Calories * 100m;
+            if (macroVariancePercent > 2m)
+                return Fail($"Los macros del día {day.DayNumber} no cuadran con sus calorías (variación {macroVariancePercent:F1}%).");
 
             foreach (var meal in day.Meals)
             {
@@ -51,6 +62,12 @@ public class PlanValidator : IPlanValidator
 
                 if (meal.Ingredients.Count == 0)
                     return Fail($"La receta '{meal.RecipeName}' no tiene ingredientes.");
+
+                if (meal.Servings <= 0)
+                    return Fail($"La receta '{meal.RecipeName}' tiene porciones inválidas.");
+
+                if (meal.TotalCalories <= 0 || meal.TotalProteinG < 0 || meal.TotalFatG < 0 || meal.TotalCarbsG < 0)
+                    return Fail($"La receta '{meal.RecipeName}' tiene macros inválidos.");
 
                 foreach (var ingredient in meal.Ingredients)
                 {

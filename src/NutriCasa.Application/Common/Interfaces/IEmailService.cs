@@ -29,4 +29,16 @@ public interface IEmailService
         string toEmail,
         string toName,
         CancellationToken ct = default);
+
+    Task SendAccountDeletionNoticeAsync(
+        string toEmail,
+        string toName,
+        int daysRemaining,
+        string cancelLink,
+        CancellationToken ct = default);
+
+    Task SendAccountDeletionConfirmationAsync(
+        string toEmail,
+        string toName,
+        CancellationToken ct = default);
 }

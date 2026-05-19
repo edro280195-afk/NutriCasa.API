@@ -115,6 +115,40 @@ public class PlanValidatorTests
         Assert.Contains("prote", result.ErrorMessage?.ToLowerInvariant() ?? "");
     }
 
+    [Fact]
+    public void Validate_PlanConCaloriasBajoBmr_Falla()
+    {
+        var plan = CreateValidPlan();
+        plan.Days[0] = plan.Days[0] with
+        {
+            DayTotals = plan.Days[0].DayTotals with { Calories = 1000, ProteinG = 120m, FatG = 50m, CarbsG = 17m }
+        };
+
+        var context = CreateContext();
+
+        var result = _sut.Validate(plan, context);
+
+        Assert.False(result.IsValid);
+        Assert.Contains("rango seguro", result.ErrorMessage?.ToLowerInvariant() ?? "");
+    }
+
+    [Fact]
+    public void Validate_PlanConMacrosQueNoCuadran_Falla()
+    {
+        var plan = CreateValidPlan();
+        plan.Days[0] = plan.Days[0] with
+        {
+            DayTotals = plan.Days[0].DayTotals with { FatG = 190m }
+        };
+
+        var context = CreateContext();
+
+        var result = _sut.Validate(plan, context);
+
+        Assert.False(result.IsValid);
+        Assert.Contains("macros", result.ErrorMessage?.ToLowerInvariant() ?? "");
+    }
+
     // ─── Helpers ─────────────────────────────────────────────────────
 
     private static GeneratePlanResponse CreateValidPlan()
@@ -147,7 +181,7 @@ public class PlanValidatorTests
                 Meals = meals,
                 DayTotals = new DayTotals
                 {
-                    Calories = 2000, ProteinG = 140, FatG = 160, CarbsG = 20,
+                    Calories = 2000, ProteinG = 140, FatG = 151, CarbsG = 20,
                     EstimatedCostMxn = 182m,
                 }
             });
@@ -162,7 +196,7 @@ public class PlanValidatorTests
             },
             MacrosTarget = new MacrosTarget
             {
-                DailyCalories = 2000, DailyProteinG = 140, DailyFatG = 160, DailyCarbsG = 20
+                DailyCalories = 2000, DailyProteinG = 140, DailyFatG = 151, DailyCarbsG = 20
             },
             Days = days,
             ShoppingListConsolidated = new List<ShoppingListConsolidatedItem>()
@@ -182,7 +216,7 @@ public class PlanValidatorTests
             DietaryRestrictions = [],
             DailyCaloriesTarget = 2000,
             ProteinTarget = 140,
-            FatTarget = 160,
+            FatTarget = 151,
             CarbsTarget = 20,
             MaxCarbsGrams = maxCarbsGrams,
             BmrKcal = 1824m,

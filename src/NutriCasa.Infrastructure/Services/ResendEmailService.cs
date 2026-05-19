@@ -86,6 +86,32 @@ public class ResendEmailService : IEmailService
         await SendEmailAsync(toEmail, "¡Bienvenido a NutriCasa! 🌿", body, ct);
     }
 
+    public async Task SendAccountDeletionNoticeAsync(string toEmail, string toName, int daysRemaining, string cancelLink, CancellationToken ct = default)
+    {
+        var body = BuildEmailHtml(
+            "Solicitud de borrado de cuenta",
+            $"<p>Hola <strong>{toName}</strong>,</p>" +
+            $"<p>Recibimos una solicitud para eliminar tu cuenta de NutriCasa.</p>" +
+            $"<p>Tu cuenta será eliminada permanentemente en <strong>{daysRemaining} día(s)</strong>.</p>" +
+            $"<p>Si no solicitaste esto o cambiaste de opinión, puedes cancelar el proceso desde tu perfil o usando el siguiente enlace:</p>" +
+            $"<div style=\"text-align:center;margin:28px 0;\">" +
+            $"<a href=\"{cancelLink}\" style=\"background:#5BC096;color:white;padding:14px 32px;border-radius:50px;text-decoration:none;font-weight:700;font-size:16px;\">Cancelar borrado de cuenta</a>" +
+            $"</div>" +
+            $"<p style=\"color:#8A9590;font-size:13px;\">Si tienes dudas, escríbenos a hola@nutricasa.app</p>");
+        await SendEmailAsync(toEmail, "Solicitud de borrado de cuenta — NutriCasa", body, ct);
+    }
+
+    public async Task SendAccountDeletionConfirmationAsync(string toEmail, string toName, CancellationToken ct = default)
+    {
+        var body = BuildEmailHtml(
+            "Cuenta eliminada",
+            $"<p>Hola <strong>{toName}</strong>,</p>" +
+            $"<p>Tu cuenta de NutriCasa ha sido eliminada permanentemente.</p>" +
+            $"<p>Lamentamos verte ir. Si decides regresar en el futuro, siempre serás bienvenido.</p>" +
+            $"<p style=\"color:#8A9590;font-size:13px;\">Este es un mensaje automático, no es necesario responder.</p>");
+        await SendEmailAsync(toEmail, "Tu cuenta de NutriCasa ha sido eliminada", body, ct);
+    }
+
     private async Task SendEmailAsync(string to, string subject, string html, CancellationToken ct)
     {
         var payload = new

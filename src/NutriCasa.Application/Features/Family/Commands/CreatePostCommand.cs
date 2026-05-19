@@ -26,11 +26,16 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, Resul
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUser;
+    private readonly IModerationService _moderation;
 
-    public CreatePostCommandHandler(IApplicationDbContext context, ICurrentUserService currentUser)
+    public CreatePostCommandHandler(
+        IApplicationDbContext context,
+        ICurrentUserService currentUser,
+        IModerationService moderation)
     {
         _context = context;
         _currentUser = currentUser;
+        _moderation = moderation;
     }
 
     public async Task<Result<PostResultDto>> Handle(CreatePostCommand request, CancellationToken ct)
@@ -50,12 +55,19 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, Resul
         if (!Enum.TryParse<PostType>(request.PostType, true, out var postType))
             postType = PostType.UserText;
 
+        var (isClean, reason, severity) = await _moderation.ModerateTextAsync(request.Content, ct);
+
         var post = new GroupPost
         {
             GroupId = membership.GroupId,
             AuthorUserId = userId,
             PostType = postType,
             Content = request.Content,
+            IsUnderReview = !isClean,
+            ModerationReason = reason,
+            ModerationSeverity = !isClean && severity is not null
+                ? Enum.TryParse<ToxicWordSeverity>(severity, true, out var s) ? s : null
+                : null,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
         };
