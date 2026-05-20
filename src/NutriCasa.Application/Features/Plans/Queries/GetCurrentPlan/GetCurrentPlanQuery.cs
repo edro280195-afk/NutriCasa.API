@@ -29,6 +29,7 @@ public class GetCurrentPlanQueryHandler : IRequestHandler<GetCurrentPlanQuery, R
         var plan = await _context.WeeklyPlans
             .Include(p => p.Meals).ThenInclude(m => m.Recipe)
             .Include(p => p.BudgetMode)
+            .Include(p => p.User).ThenInclude(u => u.KetoProfile)
             .FirstOrDefaultAsync(p => p.UserId == userId && p.IsActive, cancellationToken);
 
         if (plan is null)
@@ -72,6 +73,7 @@ public class GetCurrentPlanQueryHandler : IRequestHandler<GetCurrentPlanQuery, R
                             Instructions = m.Recipe.Instructions ?? "",
                             EstimatedCostMxn = m.Recipe.EstimatedCostPerServingMxn ?? 0,
                             PrimaryStore = null,
+                            Ingredients = RecipeIngredientParser.Parse(m.Recipe.Ingredients),
                         },
                     }).ToList(),
                     DayTotals = new DayTotalsDto
@@ -85,6 +87,15 @@ public class GetCurrentPlanQueryHandler : IRequestHandler<GetCurrentPlanQuery, R
                 };
             }).ToList();
 
+        var catalogRaw = await _context.IngredientCatalog
+            .Where(c => c.IsActive && c.PrimaryStoreCategory != null)
+            .Select(c => new { c.Name, c.PrimaryStoreCategory })
+            .ToListAsync(cancellationToken);
+        var catalog = catalogRaw
+            .Select(c => (c.Name.ToLowerInvariant(), c.PrimaryStoreCategory!))
+            .ToList();
+
+        var kp = plan.User?.KetoProfile;
         var result = new PlanGenerationResult
         {
             PlanId = plan.Id,
@@ -97,8 +108,19 @@ public class GetCurrentPlanQueryHandler : IRequestHandler<GetCurrentPlanQuery, R
             SavingsVsGourmetMxn = plan.SavingsVsGourmetMxn,
             SavingsVsGourmetPercent = plan.SavingsVsGourmetPercent,
             Days = days,
-            Macros = new KetoProfileResult(),
-            ShoppingList = null,
+            Macros = kp is not null ? new KetoProfileResult
+            {
+                BmrKcal = kp.BmrKcal ?? 0,
+                TdeeKcal = kp.TdeeKcal ?? 0,
+                DailyCalories = kp.DailyCalories,
+                CarbsGrams = kp.CarbsGrams,
+                ProteinGrams = kp.ProteinGrams,
+                FatGrams = kp.FatGrams,
+                CarbsPercent = kp.CarbsPercent ?? 0,
+                ProteinPercent = kp.ProteinPercent ?? 0,
+                FatPercent = kp.FatPercent ?? 0,
+            } : new KetoProfileResult(),
+            ShoppingList = GeneratePlanCommandHandler.BuildShoppingList(plan.Meals, catalog),
         };
 
         return Result<PlanGenerationResult>.Success(result);

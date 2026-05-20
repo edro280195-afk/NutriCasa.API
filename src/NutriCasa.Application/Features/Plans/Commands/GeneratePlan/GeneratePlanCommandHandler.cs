@@ -56,6 +56,60 @@ public record RecipeDto
     public required string Instructions { get; init; }
     public decimal EstimatedCostMxn { get; init; }
     public string? PrimaryStore { get; init; }
+    public List<RecipeIngredientDto> Ingredients { get; init; } = [];
+}
+
+public record RecipeIngredientDto
+{
+    public required string Name { get; init; }
+    public decimal Amount { get; init; }
+    public string Unit { get; init; } = "";
+}
+
+public static class RecipeIngredientParser
+{
+    private static readonly JsonSerializerOptions Options = new() { PropertyNameCaseInsensitive = true };
+
+    // Tolera ambos formatos almacenados en Recipe.Ingredients:
+    //  - Curado: { code, name, amount, unit }
+    //  - IA:     { IngredientCode, Name, AmountGr, UnitLabel }
+    public static List<RecipeIngredientDto> Parse(string? json)
+    {
+        if (string.IsNullOrWhiteSpace(json)) return [];
+
+        try
+        {
+            using var doc = JsonDocument.Parse(json);
+            if (doc.RootElement.ValueKind != JsonValueKind.Array) return [];
+
+            var result = new List<RecipeIngredientDto>();
+            foreach (var item in doc.RootElement.EnumerateArray())
+            {
+                if (item.ValueKind != JsonValueKind.Object) continue;
+
+                var name = GetString(item, "name") ?? GetString(item, "Name");
+                if (string.IsNullOrWhiteSpace(name)) continue;
+
+                var amount = GetDecimal(item, "amount") ?? GetDecimal(item, "amountGr")
+                    ?? GetDecimal(item, "amount_gr") ?? GetDecimal(item, "AmountGr") ?? 0m;
+                var unit = GetString(item, "unit") ?? GetString(item, "unitLabel")
+                    ?? GetString(item, "unit_label") ?? GetString(item, "UnitLabel") ?? "";
+
+                result.Add(new RecipeIngredientDto { Name = name, Amount = amount, Unit = unit });
+            }
+            return result;
+        }
+        catch (JsonException)
+        {
+            return [];
+        }
+    }
+
+    private static string? GetString(JsonElement el, string prop)
+        => el.TryGetProperty(prop, out var v) && v.ValueKind == JsonValueKind.String ? v.GetString() : null;
+
+    private static decimal? GetDecimal(JsonElement el, string prop)
+        => el.TryGetProperty(prop, out var v) && v.ValueKind == JsonValueKind.Number ? v.GetDecimal() : null;
 }
 
 public record DayTotalsDto
@@ -97,19 +151,22 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
     private readonly IGeminiService _geminiService;
     private readonly IPlanValidator _planValidator;
     private readonly ICostEstimationService _costEstimationService;
+    private readonly IFeatureFlagService _featureFlags;
 
     public GeneratePlanCommandHandler(
         IApplicationDbContext context,
         ICurrentUserService currentUserService,
         IGeminiService geminiService,
         IPlanValidator planValidator,
-        ICostEstimationService costEstimationService)
+        ICostEstimationService costEstimationService,
+        IFeatureFlagService featureFlags)
     {
         _context = context;
         _currentUserService = currentUserService;
         _geminiService = geminiService;
         _planValidator = planValidator;
         _costEstimationService = costEstimationService;
+        _featureFlags = featureFlags;
     }
 
     public async Task<Result<PlanGenerationResult>> Handle(GeneratePlanCommand request, CancellationToken cancellationToken)
@@ -176,16 +233,20 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
 
         int maxRegenerations = userSubscription?.Plan?.MaxRegenerationsWeek ?? 3;
 
-        var weekStart = request.WeekStartDate;
-        var weekEnd = weekStart.AddDays(7);
-        var regenerationCount = await _context.WeeklyPlans
-            .CountAsync(p => p.UserId == userId
-                          && p.CreatedAt >= weekStart.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc)
-                          && p.CreatedAt < weekEnd.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc), cancellationToken);
+        // Fase de arranque: regeneración ilimitada (ver IFeatureFlagService).
+        if (!_featureFlags.UnlimitedRegeneration)
+        {
+            var weekStart = request.WeekStartDate;
+            var weekEnd = weekStart.AddDays(7);
+            var regenerationCount = await _context.WeeklyPlans
+                .CountAsync(p => p.UserId == userId
+                              && p.CreatedAt >= weekStart.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc)
+                              && p.CreatedAt < weekEnd.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc), cancellationToken);
 
-        if (regenerationCount >= maxRegenerations && request.ForceRegenerate)
-            return Result<PlanGenerationResult>.Failure(
-                $"Has alcanzado el límite de {maxRegenerations} regeneraciones esta semana.", "MAX_REGENERATIONS");
+            if (regenerationCount >= maxRegenerations && request.ForceRegenerate)
+                return Result<PlanGenerationResult>.Failure(
+                    $"Has alcanzado el límite de {maxRegenerations} regeneraciones esta semana.", "MAX_REGENERATIONS");
+        }
 
         var existingPlan = await _context.WeeklyPlans
             .Include(p => p.Meals)
@@ -336,6 +397,19 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
             .OrderBy(m => m.DayOfWeek).ThenBy(m => m.SortOrder)
             .ToListAsync(ct);
 
+        var ketoProfile = await _context.Users
+            .Where(u => u.Id == plan.UserId)
+            .Select(u => u.KetoProfile)
+            .FirstOrDefaultAsync(ct);
+
+        var catalogRaw = await _context.IngredientCatalog
+            .Where(c => c.IsActive && c.PrimaryStoreCategory != null)
+            .Select(c => new { c.Name, c.PrimaryStoreCategory })
+            .ToListAsync(ct);
+        var catalog = catalogRaw
+            .Select(c => (c.Name.ToLowerInvariant(), c.PrimaryStoreCategory!))
+            .ToList();
+
         var days = meals
             .GroupBy(m => m.DayOfWeek)
             .OrderBy(g => g.Key)
@@ -366,6 +440,7 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
                             Instructions = m.Recipe.Instructions ?? "",
                             EstimatedCostMxn = m.Recipe.EstimatedCostPerServingMxn ?? 0,
                             PrimaryStore = null,
+                            Ingredients = RecipeIngredientParser.Parse(m.Recipe.Ingredients),
                         },
                     }).ToList(),
                     DayTotals = new DayTotalsDto
@@ -395,9 +470,110 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
             SavingsVsGourmetMxn = plan.SavingsVsGourmetMxn,
             SavingsVsGourmetPercent = plan.SavingsVsGourmetPercent,
             Days = days,
-            Macros = new KetoProfileResult(),
-            ShoppingList = null,
+            Macros = ketoProfile is not null ? new KetoProfileResult
+            {
+                BmrKcal = ketoProfile.BmrKcal ?? 0,
+                TdeeKcal = ketoProfile.TdeeKcal ?? 0,
+                DailyCalories = ketoProfile.DailyCalories,
+                CarbsGrams = ketoProfile.CarbsGrams,
+                ProteinGrams = ketoProfile.ProteinGrams,
+                FatGrams = ketoProfile.FatGrams,
+                CarbsPercent = ketoProfile.CarbsPercent ?? 0,
+                ProteinPercent = ketoProfile.ProteinPercent ?? 0,
+                FatPercent = ketoProfile.FatPercent ?? 0,
+            } : new KetoProfileResult(),
+            ShoppingList = BuildShoppingList(meals, catalog),
         };
+    }
+
+    internal static ShoppingListDto BuildShoppingList(
+        IEnumerable<WeeklyPlanMeal> meals,
+        IReadOnlyList<(string NameLower, string StoreCode)>? catalog = null)
+    {
+        var consolidated = new Dictionary<string, (decimal Amount, string Unit)>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var meal in meals.Where(m => m.Recipe is not null))
+        {
+            foreach (var ing in RecipeIngredientParser.Parse(meal.Recipe!.Ingredients))
+            {
+                if (consolidated.TryGetValue(ing.Name, out var existing))
+                    consolidated[ing.Name] = (existing.Amount + ing.Amount, ing.Unit);
+                else
+                    consolidated[ing.Name] = (ing.Amount, ing.Unit);
+            }
+        }
+
+        // Agrupar por tienda usando el catálogo de ingredientes
+        var byStore = new Dictionary<string, List<ShoppingItemDto>>(StringComparer.OrdinalIgnoreCase);
+        foreach (var kv in consolidated.OrderBy(k => k.Key))
+        {
+            var storeCode = catalog is not null ? ResolveStore(kv.Key, catalog) : "supermercado";
+            if (!byStore.TryGetValue(storeCode, out var bucket))
+            {
+                bucket = [];
+                byStore[storeCode] = bucket;
+            }
+            bucket.Add(new ShoppingItemDto
+            {
+                IngredientName = kv.Key,
+                TotalAmount = Math.Round(kv.Value.Amount, 1),
+                Unit = kv.Value.Unit,
+                EstimatedCostMxn = 0m,
+            });
+        }
+
+        var storeOrder = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["mercado_tradicional"] = 0, ["supermercado"] = 1,
+            ["pescaderia"] = 2, ["tienda_especializada"] = 3,
+        };
+        var storeDisplayNames = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["mercado_tradicional"] = "Mercado", ["supermercado"] = "Supermercado",
+            ["pescaderia"] = "Pescadería", ["tienda_especializada"] = "Tienda especializada",
+        };
+
+        var groups = byStore
+            .OrderBy(kv => storeOrder.TryGetValue(kv.Key, out var o) ? o : 99)
+            .Select(kv => new StoreGroupDto
+            {
+                StoreCode = kv.Key,
+                StoreName = storeDisplayNames.TryGetValue(kv.Key, out var name) ? name : kv.Key,
+                Items = kv.Value,
+                SubtotalMxn = 0m,
+            }).ToList();
+
+        if (groups.Count == 0)
+            groups = [new StoreGroupDto
+            {
+                StoreCode = "general", StoreName = "Lista de compras",
+                Items = [], SubtotalMxn = 0m,
+            }];
+
+        return new ShoppingListDto
+        {
+            ShoppingListId = Guid.Empty,
+            TotalEstimatedMxn = 0m,
+            ByStore = groups,
+        };
+    }
+
+    private static string ResolveStore(
+        string ingredientName,
+        IReadOnlyList<(string NameLower, string StoreCode)> catalog)
+    {
+        var lower = ingredientName.ToLowerInvariant();
+        string? best = null;
+        int bestLen = 0;
+        foreach (var (catalogName, storeCode) in catalog)
+        {
+            if (lower.Contains(catalogName) && catalogName.Length > bestLen)
+            {
+                best = storeCode;
+                bestLen = catalogName.Length;
+            }
+        }
+        return best ?? "supermercado";
     }
 
     private async Task<Result<PlanGenerationResult>> GenerateCuratedFallbackPlanAsync(
@@ -460,21 +636,39 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
 
         var totalCost = 0m;
         var mealTypes = new[] { MealType.Breakfast, MealType.Lunch, MealType.Dinner, MealType.Snack };
-        var recipesByType = mealTypes.ToDictionary(
+
+        // Cada tipo tiene su propio pool barajado. Si un tipo no tiene recetas propias,
+        // usa el catálogo completo como respaldo.
+        var rng = new Random(userId.GetHashCode() ^ request.WeekStartDate.GetHashCode());
+        var poolByType = mealTypes.ToDictionary(
             type => type,
             type =>
             {
                 var matching = curatedRecipes.Where(r => r.MealType == type).ToList();
-                return matching.Count > 0 ? matching : curatedRecipes;
+                var pool = matching.Count > 0 ? matching : curatedRecipes;
+                return pool.OrderBy(_ => rng.Next()).ToList();
             });
+        var indexByType = mealTypes.ToDictionary(type => type, _ => 0);
 
         for (int day = 1; day <= 7; day++)
         {
+            var usedToday = new HashSet<Guid>();
             for (int i = 0; i < mealTypes.Length; i++)
             {
                 var type = mealTypes[i];
-                var pool = recipesByType[type];
-                var recipe = pool[(day - 1) % pool.Count];
+                var pool = poolByType[type];
+
+                // Avanza el índice rotatorio evitando repetir una receta ya usada ese día.
+                Recipe recipe;
+                int guard = 0;
+                do
+                {
+                    recipe = pool[indexByType[type] % pool.Count];
+                    indexByType[type]++;
+                    guard++;
+                } while (usedToday.Contains(recipe.Id) && guard <= pool.Count);
+
+                usedToday.Add(recipe.Id);
                 recipe.UseCount++;
                 totalCost += recipe.EstimatedCostPerServingMxn ?? 0m;
 
