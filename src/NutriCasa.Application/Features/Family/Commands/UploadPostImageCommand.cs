@@ -41,10 +41,15 @@ public class UploadPostImageCommandHandler : IRequestHandler<UploadPostImageComm
         if (!Allowed.Contains(ext))
             return Result<string>.Failure("Formato no permitido. Usa JPG, PNG, WebP o GIF.", "INVALID_FORMAT");
 
-        var storageKey = $"family/{_currentUser.UserId}/{Guid.NewGuid()}{ext}";
-        await _storage.UploadAsync(request.FileStream, storageKey, request.ContentType, ct);
-        var url = _storage.GetPublicUrl(storageKey);
-
-        return Result<string>.Success(url);
+        try
+        {
+            var storageKey = await _storage.UploadAsync(request.FileStream, request.FileName, request.ContentType, ct);
+            var url = _storage.GetPublicUrl(storageKey);
+            return Result<string>.Success(url);
+        }
+        catch (Exception ex)
+        {
+            return Result<string>.Failure($"Error al subir la imagen: {ex.Message}", "UPLOAD_FAILED");
+        }
     }
 }

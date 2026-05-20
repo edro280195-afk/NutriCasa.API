@@ -8,6 +8,7 @@ using NutriCasa.Application.Features.UserMedicalProfile.Queries;
 namespace NutriCasa.Api.Controllers;
 
 [Authorize]
+[Route("api/medical-profile")]
 public class MedicalProfileController : BaseApiController
 {
     private readonly IMediator _mediator;
