@@ -1,6 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Application.Features.Family.Commands;
 
 namespace NutriCasa.Api.Hubs;
@@ -9,17 +11,29 @@ namespace NutriCasa.Api.Hubs;
 public class GroupHub : Hub
 {
     private readonly IMediator _mediator;
+    private readonly IApplicationDbContext _dbContext;
 
-    public GroupHub(IMediator mediator)
+    public GroupHub(IMediator mediator, IApplicationDbContext dbContext)
     {
         _mediator = mediator;
+        _dbContext = dbContext;
     }
 
     public override async Task OnConnectedAsync()
     {
-        var groupId = Context.GetHttpContext()?.Request.Query["groupId"].FirstOrDefault();
-        if (!string.IsNullOrEmpty(groupId))
-            await Groups.AddToGroupAsync(Context.ConnectionId, groupId);
+        var userIdStr = Context.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        if (Guid.TryParse(userIdStr, out var userId))
+        {
+            var membership = await _dbContext.GroupMemberships
+                .FirstOrDefaultAsync(m => m.UserId == userId && m.LeftAt == null);
+
+            if (membership != null)
+            {
+                var groupIdStr = membership.GroupId.ToString();
+                await Groups.AddToGroupAsync(Context.ConnectionId, groupIdStr);
+                Context.Items["GroupId"] = groupIdStr;
+            }
+        }
 
         await base.OnConnectedAsync();
     }
@@ -45,7 +59,10 @@ public class GroupHub : Hub
         if (!result.IsSuccess || result.Value is null)
             return null;
 
-        await Clients.Group(result.Value.PostId.ToString()).SendAsync("PostCreated", result.Value);
+        if (Context.Items.TryGetValue("GroupId", out var groupObj) && groupObj is string groupId)
+        {
+            await Clients.Group(groupId).SendAsync("PostCreated", result.Value);
+        }
 
         return result.Value;
     }
@@ -61,11 +78,14 @@ public class GroupHub : Hub
         if (!result.IsSuccess || result.Value is null)
             return null;
 
-        await Clients.Group(postId.ToString()).SendAsync("ReactionToggled", new
+        if (Context.Items.TryGetValue("GroupId", out var groupObj) && groupObj is string groupId)
         {
-            PostId = postId,
-            Reaction = result.Value,
-        });
+            await Clients.Group(groupId).SendAsync("ReactionToggled", new
+            {
+                PostId = postId,
+                Reaction = result.Value,
+            });
+        }
 
         return result.Value;
     }
@@ -81,11 +101,14 @@ public class GroupHub : Hub
         if (!result.IsSuccess || result.Value is null)
             return null;
 
-        await Clients.Group(postId.ToString()).SendAsync("CommentAdded", new
+        if (Context.Items.TryGetValue("GroupId", out var groupObj) && groupObj is string groupId)
         {
-            PostId = postId,
-            Comment = result.Value,
-        });
+            await Clients.Group(groupId).SendAsync("CommentAdded", new
+            {
+                PostId = postId,
+                Comment = result.Value,
+            });
+        }
 
         return result.Value;
     }

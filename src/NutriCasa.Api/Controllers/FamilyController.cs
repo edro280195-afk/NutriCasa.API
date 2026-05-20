@@ -1,6 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
+using NutriCasa.Api.Hubs;
+using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Application.Features.Family.Commands;
 using NutriCasa.Application.Features.Family.Commands.ChangeMemberRole;
 using NutriCasa.Application.Features.Family.Commands.CreateSubgroup;
@@ -15,10 +19,17 @@ namespace NutriCasa.Api.Controllers;
 public class FamilyController : BaseApiController
 {
     private readonly IMediator _mediator;
+    private readonly IHubContext<GroupHub> _hubContext;
+    private readonly IApplicationDbContext _context;
 
-    public FamilyController(IMediator mediator)
+    public FamilyController(
+        IMediator mediator,
+        IHubContext<GroupHub> hubContext,
+        IApplicationDbContext context)
     {
         _mediator = mediator;
+        _hubContext = hubContext;
+        _context = context;
     }
 
     [HttpGet("members")]
@@ -54,6 +65,22 @@ public class FamilyController : BaseApiController
             Content = request.Content,
             PostType = request.PostType,
         }, ct);
+
+        if (result.IsSuccess && result.Value != null)
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (Guid.TryParse(userId, out var userGuid))
+            {
+                var membership = await _context.GroupMemberships
+                    .FirstOrDefaultAsync(m => m.UserId == userGuid && m.LeftAt == null, ct);
+                if (membership != null)
+                {
+                    await _hubContext.Clients.Group(membership.GroupId.ToString())
+                        .SendAsync("PostCreated", result.Value, cancellationToken: ct);
+                }
+            }
+        }
+
         return HandleResult(result);
     }
 
@@ -66,6 +93,17 @@ public class FamilyController : BaseApiController
             PostId = postId,
             ReactionType = request.ReactionType,
         }, ct);
+
+        if (result.IsSuccess && result.Value != null)
+        {
+            var post = await _context.GroupPosts.FirstOrDefaultAsync(p => p.Id == postId, ct);
+            if (post != null)
+            {
+                await _hubContext.Clients.Group(post.GroupId.ToString())
+                    .SendAsync("ReactionToggled", new { PostId = postId, Reaction = result.Value }, cancellationToken: ct);
+            }
+        }
+
         return HandleResult(result);
     }
 
@@ -78,6 +116,17 @@ public class FamilyController : BaseApiController
             PostId = postId,
             Content = request.Content,
         }, ct);
+
+        if (result.IsSuccess && result.Value != null)
+        {
+            var post = await _context.GroupPosts.FirstOrDefaultAsync(p => p.Id == postId, ct);
+            if (post != null)
+            {
+                await _hubContext.Clients.Group(post.GroupId.ToString())
+                    .SendAsync("CommentAdded", new { PostId = postId, Comment = result.Value }, cancellationToken: ct);
+            }
+        }
+
         return HandleResult(result);
     }
 
@@ -85,7 +134,16 @@ public class FamilyController : BaseApiController
     [Authorize]
     public async Task<IActionResult> DeletePost(Guid postId, CancellationToken ct)
     {
+        var post = await _context.GroupPosts.FirstOrDefaultAsync(p => p.Id == postId, ct);
+
         var result = await _mediator.Send(new DeletePostCommand { PostId = postId }, ct);
+
+        if (result.IsSuccess && post != null)
+        {
+            await _hubContext.Clients.Group(post.GroupId.ToString())
+                .SendAsync("PostDeleted", postId, cancellationToken: ct);
+        }
+
         return HandleResult(result);
     }
 
@@ -93,7 +151,16 @@ public class FamilyController : BaseApiController
     [Authorize]
     public async Task<IActionResult> DeleteComment(Guid postId, Guid commentId, CancellationToken ct)
     {
+        var post = await _context.GroupPosts.FirstOrDefaultAsync(p => p.Id == postId, ct);
+
         var result = await _mediator.Send(new DeleteCommentCommand { PostId = postId, CommentId = commentId }, ct);
+
+        if (result.IsSuccess && post != null)
+        {
+            await _hubContext.Clients.Group(post.GroupId.ToString())
+                .SendAsync("CommentDeleted", new { PostId = postId, CommentId = commentId }, cancellationToken: ct);
+        }
+
         return HandleResult(result);
     }
 

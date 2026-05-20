@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 
 var tool = new RecipeGenerator();
 
@@ -17,7 +17,7 @@ Console.WriteLine($"Target: {recipesPerMode} recipes × {modeCodes.Length} modes
 var existingPath = tool.FindJsonPath();
 if (existingPath != null)
 {
-    var existing = JsonSerializer.Deserialize<CuratedCatalog>(File.ReadAllText(existingPath));
+    var existing = JsonSerializer.Deserialize<CuratedCatalog>(File.ReadAllText(existingPath), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     Console.WriteLine($"Existing recipes in JSON: {existing?.Recipes?.Count ?? 0}");
 }
 else
