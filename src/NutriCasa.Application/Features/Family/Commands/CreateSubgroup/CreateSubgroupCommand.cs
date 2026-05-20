@@ -7,13 +7,20 @@ using NutriCasa.Domain.Enums;
 
 namespace NutriCasa.Application.Features.Family.Commands.CreateSubgroup;
 
-public record CreateSubgroupCommand : IRequest<Result>
+public record CreateSubgroupCommand : IRequest<Result<SubgroupCreatedDto>>
 {
     public required string Name { get; init; }
     public string? Description { get; init; }
 }
 
-public class CreateSubgroupCommandHandler : IRequestHandler<CreateSubgroupCommand, Result>
+public class SubgroupCreatedDto
+{
+    public Guid SubgroupId { get; set; }
+    public string SubgroupName { get; set; } = "";
+    public string InviteCode { get; set; } = "";
+}
+
+public class CreateSubgroupCommandHandler : IRequestHandler<CreateSubgroupCommand, Result<SubgroupCreatedDto>>
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
@@ -24,10 +31,10 @@ public class CreateSubgroupCommandHandler : IRequestHandler<CreateSubgroupComman
         _currentUserService = currentUserService;
     }
 
-    public async Task<Result> Handle(CreateSubgroupCommand request, CancellationToken ct)
+    public async Task<Result<SubgroupCreatedDto>> Handle(CreateSubgroupCommand request, CancellationToken ct)
     {
         if (_currentUserService.UserId is null)
-            return Result.Failure("No autenticado.", "UNAUTHORIZED");
+            return Result<SubgroupCreatedDto>.Failure("No autenticado.", "UNAUTHORIZED");
 
         var userId = _currentUserService.UserId.Value;
 
@@ -36,17 +43,17 @@ public class CreateSubgroupCommandHandler : IRequestHandler<CreateSubgroupComman
             .FirstOrDefaultAsync(m => m.UserId == userId && m.LeftAt == null, ct);
 
         if (membership is null)
-            return Result.Failure("No perteneces a ningún grupo.", "NO_GROUP");
+            return Result<SubgroupCreatedDto>.Failure("No perteneces a ningún grupo.", "NO_GROUP");
 
         if (membership.Role != GroupRole.Owner && membership.Role != GroupRole.Admin)
-            return Result.Failure("Solo el owner o admin pueden crear subgrupos.", "FORBIDDEN");
+            return Result<SubgroupCreatedDto>.Failure("Solo el owner o admin pueden crear subgrupos.", "FORBIDDEN");
 
         var parentGroup = membership.Group;
 
         // Contar subgrupos existentes para validar profundidad máxima (3 niveles)
         var depth = await GetGroupDepthAsync(parentGroup.Id, ct);
         if (depth >= 2)
-            return Result.Failure("Ya alcanzaste el máximo de 3 niveles de subgrupos.", "MAX_DEPTH");
+            return Result<SubgroupCreatedDto>.Failure("Ya alcanzaste el máximo de 3 niveles de subgrupos.", "MAX_DEPTH");
 
         var subgroup = new Group
         {
@@ -72,7 +79,12 @@ public class CreateSubgroupCommandHandler : IRequestHandler<CreateSubgroupComman
         _context.GroupMemberships.Add(subgroupMembership);
         await _context.SaveChangesAsync(ct);
 
-        return Result.Success();
+        return Result<SubgroupCreatedDto>.Success(new SubgroupCreatedDto
+        {
+            SubgroupId = subgroup.Id,
+            SubgroupName = subgroup.Name,
+            InviteCode = subgroup.InviteCode,
+        });
     }
 
     private async Task<int> GetGroupDepthAsync(Guid groupId, CancellationToken ct)

@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Application.Common.Models;
+using System.Text.Json;
 
 namespace NutriCasa.Application.Features.Family.Queries;
 
@@ -94,6 +95,7 @@ public class GetFamilyFeedQueryHandler : IRequestHandler<GetFamilyFeedQuery, Res
             AuthorName = p.AuthorUser?.FullName ?? "Alguien",
             PostType = p.PostType.ToString().ToLowerInvariant(),
             Content = p.Content ?? "",
+            ImageUrl = TryGetImageUrl(p.Metadata),
             CreatedAt = p.CreatedAt,
             Reactions = p.Reactions
                 .GroupBy(r => r.ReactionType)
@@ -123,6 +125,17 @@ public class GetFamilyFeedQueryHandler : IRequestHandler<GetFamilyFeedQuery, Res
         .ToList();
 
         return Result<List<FamilyPostDto>>.Success(result);
+    }
+
+    private static string? TryGetImageUrl(string? metadata)
+    {
+        if (metadata is null) return null;
+        try
+        {
+            using var doc = JsonDocument.Parse(metadata);
+            return doc.RootElement.TryGetProperty("imageUrl", out var el) ? el.GetString() : null;
+        }
+        catch { return null; }
     }
 }
 
@@ -199,6 +212,7 @@ public class FamilyPostDto
     public string AuthorName { get; set; } = null!;
     public string PostType { get; set; } = null!;
     public string Content { get; set; } = "";
+    public string? ImageUrl { get; set; }
     public DateTime CreatedAt { get; set; }
     public List<PostReactionDto> Reactions { get; set; } = new();
     public List<PostCommentDto> Comments { get; set; } = new();

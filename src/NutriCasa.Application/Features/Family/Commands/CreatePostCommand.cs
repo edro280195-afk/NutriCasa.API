@@ -11,6 +11,7 @@ public record CreatePostCommand : IRequest<Result<PostResultDto>>
 {
     public string Content { get; init; } = "";
     public string PostType { get; init; } = "UserText";
+    public string? ImageUrl { get; init; }
 }
 
 public record PostResultDto
@@ -19,6 +20,7 @@ public record PostResultDto
     public string AuthorName { get; set; } = "";
     public string PostType { get; set; } = "";
     public string Content { get; set; } = "";
+    public string? ImageUrl { get; set; }
     public DateTime CreatedAt { get; set; }
 }
 
@@ -63,6 +65,9 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, Resul
             AuthorUserId = userId,
             PostType = postType,
             Content = request.Content,
+            Metadata = request.ImageUrl is not null
+                ? System.Text.Json.JsonSerializer.Serialize(new { imageUrl = request.ImageUrl })
+                : null,
             IsUnderReview = !isClean,
             ModerationReason = reason,
             ModerationSeverity = !isClean && severity is not null
@@ -86,6 +91,7 @@ public class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, Resul
             AuthorName = user ?? "Alguien",
             PostType = postType.ToString().ToLowerInvariant(),
             Content = post.Content ?? "",
+            ImageUrl = request.ImageUrl,
             CreatedAt = post.CreatedAt,
         });
     }

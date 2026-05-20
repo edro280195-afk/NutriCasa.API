@@ -56,6 +56,21 @@ public class FamilyController : BaseApiController
         return HandleResult(result);
     }
 
+    [HttpPost("posts/upload-image")]
+    [Authorize]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> UploadPostImage(IFormFile file, CancellationToken ct)
+    {
+        var result = await _mediator.Send(new UploadPostImageCommand
+        {
+            FileStream = file.OpenReadStream(),
+            FileName = file.FileName,
+            ContentType = file.ContentType,
+            FileSize = file.Length,
+        }, ct);
+        return HandleResult(result);
+    }
+
     [HttpPost("posts")]
     [Authorize]
     public async Task<IActionResult> CreatePost([FromBody] CreatePostRequest request, CancellationToken ct)
@@ -64,6 +79,7 @@ public class FamilyController : BaseApiController
         {
             Content = request.Content,
             PostType = request.PostType,
+            ImageUrl = request.ImageUrl,
         }, ct);
 
         if (result.IsSuccess && result.Value != null)
@@ -257,6 +273,7 @@ public class CreatePostRequest
 {
     public string Content { get; set; } = "";
     public string PostType { get; set; } = "UserText";
+    public string? ImageUrl { get; set; }
 }
 
 public class ToggleReactionRequest
