@@ -159,7 +159,7 @@ public class GeminiService : IGeminiService
         };
 
         var response = await client.PostAsJsonAsync(
-            $"{model}:generateContent",
+            $"./{model}:generateContent",
             requestBody, ct);
 
         response.EnsureSuccessStatusCode();
@@ -348,8 +348,8 @@ public class GeminiService : IGeminiService
                 Success = success,
                 ErrorMessage = error,
                 PromptHash = hash,
-                RequestPayload = prompt.Length > 4000 ? prompt[..4000] : prompt,
-                ResponsePayload = success ? (response.Length > 8000 ? response[..8000] : response) : null,
+                RequestPayload = JsonSerializer.Serialize(new { prompt = prompt.Length > 4000 ? prompt[..4000] : prompt }),
+                ResponsePayload = success ? response : null,
                 CacheHit = false,
                 CreatedAt = DateTime.UtcNow,
             };
@@ -421,7 +421,7 @@ public class GeminiService : IGeminiService
         };
 
         var response = await client.PostAsJsonAsync(
-            $"{model}:generateContent",
+            $"./{model}:generateContent",
             requestBody, ct);
 
         response.EnsureSuccessStatusCode();
@@ -544,8 +544,8 @@ public class GeminiService : IGeminiService
                 Success = success,
                 ErrorMessage = error,
                 PromptHash = hash,
-                RequestPayload = prompt.Length > 4000 ? prompt[..4000] : prompt,
-                ResponsePayload = success ? (response.Length > 8000 ? response[..8000] : response) : null,
+                RequestPayload = JsonSerializer.Serialize(new { prompt = prompt.Length > 4000 ? prompt[..4000] : prompt }),
+                ResponsePayload = success ? response : null,
                 CacheHit = false,
                 CreatedAt = DateTime.UtcNow,
             };
