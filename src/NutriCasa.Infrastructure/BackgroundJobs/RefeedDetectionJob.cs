@@ -52,7 +52,7 @@ public class RefeedDetectionJob
                 var membership = memberships.FirstOrDefault(m => m.UserId == userId);
                 if (membership is null) continue;
 
-                await CreateRefeedSuggestionAsync(userId, membership.GroupId, ct);
+                CreateRefeedSuggestion(userId, membership.GroupId, ct);
                 suggested++;
             }
             catch (Exception ex)
@@ -105,7 +105,7 @@ public class RefeedDetectionJob
         return true;
     }
 
-    private async Task CreateRefeedSuggestionAsync(Guid userId, Guid groupId, CancellationToken ct)
+    private void CreateRefeedSuggestion(Guid userId, Guid groupId, CancellationToken ct)
     {
         var post = new GroupPost
         {
