@@ -58,7 +58,8 @@ public static class DependencyInjection
         {
             services.AddScoped<IPaymentService, SimulatedPaymentService>();
         }
-        services.AddScoped<IEmailService, ResendEmailService>();
+        // IEmailService registrado en Program.cs vía AddHttpClient<IEmailService, ResendEmailService>
+        // para que el HttpClient sea inyectado correctamente por IHttpClientFactory.
 
         // Hangfire
         services.AddHangfireServices(configuration);

@@ -15,12 +15,13 @@ public class ResendEmailService : IEmailService
     public ResendEmailService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
-        _apiKey = configuration["Resend:ApiKey"] ?? throw new InvalidOperationException("Resend:ApiKey no configurada.");
+        _apiKey = configuration["Resend:ApiKey"] ?? "";   // vacío = sin email configurado, no lanzar excepción
         _fromEmail = configuration["Resend:FromEmail"] ?? "hola@nutricasa.app";
         _fromName = configuration["Resend:FromName"] ?? "NutriCasa";
 
         _httpClient.BaseAddress = new Uri("https://api.resend.com/");
-        _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", $"Bearer {_apiKey}");
+        if (!string.IsNullOrEmpty(_apiKey))
+            _httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", $"Bearer {_apiKey}");
     }
 
     public async Task SendEmailVerificationAsync(string toEmail, string toName, string verificationLink, CancellationToken ct = default)
@@ -114,6 +115,9 @@ public class ResendEmailService : IEmailService
 
     private async Task SendEmailAsync(string to, string subject, string html, CancellationToken ct)
     {
+        if (string.IsNullOrEmpty(_apiKey))
+            throw new InvalidOperationException("Resend:ApiKey no configurada. Email no enviado.");
+
         var payload = new
         {
             from = $"{_fromName} <{_fromEmail}>",
