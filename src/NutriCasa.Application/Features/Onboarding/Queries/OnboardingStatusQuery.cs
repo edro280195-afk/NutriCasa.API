@@ -35,7 +35,7 @@ public class OnboardingStatusQueryHandler : IRequestHandler<OnboardingStatusQuer
         if (user is null)
             return Result<OnboardingStatusResponse>.Failure("Usuario no encontrado.", "NOT_FOUND");
 
-        bool step1 = user.GroupMemberships.Any();
+        bool step1 = user.GroupMemberships.Any(m => m.LeftAt == null);
         bool step2 = !string.IsNullOrEmpty(user.FullName) && user.BirthDate != default;
         bool step3 = user.HeightCm > 0 && user.UserGoals.Any(g => g.IsActive);
         bool step4 = !string.IsNullOrEmpty(user.BodyTypeSelected);

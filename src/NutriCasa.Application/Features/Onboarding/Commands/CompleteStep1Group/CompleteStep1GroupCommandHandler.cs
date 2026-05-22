@@ -30,8 +30,17 @@ public class CompleteStep1GroupCommandHandler : IRequestHandler<CompleteStep1Gro
 
         var userId = _currentUserService.UserId.Value;
 
+        var activeMembership = await _context.GroupMemberships
+            .AsNoTracking()
+            .FirstOrDefaultAsync(m => m.UserId == userId && m.LeftAt == null, cancellationToken);
+
         if (request.Action == "create")
         {
+            if (activeMembership is not null)
+                return Result<CompleteStep1GroupResponse>.Failure(
+                    "Ya perteneces a un grupo. Sal del grupo actual antes de crear otro.",
+                    "ALREADY_IN_GROUP");
+
             var inviteCode = GenerateInviteCode();
 
             var group = new Group
@@ -78,11 +87,22 @@ public class CompleteStep1GroupCommandHandler : IRequestHandler<CompleteStep1Gro
             if (group.InviteCodeExpiresAt.HasValue && group.InviteCodeExpiresAt.Value < DateTime.UtcNow)
                 return Result<CompleteStep1GroupResponse>.Failure("El código de invitación ha expirado.", "CODE_EXPIRED");
 
-            var alreadyMember = await _context.GroupMemberships
-                .AnyAsync(m => m.GroupId == group.Id && m.UserId == userId, cancellationToken);
+            if (activeMembership is not null)
+            {
+                if (activeMembership.GroupId == group.Id)
+                    return Result<CompleteStep1GroupResponse>.Success(new CompleteStep1GroupResponse
+                    {
+                        GroupId = group.Id,
+                        GroupName = group.Name
+                    });
 
-            if (alreadyMember)
-                return Result<CompleteStep1GroupResponse>.Failure("Ya eres miembro de este grupo.", "ALREADY_MEMBER");
+                return Result<CompleteStep1GroupResponse>.Failure(
+                    "Ya perteneces a un grupo. Sal del grupo actual antes de unirte a otro.",
+                    "ALREADY_IN_GROUP");
+            }
+
+            var previousMembership = await _context.GroupMemberships
+                .FirstOrDefaultAsync(m => m.GroupId == group.Id && m.UserId == userId, cancellationToken);
 
             var currentMembers = await _context.GroupMemberships
                 .CountAsync(m => m.GroupId == group.Id && m.LeftAt == null, cancellationToken);
@@ -92,6 +112,21 @@ public class CompleteStep1GroupCommandHandler : IRequestHandler<CompleteStep1Gro
                 return Result<CompleteStep1GroupResponse>.Failure(
                     $"Este grupo ya llego al limite de {maxGroupMembers.Value} miembros de su plan.",
                     "GROUP_MEMBER_LIMIT_REACHED");
+
+            if (previousMembership is not null)
+            {
+                previousMembership.LeftAt = null;
+                previousMembership.JoinedAt = DateTime.UtcNow;
+                previousMembership.Role = GroupRole.Member;
+
+                await _context.SaveChangesAsync(cancellationToken);
+
+                return Result<CompleteStep1GroupResponse>.Success(new CompleteStep1GroupResponse
+                {
+                    GroupId = group.Id,
+                    GroupName = group.Name
+                });
+            }
 
             var membership = new GroupMembership
             {
