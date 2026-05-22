@@ -16,7 +16,8 @@ public class CloudflareR2StorageService : IFileStorageService
     public CloudflareR2StorageService(IConfiguration configuration)
     {
         var section = configuration.GetSection("Storage:R2");
-        var accountId = section["AccountId"];
+        var accountId = section["AccountId"]?.Trim();
+        var endpointUrl = section["EndpointUrl"]?.Trim();
         var accessKeyId = section["AccessKeyId"];
         var secretAccessKey = section["SecretAccessKey"];
 
@@ -24,16 +25,29 @@ public class CloudflareR2StorageService : IFileStorageService
         _publicBaseUrl = (section["PublicBaseUrl"] ?? throw new InvalidOperationException("Storage:R2:PublicBaseUrl no configurado.")).TrimEnd('/');
         _keyPrefix = (section["KeyPrefix"] ?? "uploads/progress").Trim('/');
 
-        if (string.IsNullOrWhiteSpace(accountId))
-            throw new InvalidOperationException("Storage:R2:AccountId no configurado.");
+        if (string.IsNullOrWhiteSpace(endpointUrl) && string.IsNullOrWhiteSpace(accountId))
+            throw new InvalidOperationException("Storage:R2:AccountId o Storage:R2:EndpointUrl no configurado.");
         if (string.IsNullOrWhiteSpace(accessKeyId))
             throw new InvalidOperationException("Storage:R2:AccessKeyId no configurado.");
         if (string.IsNullOrWhiteSpace(secretAccessKey))
             throw new InvalidOperationException("Storage:R2:SecretAccessKey no configurado.");
 
+        if (string.IsNullOrWhiteSpace(endpointUrl))
+        {
+            if (accountId!.StartsWith("cfat_", StringComparison.OrdinalIgnoreCase) ||
+                accountId.Contains('_') ||
+                accountId.StartsWith("http", StringComparison.OrdinalIgnoreCase) ||
+                accountId.Contains("r2.cloudflarestorage.com", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException("Storage:R2:AccountId debe contener solo el Account ID de Cloudflare, no un token ni una URL. Usa Storage:R2:EndpointUrl para una URL completa.");
+            }
+
+            endpointUrl = $"https://{accountId}.r2.cloudflarestorage.com";
+        }
+
         var config = new AmazonS3Config
         {
-            ServiceURL = $"https://{accountId}.r2.cloudflarestorage.com",
+            ServiceURL = endpointUrl.TrimEnd('/'),
             ForcePathStyle = true,
             AuthenticationRegion = "auto",
         };
@@ -52,6 +66,9 @@ public class CloudflareR2StorageService : IFileStorageService
             Key = storageKey,
             InputStream = fileStream,
             ContentType = string.IsNullOrWhiteSpace(contentType) ? "application/octet-stream" : contentType,
+            DisablePayloadSigning = true,
+            DisableDefaultChecksumValidation = true,
+            UseChunkEncoding = false,
         };
 
         await _client.PutObjectAsync(request, ct);
