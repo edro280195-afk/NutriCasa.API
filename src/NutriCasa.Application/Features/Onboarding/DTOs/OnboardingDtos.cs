@@ -43,7 +43,7 @@ public record CompleteStep3MetricsResponse
 // ─── Step 4: Body Type ────────────────────────────────────────────────────────
 public record CompleteStep4BodyTypeRequest
 {
-    public required string BodyType { get; init; } // "slim", "average", "athletic", "curvy", "plus", "heavy"
+    public required string BodyType { get; init; } // "slim", "average", "athletic", "curvy", "plus", "heavy", "notSure"
 }
 
 // ─── Step 5: Activity Level ───────────────────────────────────────────────────
