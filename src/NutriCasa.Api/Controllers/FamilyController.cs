@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using NutriCasa.Api.Hubs;
 using NutriCasa.Application.Common.Interfaces;
+using NutriCasa.Application.Common.Models;
 using NutriCasa.Application.Features.Family.Commands;
 using NutriCasa.Application.Features.Family.Commands.ChangeMemberRole;
 using NutriCasa.Application.Features.Family.Commands.CreateSubgroup;
@@ -21,15 +22,18 @@ public class FamilyController : BaseApiController
     private readonly IMediator _mediator;
     private readonly IHubContext<GroupHub> _hubContext;
     private readonly IApplicationDbContext _context;
+    private readonly ILogger<FamilyController> _logger;
 
     public FamilyController(
         IMediator mediator,
         IHubContext<GroupHub> hubContext,
-        IApplicationDbContext context)
+        IApplicationDbContext context,
+        ILogger<FamilyController> logger)
     {
         _mediator = mediator;
         _hubContext = hubContext;
         _context = context;
+        _logger = logger;
     }
 
     [HttpGet("members")]
@@ -59,8 +63,14 @@ public class FamilyController : BaseApiController
     [HttpPost("posts/upload-image")]
     [Authorize]
     [Consumes("multipart/form-data")]
-    public async Task<IActionResult> UploadPostImage(IFormFile file, CancellationToken ct)
+    public async Task<IActionResult> UploadPostImage([FromForm] IFormFile? file, CancellationToken ct)
     {
+        if (file is null)
+        {
+            _logger.LogWarning("Imagen de post rechazada: no se recibio archivo en el formulario.");
+            return HandleResult(Result<string>.Failure("No se recibió ningún archivo.", "EMPTY_FILE"));
+        }
+
         var result = await _mediator.Send(new UploadPostImageCommand
         {
             FileStream = file.OpenReadStream(),
