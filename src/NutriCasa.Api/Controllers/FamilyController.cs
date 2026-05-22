@@ -78,7 +78,11 @@ public class FamilyController : BaseApiController
             ContentType = file.ContentType,
             FileSize = file.Length,
         }, ct);
-        return HandleResult(result);
+
+        if (!result.IsSuccess)
+            return HandleResult(result);
+
+        return Ok(new UploadPostImageResponse { ImageUrl = result.Value! });
     }
 
     [HttpPost("posts")]
@@ -284,6 +288,11 @@ public class CreatePostRequest
     public string Content { get; set; } = "";
     public string PostType { get; set; } = "UserText";
     public string? ImageUrl { get; set; }
+}
+
+public class UploadPostImageResponse
+{
+    public string ImageUrl { get; set; } = "";
 }
 
 public class ToggleReactionRequest
