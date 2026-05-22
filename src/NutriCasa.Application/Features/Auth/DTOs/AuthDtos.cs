@@ -8,6 +8,7 @@ public record RegisterUserRequest
     public required string Email { get; init; }
     public required string Password { get; init; }
     public required DateOnly BirthDate { get; init; }
+    public string? GroupCode { get; init; }
 }
 
 public record LoginRequest

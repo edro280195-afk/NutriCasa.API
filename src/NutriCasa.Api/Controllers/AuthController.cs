@@ -30,7 +30,8 @@ public class AuthController : BaseApiController
             FullName = request.FullName,
             Email = request.Email,
             Password = request.Password,
-            BirthDate = request.BirthDate
+            BirthDate = request.BirthDate,
+            GroupCode = request.GroupCode
         };
 
         var result = await _mediator.Send(command, ct);

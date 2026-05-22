@@ -8,6 +8,7 @@ public class GlobalExceptionMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<GlobalExceptionMiddleware> _logger;
+    private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
     public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
     {
@@ -27,7 +28,7 @@ public class GlobalExceptionMiddleware
             context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             context.Response.ContentType = "application/json";
             var error = new ApiError { Code = "VALIDATION_ERROR", Message = ex.Message, Details = ex.Errors };
-            await context.Response.WriteAsync(JsonSerializer.Serialize(error));
+            await context.Response.WriteAsync(JsonSerializer.Serialize(error, JsonOptions));
         }
         catch (Application.Common.Exceptions.NotFoundException ex)
         {
@@ -35,7 +36,7 @@ public class GlobalExceptionMiddleware
             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
             context.Response.ContentType = "application/json";
             var error = new ApiError { Code = "NOT_FOUND", Message = ex.Message };
-            await context.Response.WriteAsync(JsonSerializer.Serialize(error));
+            await context.Response.WriteAsync(JsonSerializer.Serialize(error, JsonOptions));
         }
         catch (Application.Common.Exceptions.ForbiddenException ex)
         {
@@ -43,7 +44,7 @@ public class GlobalExceptionMiddleware
             context.Response.StatusCode = (int)HttpStatusCode.Forbidden;
             context.Response.ContentType = "application/json";
             var error = new ApiError { Code = "FORBIDDEN", Message = ex.Message };
-            await context.Response.WriteAsync(JsonSerializer.Serialize(error));
+            await context.Response.WriteAsync(JsonSerializer.Serialize(error, JsonOptions));
         }
         catch (Exception ex)
         {
@@ -51,7 +52,7 @@ public class GlobalExceptionMiddleware
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             context.Response.ContentType = "application/json";
             var error = new ApiError { Code = "INTERNAL_ERROR", Message = "Ha ocurrido un error interno. Intenta de nuevo más tarde." };
-            await context.Response.WriteAsync(JsonSerializer.Serialize(error));
+            await context.Response.WriteAsync(JsonSerializer.Serialize(error, JsonOptions));
         }
     }
 }

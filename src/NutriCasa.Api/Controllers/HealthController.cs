@@ -38,7 +38,7 @@ public class HealthController : ControllerBase
             await emailService.SendEmailVerificationAsync(
                 request.Email,
                 request.Name ?? "Test",
-                $"https://nutricasa.app/verify-email?token=test-{Guid.NewGuid():N}",
+                $"https://nutricasa.app/auth/verify-email?token=test-{Guid.NewGuid():N}",
                 CancellationToken.None);
             return Ok(new { sent = true, message = "Correo enviado exitosamente" });
         }

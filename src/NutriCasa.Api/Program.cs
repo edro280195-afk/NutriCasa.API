@@ -3,6 +3,7 @@ using System.Text;
 using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using NutriCasa.Api.Middleware;
 using NutriCasa.Application;
 using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Infrastructure;
@@ -136,6 +137,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
+app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseSerilogRequestLogging();
 app.UseCors("NutriCasaCors");
 app.UseAuthentication();
