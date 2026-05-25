@@ -4,7 +4,7 @@ namespace NutriCasa.Application.Features.Onboarding.Commands.CompleteStep4BodyTy
 
 public class CompleteStep4BodyTypeCommandValidator : AbstractValidator<CompleteStep4BodyTypeCommand>
 {
-    private static readonly string[] ValidBodyTypes = ["slim", "average", "athletic", "curvy", "plus", "heavy", "notSure"];
+    private static readonly string[] ValidBodyTypes = ["slim", "average", "athletic", "curvy", "plus", "heavy", "notsure"];
 
     public CompleteStep4BodyTypeCommandValidator()
     {
