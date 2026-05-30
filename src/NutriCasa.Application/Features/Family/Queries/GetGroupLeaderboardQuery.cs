@@ -53,8 +53,10 @@ public class GetGroupLeaderboardQueryHandler : IRequestHandler<GetGroupLeaderboa
         if (membership is null)
             return Result<GroupLeaderboardDto>.Failure("No perteneces a ningún grupo.", "NO_GROUP");
 
+        var familyGroupIds = await Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_context, membership.GroupId, ct);
+
         var groupUserIds = await _context.GroupMemberships
-            .Where(m => m.GroupId == membership.GroupId && m.LeftAt == null)
+            .Where(m => familyGroupIds.Contains(m.GroupId) && m.LeftAt == null)
             .Select(m => m.UserId)
             .ToListAsync(ct);
 

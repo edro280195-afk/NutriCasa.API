@@ -35,15 +35,19 @@ public class GetFamilyMembersQueryHandler : IRequestHandler<GetFamilyMembersQuer
         if (membership is null)
             return Result<List<FamilyMemberDto>>.Failure("No perteneces a ningún grupo.", "NO_GROUP");
 
+        var familyGroupIds = await Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_context, membership.GroupId, ct);
+
         var members = await _context.GroupMemberships
             .Include(m => m.User)
-            .Where(m => m.GroupId == membership.GroupId && m.LeftAt == null)
+            .Include(m => m.Group)
+            .Where(m => familyGroupIds.Contains(m.GroupId) && m.LeftAt == null)
             .Select(m => new FamilyMemberDto
             {
                 UserId = m.UserId,
                 FullName = m.Nickname ?? m.User.FullName,
                 Role = m.Role.ToString().ToLowerInvariant(),
                 JoinedAt = m.JoinedAt,
+                SubgroupName = m.GroupId == membership.GroupId ? null : m.Group.Name,
             })
             .ToListAsync(ct);
 
@@ -75,13 +79,15 @@ public class GetFamilyFeedQueryHandler : IRequestHandler<GetFamilyFeedQuery, Res
         if (membership is null)
             return Result<List<FamilyPostDto>>.Success([]);
 
+        var familyGroupIds = await Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_context, membership.GroupId, ct);
+
         var posts = await _context.GroupPosts
             .Include(p => p.AuthorUser)
             .Include(p => p.Reactions)
                 .ThenInclude(r => r.User)
             .Include(p => p.Comments.Where(c => c.DeletedAt == null))
                 .ThenInclude(c => c.User)
-            .Where(p => p.GroupId == membership.GroupId && p.DeletedAt == null && !p.IsUnderReview)
+            .Where(p => familyGroupIds.Contains(p.GroupId) && p.DeletedAt == null && !p.IsUnderReview)
             .OrderByDescending(p => p.CreatedAt)
             .Take(20)
             .ToListAsync(ct);
@@ -164,13 +170,15 @@ public class GetFamilyStatsQueryHandler : IRequestHandler<GetFamilyStatsQuery, R
         if (membership is null || membership.Group is null)
             return Result<FamilyStatsDto>.Success(new FamilyStatsDto());
 
+        var familyGroupIds = await Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_context, membership.GroupId, ct);
+
         var totalMembers = await _context.GroupMemberships
-            .CountAsync(m => m.GroupId == membership.GroupId && m.LeftAt == null, ct);
+            .CountAsync(m => familyGroupIds.Contains(m.GroupId) && m.LeftAt == null, ct);
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
 
         var groupUserIds = await _context.GroupMemberships
-            .Where(m => m.GroupId == membership.GroupId && m.LeftAt == null)
+            .Where(m => familyGroupIds.Contains(m.GroupId) && m.LeftAt == null)
             .Select(m => m.UserId)
             .ToListAsync(ct);
 
@@ -203,6 +211,7 @@ public class FamilyMemberDto
     public string FullName { get; set; } = null!;
     public string Role { get; set; } = "member";
     public DateTime JoinedAt { get; set; }
+    public string? SubgroupName { get; set; }
 }
 
 public class FamilyPostDto

@@ -75,6 +75,8 @@ public class CreateSubgroupCommandHandler : IRequestHandler<CreateSubgroupComman
             JoinedAt = DateTime.UtcNow,
         };
 
+        membership.LeftAt = DateTime.UtcNow;
+
         _context.Groups.Add(subgroup);
         _context.GroupMemberships.Add(subgroupMembership);
         await _context.SaveChangesAsync(ct);

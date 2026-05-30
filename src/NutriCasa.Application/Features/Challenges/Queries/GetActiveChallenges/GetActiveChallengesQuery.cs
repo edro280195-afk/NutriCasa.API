@@ -34,10 +34,12 @@ public class GetActiveChallengesQueryHandler : IRequestHandler<GetActiveChalleng
 
         var today = DateOnly.FromDateTime(DateTime.UtcNow);
 
+        var familyGroupIds = await Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_context, membership.GroupId, ct);
+
         var challenges = await _context.Challenges
             .Include(c => c.Participants)
             .Include(c => c.CreatedByUser)
-            .Where(c => c.GroupId == membership.GroupId
+            .Where(c => familyGroupIds.Contains(c.GroupId)
                      && c.IsActive
                      && !c.IsFinalized
                      && c.EndDate >= today)

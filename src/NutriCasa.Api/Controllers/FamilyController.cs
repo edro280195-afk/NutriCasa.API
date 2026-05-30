@@ -105,7 +105,9 @@ public class FamilyController : BaseApiController
                     .FirstOrDefaultAsync(m => m.UserId == userGuid && m.LeftAt == null, ct);
                 if (membership != null)
                 {
-                    await _hubContext.Clients.Group(membership.GroupId.ToString())
+                    var treeGroupIds = await Application.Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_context, membership.GroupId, ct);
+                    var groupsList = treeGroupIds.Select(id => id.ToString()).ToList();
+                    await _hubContext.Clients.Groups(groupsList)
                         .SendAsync("PostCreated", result.Value, cancellationToken: ct);
                 }
             }
@@ -129,7 +131,9 @@ public class FamilyController : BaseApiController
             var post = await _context.GroupPosts.FirstOrDefaultAsync(p => p.Id == postId, ct);
             if (post != null)
             {
-                await _hubContext.Clients.Group(post.GroupId.ToString())
+                var treeGroupIds = await Application.Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_context, post.GroupId, ct);
+                var groupsList = treeGroupIds.Select(id => id.ToString()).ToList();
+                await _hubContext.Clients.Groups(groupsList)
                     .SendAsync("ReactionToggled", new { PostId = postId, Reaction = result.Value }, cancellationToken: ct);
             }
         }
@@ -152,7 +156,9 @@ public class FamilyController : BaseApiController
             var post = await _context.GroupPosts.FirstOrDefaultAsync(p => p.Id == postId, ct);
             if (post != null)
             {
-                await _hubContext.Clients.Group(post.GroupId.ToString())
+                var treeGroupIds = await Application.Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_context, post.GroupId, ct);
+                var groupsList = treeGroupIds.Select(id => id.ToString()).ToList();
+                await _hubContext.Clients.Groups(groupsList)
                     .SendAsync("CommentAdded", new { PostId = postId, Comment = result.Value }, cancellationToken: ct);
             }
         }
@@ -170,7 +176,9 @@ public class FamilyController : BaseApiController
 
         if (result.IsSuccess && post != null)
         {
-            await _hubContext.Clients.Group(post.GroupId.ToString())
+            var treeGroupIds = await Application.Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_context, post.GroupId, ct);
+            var groupsList = treeGroupIds.Select(id => id.ToString()).ToList();
+            await _hubContext.Clients.Groups(groupsList)
                 .SendAsync("PostDeleted", postId, cancellationToken: ct);
         }
 
@@ -187,7 +195,9 @@ public class FamilyController : BaseApiController
 
         if (result.IsSuccess && post != null)
         {
-            await _hubContext.Clients.Group(post.GroupId.ToString())
+            var treeGroupIds = await Application.Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_context, post.GroupId, ct);
+            var groupsList = treeGroupIds.Select(id => id.ToString()).ToList();
+            await _hubContext.Clients.Groups(groupsList)
                 .SendAsync("CommentDeleted", new { PostId = postId, CommentId = commentId }, cancellationToken: ct);
         }
 

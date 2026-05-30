@@ -35,6 +35,16 @@ public static class PromptTemplates
         8. Preferir ingredientes de mercado tradicional y tianguis sobre supermercado.
         9. Si la receta tradicionalmente lleva un ingrediente prohibido, sustituye usando el catálogo de sustituciones.
 
+        SNACK RULES — IMPORTANTE
+        Los snacks NO son platillos completos. Son bocadillos simples, rápidos y sin preparación elaborada.
+        - Ejemplos válidos: un puñado de cacahuates (30g), 2 cuadritos de queso panela, pepino con limón y tajín,
+          rollitos de jamón con queso, apio con crema de cacahuate, chicharrones de cerdo, huevo cocido,
+          rodajas de aguacate con sal, jícama con chile piquín.
+        - prep_time_min máximo: 5 minutos. cook_time_min: 0.
+        - Máximo 3 ingredientes por snack.
+        - Las instrucciones deben ser de 1 oración ("Corta el pepino en rodajas y agrega limón y tajín").
+        - PROHIBIDO generar platillos completos como snack (nada con sartén, horno, o más de 3 ingredientes).
+
         QUALITY RULES
         - Variedad: máximo 3 desayunos iguales por semana, mínimo 3 proteínas distintas, mínimo 4 vegetales distintos.
         - Repetición inteligente: el batch cooking es bienvenido. Una receta puede aparecer hasta 3 veces como leftover.
@@ -69,6 +79,16 @@ public static class PromptTemplates
         6. Pueden incluir: aguacate Hass (1 al día max), almendras (max 30g por porción).
         7. Tiendas: supermercado y mercado tradicional.
 
+        SNACK RULES — IMPORTANTE
+        Los snacks NO son platillos completos. Son bocadillos simples, rápidos y sin preparación elaborada.
+        - Ejemplos válidos: un puñado de cacahuates o almendras (30g), queso panela en cubitos, pepino con limón,
+          rollitos de jamón con queso crema, apio con crema de cacahuate, chicharrones, huevo cocido,
+          aguacate con sal, jícama con chile, yogurt griego natural, fresas con crema.
+        - prep_time_min máximo: 5 minutos. cook_time_min: 0.
+        - Máximo 3 ingredientes por snack.
+        - Las instrucciones deben ser de 1 oración.
+        - PROHIBIDO generar platillos completos como snack.
+
         QUALITY RULES
         - Variedad: máximo 2 desayunos iguales por semana, mínimo 4 proteínas distintas, mínimo 5 vegetales.
         - Sabores mexicanos auténticos: cocina familiar reconocible.
@@ -100,6 +120,15 @@ public static class PromptTemplates
         6. Mínimo 2 desayunos sin cocción a la semana.
         7. Mínimo 3 comidas one-pan.
 
+        SNACK RULES — IMPORTANTE
+        Los snacks NO son platillos completos. Son bocadillos simples sin preparación.
+        - Ejemplos válidos: queso panela en cubitos, pepino con limón y tajín, huevo cocido (del día anterior),
+          cacahuates (30g), chicharrones de cerdo, rollito de jamón con queso, jícama con chile.
+        - prep_time_min máximo: 3 minutos. cook_time_min: 0.
+        - Máximo 2 ingredientes por snack.
+        - Las instrucciones deben ser de 1 oración corta.
+        - PROHIBIDO generar platillos completos como snack.
+
         QUALITY RULES
         - Variedad: máximo 3 desayunos iguales, mínimo 3 proteínas distintas.
         - Instrucciones en 3-4 oraciones cortas.
@@ -129,6 +158,16 @@ public static class PromptTemplates
         5. Proteínas: muslo de pollo, carne para guisar, espaldilla de cerdo, pollo entero, carne molida.
         6. PROHIBIDO: pescado delicado, platillos individuales, cosas que pierden textura al recalentar.
 
+        SNACK RULES — IMPORTANTE
+        Los snacks NO son platillos completos. Son bocadillos simples y rápidos.
+        - Ejemplos válidos: queso panela en cubitos, pepino con limón, huevo cocido (del batch dominical),
+          rollitos de jamón con queso, cacahuates (30g), chicharrones, jícama con chile, aguacate con sal.
+        - prep_time_min máximo: 5 minutos. cook_time_min: 0.
+        - Máximo 3 ingredientes por snack.
+        - Las instrucciones deben ser de 1 oración.
+        - Los snacks pueden usar sobrantes del batch cooking (huevos cocidos, pollo deshebrado en rollito, etc.).
+        - PROHIBIDO generar platillos completos como snack.
+
         QUALITY RULES
         - Variedad inteligente: misma proteína de 2-3 formas distintas.
         - Indicar rendimiento y congelabilidad en cada receta.
@@ -156,6 +195,16 @@ public static class PromptTemplates
         3. Distribución de proteína: cada comida principal mínimo 25-35g.
         4. Proteínas: pechuga de pollo, sirloin, atún fresco, claras, yogurt griego, requesón, whey.
         5. Mínimo 4 batidos a la semana.
+
+        SNACK RULES — IMPORTANTE
+        Los snacks NO son platillos completos. Son bocadillos simples de recuperación.
+        - Ejemplos válidos: huevos cocidos (2), queso panela o requesón, jerky de res, batido de whey con agua,
+          yogurt griego con fresas, puñado de almendras o nueces (40g), rollito de jamón de pavo con aguacate.
+        - prep_time_min máximo: 5 minutos. cook_time_min: 0.
+        - Máximo 3 ingredientes por snack.
+        - Las instrucciones deben ser de 1 oración.
+        - Los snacks deben ser portátiles (para llevar al gym o trabajo).
+        - PROHIBIDO generar platillos completos como snack.
 
         QUALITY RULES
         - Variedad: mínimo 5 proteínas distintas.
@@ -187,6 +236,16 @@ public static class PromptTemplates
         6. Grasas premium: aceite de oliva extra virgen, MCT oil, mantequilla grass-fed.
         7. Hasta 90 min por receta especial.
 
+        SNACK RULES — IMPORTANTE
+        Los snacks NO son platillos completos. Son bocadillos simples pero con ingredientes premium.
+        - Ejemplos válidos: queso brie con nueces de macadamia, aceitunas kalamata con queso manchego,
+          rollitos de salmón ahumado con queso crema, yogurt griego con arándanos y semillas,
+          mix de frutos secos premium (almendras, nueces, macadamia), jamón serrano con manchego.
+        - prep_time_min máximo: 5 minutos. cook_time_min: 0.
+        - Máximo 4 ingredientes por snack.
+        - Las instrucciones deben ser de 1 oración.
+        - PROHIBIDO generar platillos completos como snack.
+
         QUALITY RULES
         - Variedad máxima: cada día representa cocina diferente.
         - Educación culinaria sutil en instrucciones.
@@ -215,6 +274,9 @@ public static class PromptTemplates
         3. Respetar alergias y dislikes del usuario.
         4. Compatible con estilo de vida keto (< 20g carbos netos por comida).
         5. Ingredientes accesibles en México.
+        6. Si meal_type es "snack": el reemplazo DEBE ser un bocadillo simple (max 3 ingredientes,
+           prep_time_min <= 5, cook_time_min = 0). NO generar un platillo completo como snack.
+           Ejemplos válidos: cacahuates, queso en cubitos, pepino con limón, huevo cocido, chicharrones.
 
         OUTPUT
         Devuelve EXCLUSIVAMENTE el JSON del schema SwapMeal definido abajo.
@@ -226,12 +288,12 @@ public static class PromptTemplates
     /// </summary>
     public static class Versions
     {
-        public const string Economic = "economic-1.0";
-        public const string PantryBasic = "pantry-basic-1.0";
-        public const string SimpleKitchen = "simple-kitchen-1.0";
-        public const string BusyParent = "busy-parent-1.0";
-        public const string Athletic = "athletic-1.0";
-        public const string Gourmet = "gourmet-1.0";
-        public const string SwapMeal = "swap-meal-1.0";
+        public const string Economic = "economic-1.1";
+        public const string PantryBasic = "pantry-basic-1.1";
+        public const string SimpleKitchen = "simple-kitchen-1.1";
+        public const string BusyParent = "busy-parent-1.1";
+        public const string Athletic = "athletic-1.1";
+        public const string Gourmet = "gourmet-1.1";
+        public const string SwapMeal = "swap-meal-1.1";
     }
 }

@@ -44,7 +44,12 @@ public class JoinChallengeCommandHandler : IRequestHandler<JoinChallengeCommand,
         var membership = await _context.GroupMemberships
             .FirstOrDefaultAsync(m => m.UserId == userId && m.LeftAt == null, ct);
 
-        if (membership is null || membership.GroupId != challenge.GroupId)
+        if (membership is null)
+            return Result.Failure("No perteneces a ningún grupo.", "NO_GROUP");
+
+        var familyGroupIds = await Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_context, membership.GroupId, ct);
+
+        if (!familyGroupIds.Contains(challenge.GroupId))
             return Result.Failure("No eres miembro del grupo de este reto.", "NO_GROUP");
 
         var alreadyJoined = await _context.ChallengeParticipants

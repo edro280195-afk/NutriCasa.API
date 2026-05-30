@@ -231,7 +231,8 @@ public class GeminiService : IGeminiService
                "3. No exceder los límites de carbs\n" +
                "4. Incluir exactamente 7 días con 4 comidas cada uno (breakfast, lunch, dinner, snack)\n" +
                "5. Calcular macros que sumen 100%\n" +
-               "6. No incluir ingredientes prohibidos para este modo";
+               "6. No incluir ingredientes prohibidos para este modo\n" +
+               "7. Los SNACKS deben ser bocadillos simples (max 3 ingredientes, prep_time_min <= 5, cook_time_min = 0). NO platillos completos.";
     }
 
     private static string GetOutputSchema()
@@ -276,6 +277,9 @@ public class GeminiService : IGeminiService
             { "ingredient_code": "", "name": "string", "total_amount_gr": 0, "unit_label": "g", "store_category": "", "estimated_cost_mxn": 0, "category": "" }
           ]
         }
+        NOTA IMPORTANTE SOBRE SNACKS:
+        Para meal_type "snack": bocadillo simple, máximo 3 ingredientes, prep_time_min <= 5, cook_time_min = 0.
+        Instrucciones de 1 oración. NO es un platillo completo.
         """;
     }
 

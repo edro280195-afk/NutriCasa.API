@@ -59,9 +59,11 @@ public class GroupHub : Hub
         if (!result.IsSuccess || result.Value is null)
             return null;
 
-        if (Context.Items.TryGetValue("GroupId", out var groupObj) && groupObj is string groupId)
+        if (Context.Items.TryGetValue("GroupId", out var groupObj) && groupObj is string groupIdStr && Guid.TryParse(groupIdStr, out var groupId))
         {
-            await Clients.Group(groupId).SendAsync("PostCreated", result.Value);
+            var treeGroupIds = await Application.Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_dbContext, groupId, default);
+            var groupsList = treeGroupIds.Select(id => id.ToString()).ToList();
+            await Clients.Groups(groupsList).SendAsync("PostCreated", result.Value);
         }
 
         return result.Value;
@@ -78,9 +80,11 @@ public class GroupHub : Hub
         if (!result.IsSuccess || result.Value is null)
             return null;
 
-        if (Context.Items.TryGetValue("GroupId", out var groupObj) && groupObj is string groupId)
+        if (Context.Items.TryGetValue("GroupId", out var groupObj) && groupObj is string groupIdStr && Guid.TryParse(groupIdStr, out var groupId))
         {
-            await Clients.Group(groupId).SendAsync("ReactionToggled", new
+            var treeGroupIds = await Application.Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_dbContext, groupId, default);
+            var groupsList = treeGroupIds.Select(id => id.ToString()).ToList();
+            await Clients.Groups(groupsList).SendAsync("ReactionToggled", new
             {
                 PostId = postId,
                 Reaction = result.Value,
@@ -101,9 +105,11 @@ public class GroupHub : Hub
         if (!result.IsSuccess || result.Value is null)
             return null;
 
-        if (Context.Items.TryGetValue("GroupId", out var groupObj) && groupObj is string groupId)
+        if (Context.Items.TryGetValue("GroupId", out var groupObj) && groupObj is string groupIdStr && Guid.TryParse(groupIdStr, out var groupId))
         {
-            await Clients.Group(groupId).SendAsync("CommentAdded", new
+            var treeGroupIds = await Application.Common.Helpers.GroupTreeHelper.GetFamilyTreeGroupIdsAsync(_dbContext, groupId, default);
+            var groupsList = treeGroupIds.Select(id => id.ToString()).ToList();
+            await Clients.Groups(groupsList).SendAsync("CommentAdded", new
             {
                 PostId = postId,
                 Comment = result.Value,

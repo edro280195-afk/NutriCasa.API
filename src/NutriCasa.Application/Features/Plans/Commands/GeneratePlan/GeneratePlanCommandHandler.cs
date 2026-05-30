@@ -255,6 +255,72 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
         if (existingPlan is not null && !request.ForceRegenerate)
             return Result<PlanGenerationResult>.Success(await MapToResult(existingPlan, cancellationToken));
 
+        // ─── Contexto familiar: grupo, hogar, miembros y recetas existentes ───
+        var membership = await _context.GroupMemberships
+            .Include(m => m.Group)
+            .FirstOrDefaultAsync(m => m.UserId == userId && m.LeftAt == null, cancellationToken);
+
+        Guid? groupId = membership?.GroupId;
+        string? familyContext = null;
+
+        if (membership is not null)
+        {
+            // Obtener los miembros del mismo grupo
+            var householdMembers = await _context.GroupMemberships
+                .Include(m => m.User)
+                .Where(m => m.GroupId == membership.GroupId && m.LeftAt == null && m.UserId != userId)
+                .Select(m => m.User.FullName)
+                .ToListAsync(cancellationToken);
+
+            // Buscar recetas ya asignadas a otros miembros del grupo para esta semana
+            var householdMemberIds = await _context.GroupMemberships
+                .Where(m => m.GroupId == membership.GroupId && m.LeftAt == null && m.UserId != userId)
+                .Select(m => m.UserId)
+                .ToListAsync(cancellationToken);
+
+            var otherMembersRecipes = new List<string>();
+            if (householdMemberIds.Count > 0)
+            {
+                otherMembersRecipes = await _context.WeeklyPlans
+                    .Where(p => householdMemberIds.Contains(p.UserId)
+                             && p.IsActive
+                             && p.StartDate == request.WeekStartDate)
+                    .SelectMany(p => p.Meals)
+                    .Where(m => m.Recipe != null)
+                    .Select(m => m.Recipe!.Name)
+                    .Distinct()
+                    .ToListAsync(cancellationToken);
+            }
+
+            // Construir el contexto para Gemini
+            var parts = new List<string>();
+            var totalHousehold = householdMembers.Count + 1;
+            parts.Add($"Cocina para un hogar de {totalHousehold} persona{(totalHousehold > 1 ? "s" : "")}.");
+
+            if (householdMembers.Count > 0)
+                parts.Add($"Otros miembros del hogar: {string.Join(", ", householdMembers)}.");
+
+            if (otherMembersRecipes.Count > 0)
+            {
+                var recipeSample = otherMembersRecipes.Take(15);
+                parts.Add($"Platillos ya asignados a otros miembros esta semana (prioriza ingredientes en común para optimizar despensa): {string.Join(", ", recipeSample)}.");
+            }
+
+            parts.Add("IMPORTANTE: Prioriza recetas que compartan ingredientes base con los otros miembros del hogar para reducir costo de despensa.");
+
+            familyContext = string.Join(" ", parts);
+        }
+
+        // ─── Recetas de la semana pasada para evitar repetición excesiva ───
+        var previousWeekStart = request.WeekStartDate.AddDays(-7);
+        var previousWeekRecipes = await _context.WeeklyPlans
+            .Where(p => p.UserId == userId && p.StartDate == previousWeekStart)
+            .SelectMany(p => p.Meals)
+            .Where(m => m.Recipe != null)
+            .Select(m => m.Recipe!.Name)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+
         var geminiRequest = new GeneratePlanRequest
         {
             UserId = userId,
@@ -278,8 +344,8 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
             IsOverridePlan = user.MedicalProfile?.OverrideAcceptedAt is not null,
             GoalType = (activeGoal?.GoalType ?? GoalType.WeightLoss).ToString(),
             WeekStartDate = request.WeekStartDate.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc),
-            PreviousWeekRecipeCodes = [],
-            FamilyContext = null,
+            PreviousWeekRecipeCodes = previousWeekRecipes.ToArray(),
+            FamilyContext = familyContext,
         };
 
         GeneratePlanResponse geminiResponse;
@@ -329,6 +395,7 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
         {
             Id = Guid.NewGuid(),
             UserId = userId,
+            GroupId = groupId,
             StartDate = request.WeekStartDate,
             EndDate = endDate,
             IsOverridePlan = user.MedicalProfile?.OverrideAcceptedAt is not null,
