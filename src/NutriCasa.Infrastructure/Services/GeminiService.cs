@@ -25,6 +25,11 @@ public class GeminiService : IGeminiService
     private const decimal InputPricePerToken = 0.0000035m;
     private const decimal OutputPricePerToken = 0.0000105m;
 
+    // Modelo estable de Gemini. El preview con fecha (gemini-2.5-pro-preview-05-06)
+    // fue retirado por Google el 19/06/2025 y devuelve 404. Se puede sobreescribir
+    // vía configuración "Gemini:PlanModel".
+    private const string DefaultModel = "gemini-2.5-pro";
+
     public GeminiService(
         IHttpClientFactory httpClientFactory,
         IConfiguration configuration,
@@ -139,7 +144,7 @@ public class GeminiService : IGeminiService
     private async Task<(GeneratePlanResponse plan, string raw, int inputTokens, int outputTokens)> CallGeminiAsync(string prompt, bool isOverride, CancellationToken ct)
     {
         var client = _httpClientFactory.CreateClient("Gemini");
-        string model = _configuration["Gemini:PlanModel"] ?? "gemini-2.5-pro-preview-05-06";
+        string model = _configuration["Gemini:PlanModel"] ?? DefaultModel;
 
         var requestBody = new
         {
@@ -344,7 +349,7 @@ public class GeminiService : IGeminiService
                 UserId = request.UserId,
                 InteractionType = AiInteractionType.PlanGeneration,
                 PromptVersion = GetPromptVersion(request.BudgetModeCode),
-                ModelUsed = _configuration["Gemini:PlanModel"] ?? "gemini-2.5-pro-preview-05-06",
+                ModelUsed = _configuration["Gemini:PlanModel"] ?? DefaultModel,
                 InputTokens = inputTokens,
                 OutputTokens = outputTokens,
                 EstimatedCostUsd = estimatedCost,
@@ -405,7 +410,7 @@ public class GeminiService : IGeminiService
     private async Task<(SwapMealResponse swap, string raw, int inputTokens, int outputTokens)> CallGeminiForSwapAsync(string prompt, CancellationToken ct)
     {
         var client = _httpClientFactory.CreateClient("Gemini");
-        string model = _configuration["Gemini:PlanModel"] ?? "gemini-2.5-pro-preview-05-06";
+        string model = _configuration["Gemini:PlanModel"] ?? DefaultModel;
 
         var requestBody = new
         {
@@ -540,7 +545,7 @@ public class GeminiService : IGeminiService
                 UserId = request.UserId,
                 InteractionType = AiInteractionType.MealSwap,
                 PromptVersion = PromptTemplates.Versions.SwapMeal,
-                ModelUsed = _configuration["Gemini:PlanModel"] ?? "gemini-2.5-pro-preview-05-06",
+                ModelUsed = _configuration["Gemini:PlanModel"] ?? DefaultModel,
                 InputTokens = inputTokens,
                 OutputTokens = outputTokens,
                 EstimatedCostUsd = estimatedCost,
