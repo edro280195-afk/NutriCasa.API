@@ -26,9 +26,10 @@ public class GeminiService : IGeminiService
     private const decimal OutputPricePerToken = 0.0000105m;
 
     // Modelo estable de Gemini. El preview con fecha (gemini-2.5-pro-preview-05-06)
-    // fue retirado por Google el 19/06/2025 y devuelve 404. Se puede sobreescribir
-    // vía configuración "Gemini:PlanModel".
-    private const string DefaultModel = "gemini-2.5-pro";
+    // fue retirado por Google el 19/06/2025 y devuelve 404. Se usa gemini-2.5-flash
+    // por sus límites de cuota más altos (evita 429). Se puede sobreescribir vía
+    // configuración "Gemini:PlanModel" (p.ej. "gemini-2.5-pro" con billing activo).
+    private const string DefaultModel = "gemini-2.5-flash";
 
     public GeminiService(
         IHttpClientFactory httpClientFactory,
