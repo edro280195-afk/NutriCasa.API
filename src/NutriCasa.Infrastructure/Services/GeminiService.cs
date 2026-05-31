@@ -28,9 +28,10 @@ public class GeminiService : IGeminiService
     private const decimal OutputPricePerToken = 0.0000105m;
 
     // Modelo de Gemini. El preview con fecha (gemini-2.5-pro-preview-05-06) fue
-    // retirado por Google el 19/06/2025 y devuelve 404. Se usa el estable
-    // gemini-2.5-pro (requiere billing activo). Sobreescribible vía "Gemini:PlanModel".
-    private const string DefaultModel = "gemini-2.5-pro";
+    // retirado por Google (404). Se usa gemini-2.5-flash: mucho más rápido que pro,
+    // evita que el cliente cancele la petición por timeout. Sobreescribible vía
+    // "Gemini:PlanModel" (gemini-2.5-pro requiere billing y es más lento).
+    private const string DefaultModel = "gemini-2.5-flash";
 
     // Presupuesto de salida por defecto. Un plan de 7 días × 4 comidas + lista de
     // compras es un JSON grande; con valores bajos la respuesta se trunca y queda

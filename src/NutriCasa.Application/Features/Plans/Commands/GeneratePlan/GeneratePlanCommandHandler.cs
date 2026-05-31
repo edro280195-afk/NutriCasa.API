@@ -650,6 +650,12 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
         Guid userId,
         CancellationToken ct)
     {
+        // El respaldo se ejecuta precisamente cuando Gemini falló o tardó demasiado.
+        // Si la petición ya fue cancelada (p.ej. el cliente agotó su timeout durante la
+        // llamada lenta a Gemini), NO debemos heredar ese token: queremos persistir el
+        // plan de respaldo de todos modos para que el usuario lo vea al reintentar.
+        ct = CancellationToken.None;
+
         var budgetModeCode = user.BudgetMode?.Code ?? "pantry_basic";
 
         var curatedRecipes = await _context.Recipes
