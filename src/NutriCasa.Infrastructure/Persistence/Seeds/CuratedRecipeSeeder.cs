@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using NutriCasa.Domain.Entities;
 using NutriCasa.Domain.Enums;
 
@@ -7,7 +8,7 @@ namespace NutriCasa.Infrastructure.Persistence.Seeds;
 
 public static class CuratedRecipeSeeder
 {
-    public static async Task SeedAsync(ApplicationDbContext context)
+    public static async Task SeedAsync(ApplicationDbContext context, ILogger? logger = null)
     {
         var jsonPath = Path.Combine(AppContext.BaseDirectory, "Persistence", "Seeds", "recipes-curated.json");
         if (!File.Exists(jsonPath))
@@ -17,7 +18,13 @@ public static class CuratedRecipeSeeder
                 "..", "NutriCasa.Infrastructure", "Persistence", "Seeds", "recipes-curated.json");
         }
 
-        if (!File.Exists(jsonPath)) return;
+        if (!File.Exists(jsonPath))
+        {
+            logger?.LogWarning(
+                "No se encontró recipes-curated.json (buscado en {Path}). El respaldo de recetas curadas quedará vacío.",
+                jsonPath);
+            return;
+        }
 
         var json = await File.ReadAllTextAsync(jsonPath);
         var catalog = JsonSerializer.Deserialize<CuratedRecipeCatalog>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
@@ -87,10 +94,15 @@ public static class CuratedRecipeSeeder
             });
         }
 
-        if (recipes.Count == 0) return;
+        if (recipes.Count == 0)
+        {
+            logger?.LogInformation("Recetas curadas ya estaban sembradas; no se agregó ninguna nueva.");
+            return;
+        }
 
         context.Recipes.AddRange(recipes);
         await context.SaveChangesAsync();
+        logger?.LogInformation("Sembradas {Count} recetas curadas de respaldo.", recipes.Count);
     }
 
     private sealed record CuratedRecipeCatalog

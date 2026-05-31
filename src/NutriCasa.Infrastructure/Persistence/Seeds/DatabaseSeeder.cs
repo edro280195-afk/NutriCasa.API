@@ -28,7 +28,7 @@ public static class DatabaseSeeder
             await StoreCategorySeeder.SeedAsync(context);
             await IngredientCatalogSeeder.SeedAsync(context);
             await IngredientSubstitutionSeeder.SeedAsync(context);
-            await CuratedRecipeSeeder.SeedAsync(context);
+            await CuratedRecipeSeeder.SeedAsync(context, logger);
             await AdminSeeder.SeedAsync(context, sp.GetRequiredService<IPasswordHasher>());
 
             logger.LogInformation("Seed de datos completado exitosamente.");

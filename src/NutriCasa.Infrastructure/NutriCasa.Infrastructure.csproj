@@ -30,4 +30,12 @@
     <ProjectReference Include="..\NutriCasa.Domain\NutriCasa.Domain.csproj" />
   </ItemGroup>
 
+  <!-- Datos de semilla que el seeder lee en runtime desde el directorio de salida.
+       Sin esto, recipes-curated.json no se publica y el respaldo de recetas queda vacío. -->
+  <ItemGroup>
+    <None Update="Persistence/Seeds/recipes-curated.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
