@@ -1,7 +1,9 @@
+using System.Globalization;
 using System.Net.Http.Json;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
@@ -25,11 +27,28 @@ public class GeminiService : IGeminiService
     private const decimal InputPricePerToken = 0.0000035m;
     private const decimal OutputPricePerToken = 0.0000105m;
 
-    // Modelo estable de Gemini. El preview con fecha (gemini-2.5-pro-preview-05-06)
-    // fue retirado por Google el 19/06/2025 y devuelve 404. Se usa gemini-2.5-flash
-    // por sus límites de cuota más altos (evita 429). Se puede sobreescribir vía
-    // configuración "Gemini:PlanModel" (p.ej. "gemini-2.5-pro" con billing activo).
-    private const string DefaultModel = "gemini-2.5-flash";
+    // Modelo de Gemini. El preview con fecha (gemini-2.5-pro-preview-05-06) fue
+    // retirado por Google el 19/06/2025 y devuelve 404. Se usa el estable
+    // gemini-2.5-pro (requiere billing activo). Sobreescribible vía "Gemini:PlanModel".
+    private const string DefaultModel = "gemini-2.5-pro";
+
+    // Presupuesto de salida por defecto. Un plan de 7 días × 4 comidas + lista de
+    // compras es un JSON grande; con valores bajos la respuesta se trunca y queda
+    // inválida. Sobreescribible vía "Gemini:MaxOutputTokens".
+    private const int DefaultMaxOutputTokens = 65536;
+
+    // Opciones tolerantes: snake_case + acepta decimales/strings donde el DTO espera
+    // enteros (Gemini a veces devuelve 412.5 o "412" para total_calories, etc.).
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true,
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+        Converters =
+        {
+            new FlexibleIntConverter(),
+            new FlexibleDecimalConverter(),
+        },
+    };
 
     public GeminiService(
         IHttpClientFactory httpClientFactory,
@@ -159,7 +178,7 @@ public class GeminiService : IGeminiService
             generationConfig = new
             {
                 temperature = 0.7,
-                maxOutputTokens = 8192,
+                maxOutputTokens = _configuration.GetValue("Gemini:MaxOutputTokens", DefaultMaxOutputTokens),
                 responseMimeType = "application/json"
             }
         };
@@ -183,12 +202,7 @@ public class GeminiService : IGeminiService
         int inputTokens = prompt.Length / 4;
         int outputTokens = text.Length / 4;
 
-        var deserializeOptions = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-        };
-        var plan = JsonSerializer.Deserialize<GeneratePlanResponse>(text, deserializeOptions);
+        var plan = JsonSerializer.Deserialize<GeneratePlanResponse>(text, JsonOptions);
         if (plan is null)
             throw new InvalidOperationException("La respuesta de Gemini no pudo ser deserializada.");
 
@@ -327,12 +341,7 @@ public class GeminiService : IGeminiService
         _context.AiInteractions.Add(cacheHit);
         await _context.SaveChangesAsync(ct);
 
-        var cacheOptions = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-        };
-        return JsonSerializer.Deserialize<GeneratePlanResponse>(cached.ResponsePayload, cacheOptions);
+        return JsonSerializer.Deserialize<GeneratePlanResponse>(cached.ResponsePayload, JsonOptions);
     }
 
     private async Task LogInteractionAsync(
@@ -400,12 +409,7 @@ public class GeminiService : IGeminiService
         _context.AiInteractions.Add(cacheHit);
         await _context.SaveChangesAsync(ct);
 
-        var cacheOptions = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-        };
-        return JsonSerializer.Deserialize<SwapMealResponse>(cached.ResponsePayload, cacheOptions);
+        return JsonSerializer.Deserialize<SwapMealResponse>(cached.ResponsePayload, JsonOptions);
     }
 
     private async Task<(SwapMealResponse swap, string raw, int inputTokens, int outputTokens)> CallGeminiForSwapAsync(string prompt, CancellationToken ct)
@@ -425,7 +429,7 @@ public class GeminiService : IGeminiService
             generationConfig = new
             {
                 temperature = 0.5,
-                maxOutputTokens = 2048,
+                maxOutputTokens = 8192,
                 responseMimeType = "application/json"
             }
         };
@@ -449,12 +453,7 @@ public class GeminiService : IGeminiService
         int inputTokens = prompt.Length / 4;
         int outputTokens = text.Length / 4;
 
-        var deserializeOptions = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true,
-            PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
-        };
-        var swap = JsonSerializer.Deserialize<SwapMealResponse>(text, deserializeOptions);
+        var swap = JsonSerializer.Deserialize<SwapMealResponse>(text, JsonOptions);
         if (swap is null)
             throw new InvalidOperationException("La respuesta de Gemini swap no pudo ser deserializada.");
 
@@ -628,4 +627,60 @@ public class GeminiService : IGeminiService
         "gourmet" => PromptTemplates.Versions.Gourmet,
         _ => PromptTemplates.Versions.PantryBasic,
     };
+}
+
+// Convierte enteros aunque Gemini devuelva decimales (412.5) o strings ("412").
+internal sealed class FlexibleIntConverter : JsonConverter<int>
+{
+    public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        switch (reader.TokenType)
+        {
+            case JsonTokenType.Number:
+                if (reader.TryGetInt32(out int i)) return i;
+                if (reader.TryGetDouble(out double dbl)) return (int)Math.Round(dbl, MidpointRounding.AwayFromZero);
+                return 0;
+            case JsonTokenType.String:
+                string? s = reader.GetString();
+                if (double.TryParse(s, NumberStyles.Any, CultureInfo.InvariantCulture, out double sd))
+                    return (int)Math.Round(sd, MidpointRounding.AwayFromZero);
+                return 0;
+            case JsonTokenType.Null:
+                return 0;
+            default:
+                reader.Skip();
+                return 0;
+        }
+    }
+
+    public override void Write(Utf8JsonWriter writer, int value, JsonSerializerOptions options)
+        => writer.WriteNumberValue(value);
+}
+
+// Convierte decimales aunque Gemini devuelva el número como string ("412.5").
+internal sealed class FlexibleDecimalConverter : JsonConverter<decimal>
+{
+    public override decimal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        switch (reader.TokenType)
+        {
+            case JsonTokenType.Number:
+                if (reader.TryGetDecimal(out decimal d)) return d;
+                if (reader.TryGetDouble(out double dbl)) return (decimal)dbl;
+                return 0m;
+            case JsonTokenType.String:
+                string? s = reader.GetString();
+                if (decimal.TryParse(s, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal sd))
+                    return sd;
+                return 0m;
+            case JsonTokenType.Null:
+                return 0m;
+            default:
+                reader.Skip();
+                return 0m;
+        }
+    }
+
+    public override void Write(Utf8JsonWriter writer, decimal value, JsonSerializerOptions options)
+        => writer.WriteNumberValue(value);
 }
