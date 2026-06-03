@@ -402,8 +402,9 @@ public class GeminiService : IGeminiService
                 textPart = candidate.GetProperty("content").GetProperty("parts")[0].GetProperty("text").GetString() ?? "";
             }
             catch {}
-            string snippet = textPart.Substring(0, Math.Min(textPart.Length, 500));
-            throw new InvalidOperationException($"Gemini truncó la respuesta del día por límite de tokens. Snippet: {snippet}");
+            string startSnippet = textPart.Substring(0, Math.Min(textPart.Length, 1500));
+            string endSnippet = textPart.Length > 1500 ? textPart.Substring(textPart.Length - 500) : "";
+            throw new InvalidOperationException($"Gemini truncó la respuesta del día por límite de tokens. Longitud total: {textPart.Length}. Inicio: {startSnippet} ... Fin: {endSnippet}");
         }
 
         var text = candidate
