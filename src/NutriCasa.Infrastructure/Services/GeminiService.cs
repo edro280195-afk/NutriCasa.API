@@ -689,6 +689,12 @@ public class GeminiService : IGeminiService
             _ => "$50 MXN"
         };
 
+        string extraSnackRules = "";
+        if (request.MealType == "snack")
+        {
+            extraSnackRules = "\n\nATENCIÓN: Estás reemplazando un SNACK. El resultado DEBE ser un bocadillo frío/simple. PROHIBIDO cocinar, asar o usar estufa/horno (cook_time_min DEBE ser 0 y prep_time_min <= 5). Máximo 3 ingredientes simples (ej: pepino, jícama, cacahuates, queso panela crudo en cubos).";
+        }
+
         return template
             .Replace("{{budget_mode}}", request.BudgetModeCode)
             .Replace("{{current_recipe}}", request.CurrentRecipeName)
@@ -701,6 +707,7 @@ public class GeminiService : IGeminiService
             .Replace("{{allergies}}", string.Join(", ", request.Allergies))
             .Replace("{{disliked_ingredients}}", string.Join(", ", request.DislikedIngredients))
             + $"\n\nCosto máximo por comida: {budgetCostLimit}.\n"
+            + extraSnackRules
             + GetSwapOutputSchema();
     }
 

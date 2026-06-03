@@ -86,10 +86,10 @@ public class SwapMealCommandHandler : IRequestHandler<SwapMealCommand, Result>
             BudgetModeCode = budgetMode?.Code ?? "pantry_basic",
             Allergies = user.MedicalProfile?.Allergies ?? [],
             DislikedIngredients = user.MedicalProfile?.DislikedIngredients ?? [],
-            DailyCaloriesTarget = user.KetoProfile?.DailyCalories ?? 600,
-            ProteinTarget = user.KetoProfile?.ProteinGrams ?? 30,
-            FatTarget = user.KetoProfile?.FatGrams ?? 40,
-            CarbsTarget = user.KetoProfile?.CarbsGrams ?? 10,
+            DailyCaloriesTarget = meal.Recipe?.BaseCalories ?? 300,
+            ProteinTarget = meal.Recipe?.BaseProteinGr ?? 15,
+            FatTarget = meal.Recipe?.BaseFatGr ?? 20,
+            CarbsTarget = meal.Recipe?.BaseCarbsGr ?? 5,
             SwapReason = request.SwapReason,
         };
 
