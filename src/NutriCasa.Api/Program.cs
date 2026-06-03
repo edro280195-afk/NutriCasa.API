@@ -7,6 +7,7 @@ using NutriCasa.Api.Middleware;
 using NutriCasa.Application;
 using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Infrastructure;
+using NutriCasa.Api.Swagger;
 using NutriCasa.Infrastructure.BackgroundJobs;
 using NutriCasa.Infrastructure.Persistence.Seeds;
 using NutriCasa.Infrastructure.Services;
@@ -36,6 +37,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "NutriCasa API", Version = "v1", Description = "API de coaching nutricional cetogénico para grupos familiares" });
     c.EnableAnnotations();
+    c.OperationFilter<SwaggerFileOperationFilter>();
 });
 builder.Services.AddSignalR();
 
@@ -69,7 +71,7 @@ builder.Services.AddHttpClient("Gemini", (sp, client) =>
     var config = sp.GetRequiredService<IConfiguration>();
     client.BaseAddress = new Uri("https://generativelanguage.googleapis.com/v1beta/models/");
     client.DefaultRequestHeaders.TryAddWithoutValidation("x-goog-api-key", config["Gemini:ApiKey"]);
-    client.Timeout = TimeSpan.FromSeconds(config.GetValue<int>("Gemini:TimeoutSeconds", 60));
+    client.Timeout = TimeSpan.FromSeconds(config.GetValue<int>("Gemini:TimeoutSeconds", 240));
 });
 
 // HttpClient para Resend

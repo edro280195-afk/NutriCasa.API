@@ -63,7 +63,7 @@ public class FamilyController : BaseApiController
     [HttpPost("posts/upload-image")]
     [Authorize]
     [Consumes("multipart/form-data")]
-    public async Task<IActionResult> UploadPostImage([FromForm] IFormFile? file, CancellationToken ct)
+    public async Task<IActionResult> UploadPostImage(IFormFile? file, CancellationToken ct)
     {
         if (file is null)
         {
