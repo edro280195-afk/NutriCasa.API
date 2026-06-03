@@ -72,7 +72,7 @@ public class GeminiService : IGeminiService
 
         string requestHash = ComputeSha256Hash(JsonSerializer.Serialize(request));
 
-        var cachedResponse = await CheckCacheAsync(requestHash, cancellationToken);
+        var cachedResponse = request.ForceRegenerate ? null : await CheckCacheAsync(requestHash, cancellationToken);
         if (cachedResponse is not null)
         {
             _logger.LogInformation("Cache hit para plan del usuario {UserId}", request.UserId);
@@ -253,6 +253,7 @@ public class GeminiService : IGeminiService
                 "Moderate" => "2-3 sesiones",
                 _ => "1-2 sesiones"
             })
+            + (!string.IsNullOrEmpty(request.RandomSeed) ? $"\n\nSEED DE VARIEDAD: {request.RandomSeed} (asegúrate de generar platillos completamente diferentes a intentos anteriores)." : "")
             + $"\n\n{GetOutputSchema()}";
     }
 
@@ -314,7 +315,8 @@ public class GeminiService : IGeminiService
         }
 
         NOTA IMPORTANTE SOBRE SNACKS:
-        Para meal_type "snack": bocadillo simple, máximo 3 ingredientes, prep_time_min <= 5, cook_time_min = 0.
+        Para meal_type "snack": bocadillo MUY LIGERO, máximo 3 ingredientes, prep_time_min <= 5, cook_time_min = 0.
+        PROHIBIDO usar carnes, aves, pescados o mariscos (como atún o ceviche) en los snacks. 
         Instrucciones de 1 oración. NO es un platillo completo.
         """;
     }
@@ -329,6 +331,150 @@ public class GeminiService : IGeminiService
         "gourmet" => PromptTemplates.GourmetV1,
         _ => PromptTemplates.PantryBasicV1,
     };
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Generación por Día (reemplaza el prompt monolítico de 7 días)
+    // ─────────────────────────────────────────────────────────────────────────
+
+    public async Task<DayPlanResponse> GenerateDayPlanAsync(GenerateDayRequest request, CancellationToken cancellationToken = default)
+    {
+        if (IsCircuitBreakerOpen())
+            throw new InvalidOperationException("Circuit breaker abierto. Usar fallback.");
+
+        string prompt = BuildDayPrompt(request);
+        string? lastError = null;
+
+        for (int attempt = 1; attempt <= 3; attempt++)
+        {
+            try
+            {
+                var response = await CallGeminiForDayAsync(prompt, cancellationToken);
+                _logger.LogInformation("Gemini día {Day} generado para usuario {UserId} (intento {Attempt})",
+                    request.DayNumber, request.UserId, attempt);
+                RecordSuccess();
+                return response;
+            }
+            catch (Exception ex)
+            {
+                lastError = ex.Message;
+                _logger.LogWarning("Intento {Attempt} para día {Day} falló: {Error}", attempt, request.DayNumber, ex.Message);
+                if (attempt < 3)
+                    await Task.Delay(800 * attempt, cancellationToken);
+            }
+        }
+
+        RecordFailure();
+        throw new InvalidOperationException($"Gemini día {request.DayNumber} falló tras 3 intentos: {lastError}");
+    }
+
+    private async Task<DayPlanResponse> CallGeminiForDayAsync(string prompt, CancellationToken ct)
+    {
+        var client = _httpClientFactory.CreateClient("Gemini");
+        string model = _configuration["Gemini:PlanModel"] ?? DefaultModel;
+
+        var requestBody = new
+        {
+            contents = new[]
+            {
+                new { parts = new[] { new { text = prompt } } }
+            },
+            generationConfig = new
+            {
+                temperature = 0.85,   // ligeramente más alto que el plan completo para forzar variedad
+                maxOutputTokens = 8192,
+                responseMimeType = "application/json"
+            }
+        };
+
+        var response = await client.PostAsJsonAsync($"./{model}:generateContent", requestBody, ct);
+        response.EnsureSuccessStatusCode();
+
+        var jsonResponse = await response.Content.ReadAsStringAsync(ct);
+        using var doc = JsonDocument.Parse(jsonResponse);
+        var candidate = doc.RootElement.GetProperty("candidates")[0];
+
+        var finishReason = candidate.TryGetProperty("finishReason", out var fr) ? fr.GetString() : null;
+        if (finishReason == "MAX_TOKENS")
+            throw new InvalidOperationException("Gemini truncó la respuesta del día por límite de tokens.");
+
+        var text = candidate
+            .GetProperty("content")
+            .GetProperty("parts")[0]
+            .GetProperty("text")
+            .GetString() ?? "{}";
+
+        var dayPlan = JsonSerializer.Deserialize<DayPlan>(text, JsonOptions);
+        if (dayPlan is null)
+            throw new InvalidOperationException($"No se pudo deserializar el día desde Gemini.");
+
+        return new DayPlanResponse { Day = dayPlan, RawJson = text };
+    }
+
+    private string BuildDayPrompt(GenerateDayRequest request)
+    {
+        string baseTemplate = GetPromptTemplate(request.BudgetModeCode);
+
+        // Extraer solo ROLE + CONSTRAINTS + SNACK RULES (sin OUTPUT completo de 7 días)
+        string alreadyUsed = request.AlreadyUsedRecipeNames.Length > 0
+            ? $"Ya generados esta semana (NO repetir): {string.Join(", ", request.AlreadyUsedRecipeNames)}."
+            : "Primer día de la semana.";
+
+        string previousWeek = request.PreviousWeekRecipeCodes.Length > 0
+            ? $"Semana pasada: {string.Join(", ", request.PreviousWeekRecipeCodes.Take(10))}."
+            : "Sin historial previo.";
+
+        string seed = !string.IsNullOrEmpty(request.RandomSeed)
+            ? $"\nSEED DE VARIEDAD: {request.RandomSeed} — genera opciones únicas y creativas."
+            : "";
+
+        return $"""
+            {baseTemplate}
+
+            DÍA A GENERAR: {request.DayName} (día {request.DayNumber} de 7).
+            {alreadyUsed}
+            {previousWeek}
+            {seed}
+
+            Usuario: {request.UserName}, {request.Age} años, {request.Gender}, {request.HeightCm:F0}cm, {request.WeightKg:F1}kg.
+            Macros objetivo del DÍA: {request.DailyCalories} kcal · {request.ProteinGrams:F1}g prot · {request.FatGrams:F1}g grasa · {request.CarbsGrams:F1}g carbs.
+            Alergias: {string.Join(", ", request.Allergies.DefaultIfEmpty("ninguna"))}.
+            No le gusta: {string.Join(", ", request.DislikedIngredients.DefaultIfEmpty("ninguno"))}.
+            {(request.FamilyContext is not null ? $"Contexto: {request.FamilyContext}" : "")}
+
+            {GetDayOutputSchema(request.DayNumber, request.DayName)}
+            """;
+    }
+
+    private static string GetDayOutputSchema(int dayNumber, string dayName) => $$"""
+        OUTPUT_SCHEMA — Devuelve SOLO este JSON para el día {{dayName}}, sin texto adicional:
+        {
+          "day_number": {{dayNumber}},
+          "day_name": "{{dayName}}",
+          "meals": [
+            {
+              "meal_type": "breakfast",
+              "recipe_name": "string",
+              "ingredients": [{"ingredient_code": "", "name": "string", "amount_gr": 0, "unit_label": "g", "kcal": 0, "protein_g": 0, "fat_g": 0, "carbs_g": 0}],
+              "instructions": "string",
+              "prep_time_min": 0,
+              "cook_time_min": 0,
+              "servings": 1,
+              "total_calories": 0,
+              "total_protein_g": 0,
+              "total_fat_g": 0,
+              "total_carbs_g": 0,
+              "estimated_cost_mxn": 0,
+              "tags": [],
+              "primary_store": ""
+            }
+          ],
+          "day_totals": {"calories": 0, "protein_g": 0, "fat_g": 0, "carbs_g": 0, "estimated_cost_mxn": 0}
+        }
+
+        REGLAS SNACK: bocadillo MUY ligero (máx 3 ingredientes, prep ≤5min, cook=0).
+        PROHIBIDO en snacks: carnes, aves, pescados, mariscos, ceviche.
+        Genera exactamente 4 comidas: breakfast, lunch, dinner, snack.
+        """;
 
     private async Task<GeneratePlanResponse?> CheckCacheAsync(string requestHash, CancellationToken ct)
     {

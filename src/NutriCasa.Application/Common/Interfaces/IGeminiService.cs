@@ -12,6 +12,14 @@ public interface IGeminiService
         GeneratePlanRequest request,
         CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Genera UNA sola jornada (day) del plan keto.
+    /// Más rápido y menos propenso a timeout que el prompt completo de 7 días.
+    /// </summary>
+    Task<DayPlanResponse> GenerateDayPlanAsync(
+        GenerateDayRequest request,
+        CancellationToken cancellationToken = default);
+
     Task<SwapMealResponse> SwapMealAsync(
         SwapMealRequest request,
         CancellationToken cancellationToken = default);

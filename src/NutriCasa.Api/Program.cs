@@ -71,7 +71,9 @@ builder.Services.AddHttpClient("Gemini", (sp, client) =>
     var config = sp.GetRequiredService<IConfiguration>();
     client.BaseAddress = new Uri("https://generativelanguage.googleapis.com/v1beta/models/");
     client.DefaultRequestHeaders.TryAddWithoutValidation("x-goog-api-key", config["Gemini:ApiKey"]);
-    client.Timeout = TimeSpan.FromSeconds(config.GetValue<int>("Gemini:TimeoutSeconds", 240));
+    // Timeout elevado: por día ~60s, más margen para reintentos. El prompt por día es
+    // mucho más pequeño que el de 7 días, así que en la práctica termina en 15-25s.
+    client.Timeout = TimeSpan.FromSeconds(config.GetValue<int>("Gemini:TimeoutSeconds", 90));
 });
 
 // HttpClient para Resend
@@ -146,6 +148,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHub<NutriCasa.Api.Hubs.GroupHub>("/hubs/group");
+app.MapHub<NutriCasa.Infrastructure.Services.PlanGenerationHub>("/hubs/plan-generation");
 app.MapHealthChecks("/api/health");
 
 Log.Information("NutriCasa API iniciada en {Environment}", app.Environment.EnvironmentName);

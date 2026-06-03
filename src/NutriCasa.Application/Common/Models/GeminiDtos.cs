@@ -29,6 +29,45 @@ public record GeneratePlanRequest
     public required DateTime WeekStartDate { get; init; }
     public required string[] PreviousWeekRecipeCodes { get; init; }
     public string? FamilyContext { get; init; }
+    public bool ForceRegenerate { get; init; }
+    public string RandomSeed { get; init; } = string.Empty;
+}
+
+/// <summary>Request para generar UN solo día del plan (1 de 7 prompts).</summary>
+public record GenerateDayRequest
+{
+    public required Guid UserId { get; init; }
+    public required string UserName { get; init; }
+    public required int Age { get; init; }
+    public required string Gender { get; init; }
+    public required decimal HeightCm { get; init; }
+    public required decimal WeightKg { get; init; }
+    public decimal? TargetWeightKg { get; init; }
+    public required string ActivityLevel { get; init; }
+    public required string BudgetModeCode { get; init; }
+    public required int DailyCalories { get; init; }
+    public required decimal CarbsGrams { get; init; }
+    public required decimal ProteinGrams { get; init; }
+    public required decimal FatGrams { get; init; }
+    public required string[] Allergies { get; init; }
+    public required string[] DislikedIngredients { get; init; }
+    public required string[] DietaryRestrictions { get; init; }
+    public required string KetoExperienceLevel { get; init; }
+    public required bool IsOverridePlan { get; init; }
+    public required int DayNumber { get; init; }       // 1 = Lunes … 7 = Domingo
+    public required string DayName { get; init; }      // "Lunes", "Martes", etc.
+    public required string[] PreviousWeekRecipeCodes { get; init; }
+    /// <summary>Resumen de los días ya generados para evitar repeticin excesiva.</summary>
+    public required string[] AlreadyUsedRecipeNames { get; init; }
+    public string? FamilyContext { get; init; }
+    public string RandomSeed { get; init; } = string.Empty;
+}
+
+/// <summary>Respuesta de Gemini para UN solo día.</summary>
+public record DayPlanResponse
+{
+    public required DayPlan Day { get; init; }
+    public string RawJson { get; init; } = string.Empty;
 }
 
 public record GeneratePlanResponse

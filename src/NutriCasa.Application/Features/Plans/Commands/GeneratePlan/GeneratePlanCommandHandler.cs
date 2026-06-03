@@ -152,6 +152,21 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
     private readonly IPlanValidator _planValidator;
     private readonly ICostEstimationService _costEstimationService;
     private readonly IFeatureFlagService _featureFlags;
+    private readonly IPlanGenerationProgressService _progress;
+
+    // Mensajes motivacionales para cada día (índice = dayNumber - 1)
+    private static readonly (string Emoji, string Message)[] DayMessages =
+    [
+        ("🥑", "Preparando tu Lunes... ¡arranquemos con todo!"),
+        ("🍳", "Ahora el Martes, ¡sin excusas esta semana!"),
+        ("💪", "Ya vamos a mitad de semana, ¡excelente ritmo!"),
+        ("🥩", "El Jueves casi listo, ¡tu cuerpo lo agradecerá!"),
+        ("🎯", "Viernes en camino, ¡ya casi terminamos!"),
+        ("🏋️", "Preparando tu Sábado, ¡el fin de semana también cuenta!"),
+        ("✨", "Último día — Domingo. ¡Semana completa incoming!"),
+    ];
+
+    private static readonly string[] DayNames = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 
     public GeneratePlanCommandHandler(
         IApplicationDbContext context,
@@ -159,7 +174,8 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
         IGeminiService geminiService,
         IPlanValidator planValidator,
         ICostEstimationService costEstimationService,
-        IFeatureFlagService featureFlags)
+        IFeatureFlagService featureFlags,
+        IPlanGenerationProgressService progress)
     {
         _context = context;
         _currentUserService = currentUserService;
@@ -167,6 +183,7 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
         _planValidator = planValidator;
         _costEstimationService = costEstimationService;
         _featureFlags = featureFlags;
+        _progress = progress;
     }
 
     public async Task<Result<PlanGenerationResult>> Handle(GeneratePlanCommand request, CancellationToken cancellationToken)
@@ -252,12 +269,14 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
             .Include(p => p.Meals)
             .FirstOrDefaultAsync(p => p.UserId == userId && p.IsActive && p.StartDate == request.WeekStartDate, cancellationToken);
 
-        // Si ya existe un plan generado por IA (no fallback), devolverlo sin llamar a Gemini.
-        // Si es fallback, siempre reintentar Gemini para dar la mejor experiencia.
-        if (existingPlan is not null && !request.ForceRegenerate && existingPlan.GenerationSource != GenerationSource.Fallback)
+        // Si ya existe un plan completo de IA (no fallback ni generando), devolverlo sin llamar a Gemini.
+        if (existingPlan is not null
+            && !request.ForceRegenerate
+            && existingPlan.GenerationSource != GenerationSource.Fallback
+            && existingPlan.GenerationStatus == PlanGenerationStatus.Completed)
             return Result<PlanGenerationResult>.Success(await MapToResult(existingPlan, cancellationToken));
 
-        // ─── Contexto familiar: grupo, hogar, miembros y recetas existentes ───
+        // ─── Contexto familiar ───
         var membership = await _context.GroupMemberships
             .Include(m => m.Group)
             .FirstOrDefaultAsync(m => m.UserId == userId && m.LeftAt == null, cancellationToken);
@@ -267,14 +286,12 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
 
         if (membership is not null)
         {
-            // Obtener los miembros del mismo grupo
             var householdMembers = await _context.GroupMemberships
                 .Include(m => m.User)
                 .Where(m => m.GroupId == membership.GroupId && m.LeftAt == null && m.UserId != userId)
                 .Select(m => m.User.FullName)
                 .ToListAsync(cancellationToken);
 
-            // Buscar recetas ya asignadas a otros miembros del grupo para esta semana
             var householdMemberIds = await _context.GroupMemberships
                 .Where(m => m.GroupId == membership.GroupId && m.LeftAt == null && m.UserId != userId)
                 .Select(m => m.UserId)
@@ -294,26 +311,18 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
                     .ToListAsync(cancellationToken);
             }
 
-            // Construir el contexto para Gemini
             var parts = new List<string>();
             var totalHousehold = householdMembers.Count + 1;
             parts.Add($"Cocina para un hogar de {totalHousehold} persona{(totalHousehold > 1 ? "s" : "")}.");
-
             if (householdMembers.Count > 0)
                 parts.Add($"Otros miembros del hogar: {string.Join(", ", householdMembers)}.");
-
             if (otherMembersRecipes.Count > 0)
-            {
-                var recipeSample = otherMembersRecipes.Take(15);
-                parts.Add($"Platillos ya asignados a otros miembros esta semana (prioriza ingredientes en común para optimizar despensa): {string.Join(", ", recipeSample)}.");
-            }
-
-            parts.Add("IMPORTANTE: Prioriza recetas que compartan ingredientes base con los otros miembros del hogar para reducir costo de despensa.");
-
+                parts.Add($"Platillos ya asignados a otros miembros: {string.Join(", ", otherMembersRecipes.Take(15))}.");
+            parts.Add("Prioriza recetas que compartan ingredientes base para reducir costo de despensa.");
             familyContext = string.Join(" ", parts);
         }
 
-        // ─── Recetas de la semana pasada para evitar repetición excesiva ───
+        // ─── Recetas semana pasada ───
         var previousWeekStart = request.WeekStartDate.AddDays(-7);
         var previousWeekRecipes = await _context.WeeklyPlans
             .Where(p => p.UserId == userId && p.StartDate == previousWeekStart)
@@ -323,7 +332,36 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
             .Distinct()
             .ToListAsync(cancellationToken);
 
-        var geminiRequest = new GeneratePlanRequest
+        // ─── Crear plan en BD en estado Generating ───
+        var activePlans = await _context.WeeklyPlans
+            .Where(p => p.UserId == userId && p.IsActive)
+            .ToListAsync(cancellationToken);
+        foreach (var plan in activePlans) plan.IsActive = false;
+
+        var weeklyPlan = new WeeklyPlan
+        {
+            Id = Guid.NewGuid(),
+            UserId = userId,
+            GroupId = groupId,
+            StartDate = request.WeekStartDate,
+            EndDate = request.WeekStartDate.AddDays(6),
+            IsOverridePlan = user.MedicalProfile?.OverrideAcceptedAt is not null,
+            OriginalMenuContent = "{}",
+            IsActive = true,
+            GenerationSource = GenerationSource.Ai,
+            GenerationStatus = PlanGenerationStatus.Generating,
+            BudgetModeId = user.BudgetModeId,
+        };
+        _context.WeeklyPlans.Add(weeklyPlan);
+        await _context.SaveChangesAsync(cancellationToken);
+
+        // ─── Notificar inicio via SignalR ───
+        await _progress.SendStartedAsync(userId, weeklyPlan.Id, 7, cancellationToken);
+
+        string randomSeed = request.ForceRegenerate ? Guid.NewGuid().ToString() : string.Empty;
+        var alreadyUsedNames = new List<string>();
+
+        var dayBase = new GenerateDayRequest
         {
             UserId = userId,
             UserName = user.FullName,
@@ -334,7 +372,6 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
             TargetWeightKg = activeGoal?.TargetWeightKg,
             ActivityLevel = user.ActivityLevel.ToString(),
             BudgetModeCode = user.BudgetMode.Code,
-            BudgetModeRulesJson = user.BudgetMode.Rules,
             DailyCalories = user.KetoProfile.DailyCalories,
             CarbsGrams = user.KetoProfile.CarbsGrams,
             ProteinGrams = user.KetoProfile.ProteinGrams,
@@ -344,81 +381,48 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
             DietaryRestrictions = user.MedicalProfile?.DietaryRestrictions ?? [],
             KetoExperienceLevel = (user.MedicalProfile?.KetoExperienceLevel ?? KetoExperienceLevel.Beginner).ToString(),
             IsOverridePlan = user.MedicalProfile?.OverrideAcceptedAt is not null,
-            GoalType = (activeGoal?.GoalType ?? GoalType.WeightLoss).ToString(),
-            WeekStartDate = request.WeekStartDate.ToDateTime(TimeOnly.MinValue, DateTimeKind.Utc),
             PreviousWeekRecipeCodes = previousWeekRecipes.ToArray(),
             FamilyContext = familyContext,
+            RandomSeed = randomSeed,
+            // DayNumber, DayName y AlreadyUsedRecipeNames se asignan por iteración
+            DayNumber = 1,
+            DayName = "Lunes",
+            AlreadyUsedRecipeNames = [],
         };
 
-        GeneratePlanResponse geminiResponse;
-        try
+        // ─── Iterar 7 días ───
+        for (int dayNumber = 1; dayNumber <= 7; dayNumber++)
         {
-            geminiResponse = await _geminiService.GeneratePlanAsync(geminiRequest, cancellationToken);
-        }
-        catch (Exception)
-        {
-            return await GenerateCuratedFallbackPlanAsync(user, activeGoal, request, userId, cancellationToken);
-        }
+            string dayName = DayNames[dayNumber - 1];
+            var (emoji, msg) = DayMessages[dayNumber - 1];
+            int progressBefore = (dayNumber - 1) * 100 / 7;
 
-        var validationContext = new PlanValidationContext
-        {
-            Allergies = user.MedicalProfile?.Allergies ?? [],
-            DislikedIngredients = user.MedicalProfile?.DislikedIngredients ?? [],
-            DietaryRestrictions = user.MedicalProfile?.DietaryRestrictions ?? [],
-            DailyCaloriesTarget = user.KetoProfile.DailyCalories,
-            ProteinTarget = user.KetoProfile.ProteinGrams,
-            FatTarget = user.KetoProfile.FatGrams,
-            CarbsTarget = user.KetoProfile.CarbsGrams,
-            MaxCarbsGrams = user.MedicalProfile?.OverrideAcceptedAt is not null ? 60 : 50,
-            BmrKcal = user.KetoProfile.BmrKcal ?? 0,
-            TdeeKcal = user.KetoProfile.TdeeKcal ?? 0,
-            IsOverridePlan = user.MedicalProfile?.OverrideAcceptedAt is not null,
-            BudgetModeCode = user.BudgetMode.Code,
-            WeightKg = activeGoal?.StartWeightKg ?? 70m,
-            MinProteinPerKg = 0.8m,
-        };
+            await _progress.SendProgressMessageAsync(userId, emoji, msg, progressBefore, cancellationToken);
 
-        var validationResult = _planValidator.Validate(geminiResponse, validationContext);
-        if (!validationResult.IsValid)
-            return await GenerateCuratedFallbackPlanAsync(user, activeGoal, request, userId, cancellationToken);
-
-        var costEstimate = await _costEstimationService.EstimatePlanCostAsync(
-            geminiResponse, user.BudgetMode.Code, numberOfPeople: 1, cancellationToken);
-
-        var activePlans = await _context.WeeklyPlans
-            .Where(p => p.UserId == userId && p.IsActive)
-            .ToListAsync(cancellationToken);
-
-        foreach (var plan in activePlans)
-            plan.IsActive = false;
-
-        var endDate = request.WeekStartDate.AddDays(6);
-        var weeklyPlan = new WeeklyPlan
-        {
-            Id = Guid.NewGuid(),
-            UserId = userId,
-            GroupId = groupId,
-            StartDate = request.WeekStartDate,
-            EndDate = endDate,
-            IsOverridePlan = user.MedicalProfile?.OverrideAcceptedAt is not null,
-            OriginalMenuContent = geminiResponse.RawJson,
-            IsActive = true,
-            GenerationSource = GenerationSource.Ai,
-            BudgetModeId = user.BudgetModeId,
-            EstimatedTotalCostMxn = costEstimate.TotalCostMxn,
-            EstimatedCostPerPersonMxn = costEstimate.CostPerPersonMxn,
-            EstimatedCostGourmetBaselineMxn = costEstimate.GourmetBaselineCostMxn,
-            SavingsVsGourmetMxn = costEstimate.SavingsVsGourmetMxn,
-            SavingsVsGourmetPercent = costEstimate.SavingsVsGourmetPercent,
-        };
-        _context.WeeklyPlans.Add(weeklyPlan);
-
-        var mealTypes = new[] { "breakfast", "lunch", "dinner", "snack" };
-        foreach (var day in geminiResponse.Days)
-        {
-            for (int i = 0; i < day.Meals.Count; i++)
+            var dayRequest = dayBase with
             {
-                var meal = day.Meals[i];
+                DayNumber = dayNumber,
+                DayName = dayName,
+                AlreadyUsedRecipeNames = alreadyUsedNames.ToArray(),
+            };
+
+            DayPlan geminiDay;
+            try
+            {
+                var dayResponse = await _geminiService.GenerateDayPlanAsync(dayRequest, cancellationToken);
+                geminiDay = dayResponse.Day;
+            }
+            catch (Exception)
+            {
+                // Un día fallado no cancela el plan: usamos fallback curado para ese día.
+                await _progress.SendErrorAsync(userId, $"Día {dayName} usó receta curada (IA no disponible).", dayNumber, cancellationToken);
+                geminiDay = await BuildFallbackDayAsync(dayNumber, dayName, user.BudgetMode.Code, userId, cancellationToken);
+            }
+
+            // Persistir comidas de este día
+            for (int i = 0; i < geminiDay.Meals.Count; i++)
+            {
+                var meal = geminiDay.Meals[i];
                 var recipe = new Recipe
                 {
                     Id = Guid.NewGuid(),
@@ -439,23 +443,136 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
                     EstimatedCostPerServingMxn = meal.EstimatedCostMxn,
                 };
                 _context.Recipes.Add(recipe);
-
-                var planMeal = new WeeklyPlanMeal
+                _context.WeeklyPlanMeals.Add(new WeeklyPlanMeal
                 {
                     Id = Guid.NewGuid(),
                     PlanId = weeklyPlan.Id,
-                    DayOfWeek = day.DayNumber,
+                    DayOfWeek = dayNumber,
                     MealType = Enum.Parse<MealType>(meal.MealType, ignoreCase: true),
                     RecipeId = recipe.Id,
                     SortOrder = i + 1,
-                };
-                _context.WeeklyPlanMeals.Add(planMeal);
+                });
+
+                alreadyUsedNames.Add(meal.RecipeName);
             }
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            // Construir DTO del día para el cliente
+            int progressAfter = dayNumber * 100 / 7;
+            var dayDto = await MapDayToDto(weeklyPlan.Id, dayNumber, dayName, cancellationToken);
+            await _progress.SendDayReadyAsync(userId, dayNumber, dayName, dayDto, progressAfter, cancellationToken);
         }
 
+        // ─── Marcar plan como completado y calcular costo ───
+        weeklyPlan.GenerationStatus = PlanGenerationStatus.Completed;
+        weeklyPlan.EstimatedTotalCostMxn = alreadyUsedNames.Count > 0 ? 0m : null; // se recalcula en costService si es necesario
         await _context.SaveChangesAsync(cancellationToken);
 
+        await _progress.SendCompletedAsync(userId, weeklyPlan.Id, cancellationToken);
+
         return Result<PlanGenerationResult>.Success(await MapToResult(weeklyPlan, cancellationToken));
+    }
+
+    private async Task<DayPlan> BuildFallbackDayAsync(int dayNumber, string dayName, string budgetModeCode, Guid userId, CancellationToken ct)
+    {
+        var curatedRecipes = await _context.Recipes
+            .Where(r => r.Source == RecipeSource.Curated
+                     && r.NutritionTrack == NutritionTrack.Keto
+                     && (r.CompatibleModeCodes.Any(c => c == budgetModeCode) || r.CompatibleModeCodes.Length == 0))
+            .OrderBy(r => r.MealType)
+            .ThenBy(r => r.UseCount)
+            .ToListAsync(ct);
+
+        if (curatedRecipes.Count == 0)
+            curatedRecipes = await _context.Recipes
+                .Where(r => r.Source == RecipeSource.Curated && r.NutritionTrack == NutritionTrack.Keto)
+                .ToListAsync(ct);
+
+        var rng = new Random(userId.GetHashCode() ^ dayNumber);
+        var mealTypes = new[] { Domain.Enums.MealType.Breakfast, Domain.Enums.MealType.Lunch, Domain.Enums.MealType.Dinner, Domain.Enums.MealType.Snack };
+
+        var meals = mealTypes.Select(type =>
+        {
+            var pool = curatedRecipes.Where(r => r.MealType == type).ToList();
+            if (pool.Count == 0) pool = curatedRecipes;
+            var recipe = pool[rng.Next(pool.Count)];
+            return new MealPlan
+            {
+                MealType = type.ToString().ToLowerInvariant(),
+                RecipeName = recipe.Name,
+                Ingredients = [],
+                Instructions = recipe.Instructions ?? "Ver receta.",
+                PrepTimeMin = recipe.PrepTimeMin ?? 10,
+                CookTimeMin = recipe.CookTimeMin ?? 0,
+                Servings = recipe.Servings,
+                TotalCalories = recipe.BaseCalories,
+                TotalProteinG = recipe.BaseProteinGr,
+                TotalFatG = recipe.BaseFatGr,
+                TotalCarbsG = recipe.BaseCarbsGr,
+                EstimatedCostMxn = recipe.EstimatedCostPerServingMxn ?? 0,
+            };
+        }).ToList();
+
+        return new DayPlan
+        {
+            DayNumber = dayNumber,
+            DayName = dayName,
+            Meals = meals,
+            DayTotals = new DayTotals
+            {
+                Calories = meals.Sum(m => m.TotalCalories),
+                ProteinG = meals.Sum(m => m.TotalProteinG),
+                FatG = meals.Sum(m => m.TotalFatG),
+                CarbsG = meals.Sum(m => m.TotalCarbsG),
+                EstimatedCostMxn = meals.Sum(m => m.EstimatedCostMxn),
+            },
+        };
+    }
+
+    private async Task<DayPlanDto> MapDayToDto(Guid planId, int dayNumber, string dayName, CancellationToken ct)
+    {
+        var dayMeals = await _context.WeeklyPlanMeals
+            .Include(m => m.Recipe)
+            .Where(m => m.PlanId == planId && m.DayOfWeek == dayNumber)
+            .OrderBy(m => m.SortOrder)
+            .ToListAsync(ct);
+
+        return new DayPlanDto
+        {
+            DayNumber = dayNumber,
+            DayName = dayName,
+            Meals = dayMeals.Select(m => new MealPlanDto
+            {
+                PlanMealId = m.Id,
+                MealType = m.MealType.ToString().ToLowerInvariant(),
+                IsLocked = m.IsLocked,
+                PortionMultiplier = m.PortionMultiplier,
+                RowVersion = m.RowVersion,
+                Recipe = new RecipeDto
+                {
+                    RecipeId = m.Recipe!.Id,
+                    Name = m.Recipe.Name,
+                    Calories = m.Recipe.BaseCalories,
+                    ProteinGr = m.Recipe.BaseProteinGr,
+                    FatGr = m.Recipe.BaseFatGr,
+                    CarbsGr = m.Recipe.BaseCarbsGr,
+                    PrepTimeMin = m.Recipe.PrepTimeMin ?? 0,
+                    CookTimeMin = m.Recipe.CookTimeMin ?? 0,
+                    Instructions = m.Recipe.Instructions ?? "",
+                    EstimatedCostMxn = m.Recipe.EstimatedCostPerServingMxn ?? 0,
+                    Ingredients = RecipeIngredientParser.Parse(m.Recipe.Ingredients),
+                },
+            }).ToList(),
+            DayTotals = new DayTotalsDto
+            {
+                Calories = dayMeals.Sum(m => m.Recipe?.BaseCalories ?? 0),
+                ProteinGr = dayMeals.Sum(m => m.Recipe?.BaseProteinGr ?? 0),
+                FatGr = dayMeals.Sum(m => m.Recipe?.BaseFatGr ?? 0),
+                CarbsGr = dayMeals.Sum(m => m.Recipe?.BaseCarbsGr ?? 0),
+                EstimatedCostMxn = dayMeals.Sum(m => m.Recipe?.EstimatedCostPerServingMxn ?? 0),
+            },
+        };
     }
 
     private async Task<PlanGenerationResult> MapToResult(WeeklyPlan plan, CancellationToken ct)

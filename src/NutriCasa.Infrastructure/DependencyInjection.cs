@@ -46,6 +46,7 @@ public static class DependencyInjection
         services.AddScoped<IIngredientSubstitutionService, IngredientSubstitutionService>();
         services.AddScoped<IModerationService, ModerationService>();
         services.AddSingleton<IFeatureFlagService, FeatureFlagService>();
+        services.AddScoped<IPlanGenerationProgressService, SignalRPlanProgressService>();
         if (string.Equals(configuration["Payments:Provider"], "MercadoPago", StringComparison.OrdinalIgnoreCase))
         {
             services.AddHttpClient<IPaymentService, MercadoPagoPaymentService>((_, client) =>

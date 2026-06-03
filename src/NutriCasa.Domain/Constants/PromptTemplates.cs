@@ -44,6 +44,7 @@ public static class PromptTemplates
         - Máximo 3 ingredientes por snack.
         - Las instrucciones deben ser de 1 oración ("Corta el pepino en rodajas y agrega limón y tajín").
         - PROHIBIDO generar platillos completos como snack (nada con sartén, horno, o más de 3 ingredientes).
+        - PROHIBIDO usar atún, pescados, mariscos, pollo o carnes para los snacks.
 
         QUALITY RULES
         - Variedad: máximo 3 desayunos iguales por semana, mínimo 3 proteínas distintas, mínimo 4 vegetales distintos.
@@ -88,6 +89,7 @@ public static class PromptTemplates
         - Máximo 3 ingredientes por snack.
         - Las instrucciones deben ser de 1 oración.
         - PROHIBIDO generar platillos completos como snack.
+        - PROHIBIDO usar atún, pescados, mariscos, pollo o carnes para los snacks.
 
         QUALITY RULES
         - Variedad: máximo 2 desayunos iguales por semana, mínimo 4 proteínas distintas, mínimo 5 vegetales.
@@ -128,6 +130,7 @@ public static class PromptTemplates
         - Máximo 2 ingredientes por snack.
         - Las instrucciones deben ser de 1 oración corta.
         - PROHIBIDO generar platillos completos como snack.
+        - PROHIBIDO usar atún, pescados, mariscos, pollo o carnes para los snacks.
 
         QUALITY RULES
         - Variedad: máximo 3 desayunos iguales, mínimo 3 proteínas distintas.
@@ -167,6 +170,7 @@ public static class PromptTemplates
         - Las instrucciones deben ser de 1 oración.
         - Los snacks pueden usar sobrantes del batch cooking (huevos cocidos, pollo deshebrado en rollito, etc.).
         - PROHIBIDO generar platillos completos como snack.
+        - PROHIBIDO usar atún, pescados, mariscos o carnes pesadas para los snacks.
 
         QUALITY RULES
         - Variedad inteligente: misma proteína de 2-3 formas distintas.
@@ -205,6 +209,7 @@ public static class PromptTemplates
         - Las instrucciones deben ser de 1 oración.
         - Los snacks deben ser portátiles (para llevar al gym o trabajo).
         - PROHIBIDO generar platillos completos como snack.
+        - PROHIBIDO usar atún, pescados, mariscos o carnes pesadas para los snacks.
 
         QUALITY RULES
         - Variedad: mínimo 5 proteínas distintas.
@@ -245,6 +250,7 @@ public static class PromptTemplates
         - Máximo 4 ingredientes por snack.
         - Las instrucciones deben ser de 1 oración.
         - PROHIBIDO generar platillos completos como snack.
+        - PROHIBIDO usar atún, pescados, mariscos, pollo o carnes para los snacks.
 
         QUALITY RULES
         - Variedad máxima: cada día representa cocina diferente.
@@ -276,6 +282,7 @@ public static class PromptTemplates
         5. Ingredientes accesibles en México.
         6. Si meal_type es "snack": el reemplazo DEBE ser un bocadillo simple (max 3 ingredientes,
            prep_time_min <= 5, cook_time_min = 0). NO generar un platillo completo como snack.
+           PROHIBIDO usar atún, pescados, mariscos, pollo o carnes.
            Ejemplos válidos: cacahuates, queso en cubitos, pepino con limón, huevo cocido, chicharrones.
 
         OUTPUT

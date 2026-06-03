@@ -16,6 +16,7 @@ public class WeeklyPlan : AuditableEntity
     public string? CurrentMenuContent { get; set; } // JSONB
     public bool IsActive { get; set; } = true;
     public GenerationSource GenerationSource { get; set; } = GenerationSource.Ai;
+    public PlanGenerationStatus GenerationStatus { get; set; } = PlanGenerationStatus.Pending;
     public Guid? ParentPlanId { get; set; }
     public Guid? AiInteractionId { get; set; }
     // Del delta 002
