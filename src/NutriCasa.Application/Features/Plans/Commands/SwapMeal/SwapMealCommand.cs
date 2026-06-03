@@ -178,7 +178,7 @@ public class SwapMealCommandHandler : IRequestHandler<SwapMealCommand, Result>
                      && r.NutritionTrack == NutritionTrack.Keto
                      && r.MealType == mealType
                      && r.Id != currentRecipeId
-                     && (r.CompatibleModeCodes.Contains(budgetModeCode) || r.CompatibleModeCodes.Length == 0))
+                     && (r.CompatibleModeCodes.Any(c => c == budgetModeCode) || r.CompatibleModeCodes.Length == 0))
             .OrderBy(r => r.UseCount)
             .Take(10)
             .ToListAsync(ct);

@@ -252,7 +252,9 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
             .Include(p => p.Meals)
             .FirstOrDefaultAsync(p => p.UserId == userId && p.IsActive && p.StartDate == request.WeekStartDate, cancellationToken);
 
-        if (existingPlan is not null && !request.ForceRegenerate)
+        // Si ya existe un plan generado por IA (no fallback), devolverlo sin llamar a Gemini.
+        // Si es fallback, siempre reintentar Gemini para dar la mejor experiencia.
+        if (existingPlan is not null && !request.ForceRegenerate && existingPlan.GenerationSource != GenerationSource.Fallback)
             return Result<PlanGenerationResult>.Success(await MapToResult(existingPlan, cancellationToken));
 
         // ─── Contexto familiar: grupo, hogar, miembros y recetas existentes ───
@@ -661,7 +663,7 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
         var curatedRecipes = await _context.Recipes
             .Where(r => r.Source == RecipeSource.Curated
                      && r.NutritionTrack == NutritionTrack.Keto
-                     && (r.CompatibleModeCodes.Contains(budgetModeCode) || r.CompatibleModeCodes.Length == 0))
+                     && (r.CompatibleModeCodes.Any(c => c == budgetModeCode) || r.CompatibleModeCodes.Length == 0))
             .OrderBy(r => r.MealType)
             .ThenBy(r => r.UseCount)
             .ThenBy(r => r.Name)

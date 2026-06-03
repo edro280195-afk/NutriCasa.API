@@ -193,15 +193,29 @@ public class GeminiService : IGeminiService
         var jsonResponse = await response.Content.ReadAsStringAsync(ct);
 
         using var doc = JsonDocument.Parse(jsonResponse);
-        var text = doc.RootElement
-            .GetProperty("candidates")[0]
+        var candidate = doc.RootElement.GetProperty("candidates")[0];
+
+        // Validar finishReason antes de intentar parsear
+        var finishReason = candidate.TryGetProperty("finishReason", out var fr) ? fr.GetString() : null;
+        if (finishReason == "MAX_TOKENS")
+            throw new InvalidOperationException("Gemini truncó la respuesta por límite de tokens. La respuesta JSON está incompleta.");
+
+        var text = candidate
             .GetProperty("content")
             .GetProperty("parts")[0]
             .GetProperty("text")
             .GetString() ?? "{}";
 
+        // Extraer tokens reales de usageMetadata si están disponibles
         int inputTokens = prompt.Length / 4;
         int outputTokens = text.Length / 4;
+        if (doc.RootElement.TryGetProperty("usageMetadata", out var usage))
+        {
+            if (usage.TryGetProperty("promptTokenCount", out var ptc))
+                inputTokens = ptc.GetInt32();
+            if (usage.TryGetProperty("candidatesTokenCount", out var ctc))
+                outputTokens = ctc.GetInt32();
+        }
 
         var plan = JsonSerializer.Deserialize<GeneratePlanResponse>(text, JsonOptions);
         if (plan is null)
@@ -298,6 +312,7 @@ public class GeminiService : IGeminiService
             { "ingredient_code": "", "name": "string", "total_amount_gr": 0, "unit_label": "g", "store_category": "", "estimated_cost_mxn": 0, "category": "" }
           ]
         }
+
         NOTA IMPORTANTE SOBRE SNACKS:
         Para meal_type "snack": bocadillo simple, máximo 3 ingredientes, prep_time_min <= 5, cook_time_min = 0.
         Instrucciones de 1 oración. NO es un platillo completo.
@@ -444,15 +459,29 @@ public class GeminiService : IGeminiService
         var jsonResponse = await response.Content.ReadAsStringAsync(ct);
 
         using var doc = JsonDocument.Parse(jsonResponse);
-        var text = doc.RootElement
-            .GetProperty("candidates")[0]
+        var candidate = doc.RootElement.GetProperty("candidates")[0];
+
+        // Validar finishReason antes de intentar parsear
+        var finishReason = candidate.TryGetProperty("finishReason", out var fr) ? fr.GetString() : null;
+        if (finishReason == "MAX_TOKENS")
+            throw new InvalidOperationException("Gemini truncó la respuesta swap por límite de tokens.");
+
+        var text = candidate
             .GetProperty("content")
             .GetProperty("parts")[0]
             .GetProperty("text")
             .GetString() ?? "{}";
 
+        // Extraer tokens reales de usageMetadata si están disponibles
         int inputTokens = prompt.Length / 4;
         int outputTokens = text.Length / 4;
+        if (doc.RootElement.TryGetProperty("usageMetadata", out var usage))
+        {
+            if (usage.TryGetProperty("promptTokenCount", out var ptc))
+                inputTokens = ptc.GetInt32();
+            if (usage.TryGetProperty("candidatesTokenCount", out var ctc))
+                outputTokens = ctc.GetInt32();
+        }
 
         var swap = JsonSerializer.Deserialize<SwapMealResponse>(text, JsonOptions);
         if (swap is null)
