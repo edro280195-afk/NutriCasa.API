@@ -395,7 +395,16 @@ public class GeminiService : IGeminiService
 
         var finishReason = candidate.TryGetProperty("finishReason", out var fr) ? fr.GetString() : null;
         if (finishReason == "MAX_TOKENS")
-            throw new InvalidOperationException("Gemini truncó la respuesta del día por límite de tokens.");
+        {
+            string textPart = "";
+            try
+            {
+                textPart = candidate.GetProperty("content").GetProperty("parts")[0].GetProperty("text").GetString() ?? "";
+            }
+            catch {}
+            string snippet = textPart.Substring(0, Math.Min(textPart.Length, 500));
+            throw new InvalidOperationException($"Gemini truncó la respuesta del día por límite de tokens. Snippet: {snippet}");
+        }
 
         var text = candidate
             .GetProperty("content")
@@ -414,7 +423,33 @@ public class GeminiService : IGeminiService
     {
         string baseTemplate = GetPromptTemplate(request.BudgetModeCode);
 
-        // Extraer solo ROLE + CONSTRAINTS + SNACK RULES (sin OUTPUT completo de 7 días)
+        // Reemplazar placeholders del template base con la información del usuario
+        string templateProcessed = baseTemplate
+            .Replace("{{user_name}}", request.UserName)
+            .Replace("{{age}}", request.Age.ToString())
+            .Replace("{{gender}}", request.Gender)
+            .Replace("{{height_cm}}", request.HeightCm.ToString("F1"))
+            .Replace("{{weight_kg}}", request.WeightKg.ToString("F1"))
+            .Replace("{{target_weight_kg}}", request.TargetWeightKg?.ToString("F1") ?? "no definido")
+            .Replace("{{activity_level}}", request.ActivityLevel)
+            .Replace("{{daily_calories}}", request.DailyCalories.ToString())
+            .Replace("{{protein_g}}", request.ProteinGrams.ToString("F1"))
+            .Replace("{{fat_g}}", request.FatGrams.ToString("F1"))
+            .Replace("{{carbs_g}}", request.CarbsGrams.ToString("F1"))
+            .Replace("{{allergies}}", string.Join(", ", request.Allergies))
+            .Replace("{{disliked_ingredients}}", string.Join(", ", request.DislikedIngredients))
+            .Replace("{{dietary_restrictions}}", string.Join(", ", request.DietaryRestrictions))
+            .Replace("{{keto_experience}}", request.KetoExperienceLevel)
+            .Replace("{{family_context}}", request.FamilyContext ?? "Sin contexto adicional")
+            .Replace("{{previous_week_recipes}}", string.Join(", ", request.PreviousWeekRecipeCodes))
+            .Replace("{{training_volume}}", request.ActivityLevel switch
+            {
+                "VeryActive" => "5-6 sesiones",
+                "Active" => "3-4 sesiones",
+                "Moderate" => "2-3 sesiones",
+                _ => "1-2 sesiones"
+            });
+
         string alreadyUsed = request.AlreadyUsedRecipeNames.Length > 0
             ? $"Ya generados esta semana (NO repetir): {string.Join(", ", request.AlreadyUsedRecipeNames)}."
             : "Primer día de la semana.";
@@ -428,18 +463,18 @@ public class GeminiService : IGeminiService
             : "";
 
         return $"""
-            {baseTemplate}
+            {templateProcessed}
 
-            DÍA A GENERAR: {request.DayName} (día {request.DayNumber} de 7).
+            ================================================================================
+            INSTRUCCIÓN DE GENERACIÓN ESPECÍFICA (DÍA ÚNICO):
+            ================================================================================
+            Estás generando ÚNICAMENTE el día: {request.DayName} (día {request.DayNumber} de 7).
+            PROHIBIDO generar otros días. Devuelve SOLO el objeto JSON para {request.DayName} siguiendo el esquema del final.
+
+            Detalles de control del día:
             {alreadyUsed}
             {previousWeek}
             {seed}
-
-            Usuario: {request.UserName}, {request.Age} años, {request.Gender}, {request.HeightCm:F0}cm, {request.WeightKg:F1}kg.
-            Macros objetivo del DÍA: {request.DailyCalories} kcal · {request.ProteinGrams:F1}g prot · {request.FatGrams:F1}g grasa · {request.CarbsGrams:F1}g carbs.
-            Alergias: {string.Join(", ", request.Allergies.DefaultIfEmpty("ninguna"))}.
-            No le gusta: {string.Join(", ", request.DislikedIngredients.DefaultIfEmpty("ninguno"))}.
-            {(request.FamilyContext is not null ? $"Contexto: {request.FamilyContext}" : "")}
 
             {GetDayOutputSchema(request.DayNumber, request.DayName)}
             """;
