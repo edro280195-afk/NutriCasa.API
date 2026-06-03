@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using NutriCasa.Application.Common.Interfaces;
 using NutriCasa.Application.Common.Models;
 using NutriCasa.Application.Features.Plans.Commands.GeneratePlan;
@@ -12,11 +13,16 @@ public class GetCurrentPlanQueryHandler : IRequestHandler<GetCurrentPlanQuery, R
 {
     private readonly IApplicationDbContext _context;
     private readonly ICurrentUserService _currentUserService;
+    private readonly ILogger<GetCurrentPlanQueryHandler> _logger;
 
-    public GetCurrentPlanQueryHandler(IApplicationDbContext context, ICurrentUserService currentUserService)
+    public GetCurrentPlanQueryHandler(
+        IApplicationDbContext context,
+        ICurrentUserService currentUserService,
+        ILogger<GetCurrentPlanQueryHandler> logger)
     {
         _context = context;
         _currentUserService = currentUserService;
+        _logger = logger;
     }
 
     public async Task<Result<PlanGenerationResult>> Handle(GetCurrentPlanQuery request, CancellationToken cancellationToken)
@@ -31,6 +37,18 @@ public class GetCurrentPlanQueryHandler : IRequestHandler<GetCurrentPlanQuery, R
             .Include(p => p.BudgetMode)
             .Include(p => p.User).ThenInclude(u => u.KetoProfile)
             .FirstOrDefaultAsync(p => p.UserId == userId && p.IsActive, cancellationToken);
+
+        if (plan is not null && plan.GenerationStatus == Domain.Enums.PlanGenerationStatus.Generating)
+        {
+            if (plan.CreatedAt < DateTime.UtcNow.AddMinutes(-3))
+            {
+                _logger.LogWarning("Se detectó un plan semanal del usuario {UserId} atascado en estado Generating (creado el {CreatedAt}). Marcándolo como fallido e inactivo.", userId, plan.CreatedAt);
+                plan.GenerationStatus = Domain.Enums.PlanGenerationStatus.Failed;
+                plan.IsActive = false;
+                await _context.SaveChangesAsync(cancellationToken);
+                plan = null;
+            }
+        }
 
         if (plan is null)
             return Result<PlanGenerationResult>.Failure("No hay un plan activo.", "NO_ACTIVE_PLAN");
@@ -121,6 +139,7 @@ public class GetCurrentPlanQueryHandler : IRequestHandler<GetCurrentPlanQuery, R
                 FatPercent = kp.FatPercent ?? 0,
             } : new KetoProfileResult(),
             ShoppingList = GeneratePlanCommandHandler.BuildShoppingList(plan.Meals, catalog),
+            GenerationStatus = plan.GenerationStatus.ToString(),
         };
 
         return Result<PlanGenerationResult>.Success(result);

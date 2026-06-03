@@ -381,7 +381,7 @@ public class GeminiService : IGeminiService
             generationConfig = new
             {
                 temperature = 0.85,   // ligeramente más alto que el plan completo para forzar variedad
-                maxOutputTokens = 8192,
+                maxOutputTokens = _configuration.GetValue("Gemini:MaxOutputTokens", DefaultMaxOutputTokens),
                 responseMimeType = "application/json"
             }
         };

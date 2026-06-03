@@ -23,6 +23,7 @@ public record PlanGenerationResult
     public required List<DayPlanDto> Days { get; init; }
     public required KetoProfileResult Macros { get; init; }
     public ShoppingListDto? ShoppingList { get; init; }
+    public string? GenerationStatus { get; init; }
 }
 
 public record DayPlanDto
@@ -391,85 +392,99 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
         };
 
         // ─── Iterar 7 días ───
-        for (int dayNumber = 1; dayNumber <= 7; dayNumber++)
+        try
         {
-            string dayName = DayNames[dayNumber - 1];
-            var (emoji, msg) = DayMessages[dayNumber - 1];
-            int progressBefore = (dayNumber - 1) * 100 / 7;
-
-            await _progress.SendProgressMessageAsync(userId, emoji, msg, progressBefore, cancellationToken);
-
-            var dayRequest = dayBase with
+            for (int dayNumber = 1; dayNumber <= 7; dayNumber++)
             {
-                DayNumber = dayNumber,
-                DayName = dayName,
-                AlreadyUsedRecipeNames = alreadyUsedNames.ToArray(),
-            };
+                string dayName = DayNames[dayNumber - 1];
+                var (emoji, msg) = DayMessages[dayNumber - 1];
+                int progressBefore = (dayNumber - 1) * 100 / 7;
 
-            DayPlan geminiDay;
-            try
-            {
-                var dayResponse = await _geminiService.GenerateDayPlanAsync(dayRequest, cancellationToken);
-                geminiDay = dayResponse.Day;
-            }
-            catch (Exception)
-            {
-                // Un día fallado no cancela el plan: usamos fallback curado para ese día.
-                await _progress.SendErrorAsync(userId, $"Día {dayName} usó receta curada (IA no disponible).", dayNumber, cancellationToken);
-                geminiDay = await BuildFallbackDayAsync(dayNumber, dayName, user.BudgetMode.Code, userId, cancellationToken);
-            }
+                await _progress.SendProgressMessageAsync(userId, emoji, msg, progressBefore, cancellationToken);
 
-            // Persistir comidas de este día
-            for (int i = 0; i < geminiDay.Meals.Count; i++)
-            {
-                var meal = geminiDay.Meals[i];
-                var recipe = new Recipe
+                var dayRequest = dayBase with
                 {
-                    Id = Guid.NewGuid(),
-                    Name = meal.RecipeName,
-                    MealType = Enum.Parse<MealType>(meal.MealType, ignoreCase: true),
-                    Ingredients = JsonSerializer.Serialize(meal.Ingredients),
-                    Instructions = meal.Instructions,
-                    PrepTimeMin = meal.PrepTimeMin > 0 ? meal.PrepTimeMin : null,
-                    CookTimeMin = meal.CookTimeMin > 0 ? meal.CookTimeMin : null,
-                    Servings = meal.Servings,
-                    BaseCalories = meal.TotalCalories,
-                    BaseProteinGr = meal.TotalProteinG,
-                    BaseFatGr = meal.TotalFatG,
-                    BaseCarbsGr = meal.TotalCarbsG,
-                    Source = RecipeSource.AiGenerated,
-                    IsPublic = false,
-                    CompatibleModeCodes = [user.BudgetMode.Code],
-                    EstimatedCostPerServingMxn = meal.EstimatedCostMxn,
+                    DayNumber = dayNumber,
+                    DayName = dayName,
+                    AlreadyUsedRecipeNames = alreadyUsedNames.ToArray(),
                 };
-                _context.Recipes.Add(recipe);
-                _context.WeeklyPlanMeals.Add(new WeeklyPlanMeal
-                {
-                    Id = Guid.NewGuid(),
-                    PlanId = weeklyPlan.Id,
-                    DayOfWeek = dayNumber,
-                    MealType = Enum.Parse<MealType>(meal.MealType, ignoreCase: true),
-                    RecipeId = recipe.Id,
-                    SortOrder = i + 1,
-                });
 
-                alreadyUsedNames.Add(meal.RecipeName);
+                DayPlan geminiDay;
+                try
+                {
+                    var dayResponse = await _geminiService.GenerateDayPlanAsync(dayRequest, cancellationToken);
+                    geminiDay = dayResponse.Day;
+                }
+                catch (Exception)
+                {
+                    // Un día fallado no cancela el plan: usamos fallback curado para ese día.
+                    await _progress.SendErrorAsync(userId, $"Día {dayName} usó receta curada (IA no disponible).", dayNumber, cancellationToken);
+                    geminiDay = await BuildFallbackDayAsync(dayNumber, dayName, user.BudgetMode.Code, userId, cancellationToken);
+                }
+
+                // Persistir comidas de este día
+                for (int i = 0; i < geminiDay.Meals.Count; i++)
+                {
+                    var meal = geminiDay.Meals[i];
+                    var recipe = new Recipe
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = meal.RecipeName,
+                        MealType = Enum.Parse<MealType>(meal.MealType, ignoreCase: true),
+                        Ingredients = JsonSerializer.Serialize(meal.Ingredients),
+                        Instructions = meal.Instructions,
+                        PrepTimeMin = meal.PrepTimeMin > 0 ? meal.PrepTimeMin : null,
+                        CookTimeMin = meal.CookTimeMin > 0 ? meal.CookTimeMin : null,
+                        Servings = meal.Servings,
+                        BaseCalories = meal.TotalCalories,
+                        BaseProteinGr = meal.TotalProteinG,
+                        BaseFatGr = meal.TotalFatG,
+                        BaseCarbsGr = meal.TotalCarbsG,
+                        Source = RecipeSource.AiGenerated,
+                        IsPublic = false,
+                        CompatibleModeCodes = [user.BudgetMode.Code],
+                        EstimatedCostPerServingMxn = meal.EstimatedCostMxn,
+                    };
+                    _context.Recipes.Add(recipe);
+                    _context.WeeklyPlanMeals.Add(new WeeklyPlanMeal
+                    {
+                        Id = Guid.NewGuid(),
+                        PlanId = weeklyPlan.Id,
+                        DayOfWeek = dayNumber,
+                        MealType = Enum.Parse<MealType>(meal.MealType, ignoreCase: true),
+                        RecipeId = recipe.Id,
+                        SortOrder = i + 1,
+                    });
+
+                    alreadyUsedNames.Add(meal.RecipeName);
+                }
+
+                await _context.SaveChangesAsync(cancellationToken);
+
+                // Construir DTO del día para el cliente
+                int progressAfter = dayNumber * 100 / 7;
+                var dayDto = await MapDayToDto(weeklyPlan.Id, dayNumber, dayName, cancellationToken);
+                await _progress.SendDayReadyAsync(userId, dayNumber, dayName, dayDto, progressAfter, cancellationToken);
             }
 
+            // ─── Marcar plan como completado y calcular costo ───
+            weeklyPlan.GenerationStatus = PlanGenerationStatus.Completed;
+            weeklyPlan.EstimatedTotalCostMxn = alreadyUsedNames.Count > 0 ? 0m : null; // se recalcula en costService si es necesario
             await _context.SaveChangesAsync(cancellationToken);
 
-            // Construir DTO del día para el cliente
-            int progressAfter = dayNumber * 100 / 7;
-            var dayDto = await MapDayToDto(weeklyPlan.Id, dayNumber, dayName, cancellationToken);
-            await _progress.SendDayReadyAsync(userId, dayNumber, dayName, dayDto, progressAfter, cancellationToken);
+            await _progress.SendCompletedAsync(userId, weeklyPlan.Id, cancellationToken);
         }
-
-        // ─── Marcar plan como completado y calcular costo ───
-        weeklyPlan.GenerationStatus = PlanGenerationStatus.Completed;
-        weeklyPlan.EstimatedTotalCostMxn = alreadyUsedNames.Count > 0 ? 0m : null; // se recalcula en costService si es necesario
-        await _context.SaveChangesAsync(cancellationToken);
-
-        await _progress.SendCompletedAsync(userId, weeklyPlan.Id, cancellationToken);
+        catch (Exception)
+        {
+            weeklyPlan.GenerationStatus = PlanGenerationStatus.Failed;
+            weeklyPlan.IsActive = false;
+            try
+            {
+                await _context.SaveChangesAsync(CancellationToken.None);
+            }
+            catch { /* ignore */ }
+            throw;
+        }
 
         return Result<PlanGenerationResult>.Success(await MapToResult(weeklyPlan, cancellationToken));
     }
@@ -669,6 +684,7 @@ public class GeneratePlanCommandHandler : IRequestHandler<GeneratePlanCommand, R
                 FatPercent = ketoProfile.FatPercent ?? 0,
             } : new KetoProfileResult(),
             ShoppingList = BuildShoppingList(meals, catalog),
+            GenerationStatus = plan.GenerationStatus.ToString(),
         };
     }
 
